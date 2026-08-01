@@ -1,0 +1,6 @@
+# Yasmin is the required reviewer for every change targeting protected branches.
+* @PERRY-YASMIN
+
+# Protect ownership rules themselves.
+/.github/ @PERRY-YASMIN
+

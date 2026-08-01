@@ -25,6 +25,12 @@ Never push unfinished work to `main`. Use small commits and test before push. PR
 
 Commit examples: `feat(auth): implement JWT login`, `feat(database): add itinerary tables`, `feat(ai): add itinerary prompt service`, `test(api): add trip endpoint tests`, `fix(sql): correct expense trigger`, `docs(plan): update milestone checklist`.
 
+## Main-branch ownership
+
+`PERRY-YASMIN` is the sole code owner in `.github/CODEOWNERS`. Protect `main` in GitHub by requiring a pull request, one approval, Code Owner review, conversation resolution, no force pushes and no deletion. Teammates target `develop`; Yasmin alone performs the accepted `develop` → `main` release.
+
+Because this repository is owned by a personal GitHub account, collaborators receive repository write access and personal repositories do not provide the organization-only “Restrict who can push” actor list. For absolute enforcement, transfer the repository to a GitHub organization and restrict `main` pushes/bypass to Yasmin, or do not add collaborators and have teammates contribute through forks. CODEOWNERS plus required review is the strongest review gate while retaining collaborators on this personal repository, but it is not identical to an organization-level owner-only push restriction.
+
 <!-- SUPABASE_UPDATE_START -->
 ## Database change workflow
 
