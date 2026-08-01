@@ -1,0 +1,11 @@
+CREATE OR REPLACE FUNCTION audit_trip_change() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  INSERT INTO trip_audit(trip_id,action,old_row,new_row)
+  VALUES(COALESCE(NEW.id,OLD.id),TG_OP,CASE WHEN TG_OP='INSERT' THEN NULL ELSE to_jsonb(OLD) END,CASE WHEN TG_OP='DELETE' THEN NULL ELSE to_jsonb(NEW) END);
+  RETURN COALESCE(NEW,OLD);
+END $$;
+
+DROP TRIGGER IF EXISTS trg_trip_audit ON trips;
+CREATE TRIGGER trg_trip_audit AFTER INSERT OR UPDATE OR DELETE ON trips
+FOR EACH ROW EXECUTE FUNCTION audit_trip_change();
+

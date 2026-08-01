@@ -1,0 +1,2 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","required":["summary","days","budget_split","warnings","packing_items"],"properties":{"summary":{"type":"string"},"days":{"type":"array","items":{"type":"object","required":["day_number","date","items"]}},"budget_split":{"type":"array","items":{"type":"object","required":["category","amount"]}},"warnings":{"type":"array","items":{"type":"string"}},"packing_items":{"type":"array","items":{"type":"string"}}},"additionalProperties":false}
+
