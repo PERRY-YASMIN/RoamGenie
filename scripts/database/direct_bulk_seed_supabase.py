@@ -7,10 +7,18 @@ import psycopg
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("bulk_seed")
 
+import os
+from dotenv import load_dotenv
+
 project_root = Path(__file__).resolve().parent.parent.parent
 seeds_dir = project_root / "database" / "seeds"
+backend_env = project_root / "backend" / ".env"
+if backend_env.exists():
+    load_dotenv(backend_env)
 
-DB_URL = "postgresql://postgres:PERRY1102YASMIN@db.nacsaikbracbdsouaybk.supabase.co:5432/postgres"
+DB_URL = os.getenv("DATABASE_URL")
+if not DB_URL:
+    raise ValueError("DATABASE_URL environment variable is required.")
 
 def seed_restaurants_bulk():
     rests_file = seeds_dir / "restaurants_master_d4.json"
