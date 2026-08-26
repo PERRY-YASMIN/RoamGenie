@@ -57,7 +57,7 @@ Every capability documented below is fully implemented and verified by automated
 * **Master Travel Catalogue Explorer:** Filtered browsing of 500 cities, 6,000 hotels, 6,000 dining spots, 2,517 attractions, and 6,000 transit routes with curated landmark photography and direct Google Maps exploration links.
 * **Autocomplete Destination Search:** Interactive Google-search-style autocomplete in trip planner filtering across 500 active destinations with keyword suggestions.
 * **Deterministic Itinerary Engine:** Day-by-day scheduler allocating morning, afternoon, and evening slots based on user dates and traveller count.
-* **Itemized Budget Visualizer & Deficit Solver:** Category expense breakdown with colored progress bars and deficit warnings when $\text{estimated\_cost} > \text{total\_budget}$.
+* **Itemized Budget Visualizer & Deficit Solver:** Category expense breakdown with colored progress bars and deficit warnings when $\text{estimated\cost} > \text{total\budget}$.
 * **Manual Catalogue Swap:** Modal interface to replace individual itinerary items with catalogue alternatives, recalculating budgets atomically.
 * **Weather Forecasting:** Open-Meteo live forecast integration (summary, temperature, conditions) with snapshot caching.
 * **Dynamic Packing Checklist:** Contextual travel checklist items with interactive add, toggle packed, and delete controls.
