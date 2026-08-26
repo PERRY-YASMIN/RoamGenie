@@ -1,24 +1,31 @@
-# Requirements
+# Requirements Specification
 
-## Functional
+> **Project:** RoamGenie — AI Travel Planner & Budget Optimizer  
+> **Course:** Database Management Systems (Semester 5 Theory & Project)  
+> **Authoritative Specification:** [docs/requirements/PROJECT_SPECIFICATION.md](docs/requirements/PROJECT_SPECIFICATION.md)  
+> **Requirements Matrix:** [docs/requirements/REQUIREMENTS_MATRIX.md](docs/requirements/REQUIREMENTS_MATRIX.md)
 
-FR-01 register/login/logout and protected profile; FR-02 manage preferences; FR-03 browse/filter destinations, hotels, restaurants, attractions and transport; FR-04 create/edit/delete trips; FR-05 validate dates, travellers and budget; FR-06 generate a day-wise itinerary from approved records; FR-07 allocate and total category costs; FR-08 warn on deficit; FR-09 save/reopen itinerary history; FR-10 AI recommendations/Q&A/packing with mock fallback; FR-11 weather with fallback; FR-12 admin-safe catalogue management; FR-13 reports demonstrating SQL concepts; FR-14 auditable important changes.
+---
 
-## Non-functional
+## 1. Functional Requirements Summary
 
-- Security: hashed passwords, JWT expiry, least privilege, input validation, no secrets/stack traces.
-- Reliability: mock fallbacks; transactions for multi-step saves; backups tested.
-- Performance: paginated lists; indexes verified with plans; target common API response under 2 s locally excluding external AI.
-- Usability: responsive at 360/768/1440 px; accessible labels/keyboard focus; understandable errors.
-- Maintainability: layered modules, migrations, contract versioning, small reviewed PRs.
-- Portability: documented Windows PowerShell setup; environment-driven URLs.
-- Data integrity: PostgreSQL PK/FK/unique/check constraints and UTC timestamps.
-- Testability: unit, database, integration and acceptance commands run from a clean clone.
+* **FR-01 (Authentication & User Profile):** User registration, login, logout, and token-authenticated profile access (`/auth/register`, `/auth/login`, `/users/me`).
+* **FR-02 (User Preferences):** Management of travel preferences (accommodation tier, food preferences, transport modes, travel style, activity preferences, special requirements).
+* **FR-03 (Catalogue Exploration):** Filtered and paginated browsing of 500 destinations, 6,000 hotels, 6,000 restaurants, 2,517 attractions, and 6,000 transport routes.
+* **FR-04 (Trip Management CRUD):** Create, read, update, list, and delete trip records (`POST/GET /trips`, `GET/PATCH/DELETE /trips/{id}`).
+* **FR-05 (Trip Parameter Validation):** Strict validation ensuring `end_date >= start_date`, trip duration $\le 31$ days, positive traveller count (1-50), and positive budget ($>0$).
+* **FR-06 (Day-Wise Itinerary Generation):** Generate structured day-by-day scheduled itinerary items with allocated start times and categories linked to approved catalogue entities.
+* **FR-07 (Budget Calculation Engine):** Compute category-wise expense splits (accommodation, transport, food, activities, contingency) and total estimated trip costs.
+* **FR-08 (Deficit Detection & Warnings):** Compare total budget against estimated expenses; trigger explicit warnings when `estimated_total > total_budget`.
+* **FR-09 (Iterative Budget Optimization):** Deterministically swap expensive catalogue stays, transit, dining, and attractions with budget alternatives until deficit is resolved.
+* **FR-10 (Transactional Itinerary Persistence):** Atomically commit generated itineraries, days, items, and allocations to PostgreSQL; allow users to bookmark and review saved trip history.
+* **FR-11 (AI Assistant with Deterministic Fallback):** Generate contextual recommendations and packing checklists using structured JSON prompts with guaranteed fallback.
+* **FR-12 (Weather Context):** Provide destination weather snapshots and packing adjustments via Open-Meteo with mock fallback.
+* **FR-13 (Analytical SQL Reports):** Execute 18 dedicated SQL queries demonstrating joins, subqueries, aggregations, window functions, and `EXISTS` for DBMS course evaluation.
+* **FR-14 (Auditable Mutation Tracking):** Record all insert, update, and delete mutations on `trips` into `trip_audit` via PL/pgSQL database triggers.
 
-Out of scope for v1: bookings/payments, live navigation, visa guarantees, autonomous purchases, AI database access, and production-scale availability.
+---
 
-<!-- SUPABASE_UPDATE_START -->
-## Database platform requirements
+## 2. Master Requirements Specification Reference
 
-NFR-DB1 Supabase-hosted PostgreSQL is the primary team database. NFR-DB2 FastAPI uses environment-only `DATABASE_URL` through SQLAlchemy/psycopg. NFR-DB3 Alembic is the main application schema evolution path; course SQL objects remain version controlled and PostgreSQL-compatible. NFR-DB4 manual Dashboard changes are incomplete until reproduced in Git. NFR-DB5 frontend and AI receive no database/service-role credentials. NFR-DB6 local PostgreSQL is an optional isolated fallback rebuilt from the same migrations/seeds.
-<!-- SUPABASE_UPDATE_END -->
+For the complete requirements specification, acceptance criteria, and DBMS syllabus mapping, see [docs/requirements/PROJECT_SPECIFICATION.md](docs/requirements/PROJECT_SPECIFICATION.md).

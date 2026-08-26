@@ -1,0 +1,134 @@
+{
+  "dataset_name": "RoamGenie Master Destinations Dataset (Phase D1)",
+  "generation_date": "2026-08-20",
+  "random_seed": 20260820,
+  "number_of_existing_records": 5,
+  "number_of_newly_inserted_records": 495,
+  "final_record_count": 500,
+  "countries_represented": 93,
+  "regional_distribution": {
+    "India": 144,
+    "North & Central America": 51,
+    "Southeast & East Asia / South Asia": 85,
+    "Europe": 105,
+    "Oceania": 20,
+    "South America": 26,
+    "Middle East & North Africa": 34,
+    "Sub-Saharan Africa & Island Nations": 35
+  },
+  "validation_results": {
+    "status": "PASS",
+    "checks": {
+      "count_within_target": {
+        "passed": true,
+        "count": 500,
+        "target": 500
+      },
+      "no_duplicates": {
+        "passed": true,
+        "duplicate_count": 0
+      },
+      "no_null_or_empty_fields": {
+        "passed": true,
+        "violating_rows": 0
+      },
+      "no_placeholders": {
+        "passed": true,
+        "placeholder_hits": []
+      },
+      "costs_valid_and_reasonable": {
+        "passed": true,
+        "invalid_cost_count": 0,
+        "min_cost": 2700.0,
+        "max_cost": 28000.0,
+        "avg_cost": 9428.6
+      },
+      "preserved_original_records": {
+        "passed": true,
+        "details": [
+          {
+            "id": 1,
+            "city": "Mysuru",
+            "country": "India",
+            "preserved": true
+          },
+          {
+            "id": 2,
+            "city": "Kochi",
+            "country": "India",
+            "preserved": true
+          },
+          {
+            "id": 3,
+            "city": "Jaipur",
+            "country": "India",
+            "preserved": true
+          },
+          {
+            "id": 4,
+            "city": "Udaipur",
+            "country": "India",
+            "preserved": true
+          },
+          {
+            "id": 5,
+            "city": "Goa",
+            "country": "India",
+            "preserved": true
+          }
+        ]
+      },
+      "no_duplicate_descriptions": {
+        "passed": true,
+        "duplicate_desc_count": 0
+      }
+    },
+    "issues": []
+  },
+  "duplicate_count": 0,
+  "invalid_record_count": 0,
+  "cost_summary_inr": {
+    "min_daily_cost": 2700.0,
+    "max_daily_cost": 28000.0,
+    "avg_daily_cost": 9428.6
+  },
+  "preserved_records": [
+    {
+      "id": 1,
+      "city": "Mysuru",
+      "country": "India"
+    },
+    {
+      "id": 2,
+      "city": "Kochi",
+      "country": "India"
+    },
+    {
+      "id": 3,
+      "city": "Jaipur",
+      "country": "India"
+    },
+    {
+      "id": 4,
+      "city": "Udaipur",
+      "country": "India"
+    },
+    {
+      "id": 5,
+      "city": "Goa",
+      "country": "India"
+    }
+  ],
+  "assumptions_made": [
+    "average_daily_cost values represent estimated baseline travel expense per person per day in INR (₹) across domestic and international destinations to maintain complete consistency with existing schema Numeric(12,2) and frontend rendering.",
+    "Existing 5 seed destinations (IDs 1-5) were preserved and retained without modifications to safeguard foreign key relationships with dependent tables.",
+    "All inserted destinations have active=True for planner visibility.",
+    "Primary keys were assigned by PostgreSQL Identity column sequences without manual ID overrides."
+  ],
+  "files_created_or_modified": [
+    "scripts/database/seed_destinations_d1.py",
+    "scripts/database/validate_destinations_d1.py",
+    "database/seeds/destinations_master_d1.json",
+    "database/seeds/manifest_d1_destinations.json"
+  ]
+}

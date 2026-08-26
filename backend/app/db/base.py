@@ -2,5 +2,5 @@ from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):
-    """Base class for models added during milestone 1/2."""
-
+    """Declarative base class for all RoamGenie relational models."""
+    pass

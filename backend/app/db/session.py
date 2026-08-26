@@ -14,10 +14,22 @@ def get_engine() -> Engine | None:
     url = settings.effective_database_url
     if not url:
         return None
+
+    connect_args = {}
+    engine_kwargs = {"pool_pre_ping": True}
+
+    if url.startswith("sqlite"):
+        connect_args = {"check_same_thread": False}
+    elif "postgresql" in url:
+        connect_args = {"connect_timeout": settings.db_connect_timeout_seconds}
+        engine_kwargs["pool_recycle"] = 300
+        engine_kwargs["pool_size"] = 10
+        engine_kwargs["max_overflow"] = 20
+
     return create_engine(
         url,
-        pool_pre_ping=True,
-        connect_args={"connect_timeout": settings.db_connect_timeout_seconds},
+        connect_args=connect_args,
+        **engine_kwargs,
     )
 
 

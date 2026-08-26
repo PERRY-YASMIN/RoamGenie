@@ -1,5 +1,6 @@
 from datetime import date
 from decimal import Decimal
+from typing import Optional
 
 from pydantic import BaseModel, Field, model_validator
 
@@ -7,6 +8,7 @@ from pydantic import BaseModel, Field, model_validator
 class TripPlanRequest(BaseModel):
     starting_location: str = Field(min_length=2, max_length=120)
     destination: str = Field(min_length=2, max_length=120)
+    destination_id: Optional[int] = Field(default=None, gt=0, description="Optional destination catalogue ID")
     start_date: date
     end_date: date
     travellers: int = Field(gt=0, le=50)

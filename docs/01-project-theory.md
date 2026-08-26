@@ -1,3 +1,0 @@
-# Project Theory
-
-Travellers currently combine many sites for places, stays, food, transport, weather and costs, increasing planning time and budget mistakes. RoamGenie centralizes normalized travel data and accepts origin, destination, dates, travellers, budget, preferences, travel style and special needs. It returns a day-wise plan, suggested places/services, category costs, remaining budget or deficit, warnings, weather context, packing suggestions and AI assistance. AI proposes; validated application logic and PostgreSQL remain authoritative. Core modules are auth/profile, catalogues, trip/itinerary, expense optimization, AI/weather/packing, saved history, administration and reports.

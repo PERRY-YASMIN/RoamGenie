@@ -1,0 +1,219 @@
+{
+  "dataset_name": "RoamGenie Master Restaurants Dataset (Phase D4)",
+  "generation_date": "2026-08-20",
+  "random_seed": 20260820,
+  "number_of_existing_records": 2,
+  "number_of_newly_inserted_records": 5998,
+  "final_record_count": 6000,
+  "destinations_covered": "500/500",
+  "destinations_with_zero_restaurants": 0,
+  "min_restaurants_per_destination": 12,
+  "max_restaurants_per_destination": 12,
+  "avg_restaurants_per_destination": 12.0,
+  "cuisines_count": 254,
+  "pricing_summary_inr": {
+    "min_cost_per_person": 100.0,
+    "max_cost_per_person": 32000.0,
+    "avg_cost_per_person": 2095.32,
+    "median_cost_per_person": 1180.0,
+    "price_bands": {
+      "budget_under_400": {
+        "count": 942,
+        "percentage": 15.7,
+        "description": "Street food hubs, traditional tiffin rooms, local snack corners"
+      },
+      "economy_400_to_900": {
+        "count": 1455,
+        "percentage": 24.25,
+        "description": "Casual diners, family restaurants, bakeries & cafes"
+      },
+      "midrange_900_to_2000": {
+        "count": 1635,
+        "percentage": 27.25,
+        "description": "Specialty regional restaurants, grills & bistros, gastro dining"
+      },
+      "premium_2000_to_5000": {
+        "count": 1387,
+        "percentage": 23.12,
+        "description": "Upscale dining rooms, rooftop lounges, waterfront seafood"
+      },
+      "fine_dining_5000_plus": {
+        "count": 581,
+        "percentage": 9.68,
+        "description": "Michelin-level fine gastronomy, royal palace dining"
+      }
+    }
+  },
+  "rating_summary": {
+    "rated_count": 6000,
+    "min_rating": 4.1,
+    "max_rating": 5.0,
+    "avg_rating": 4.49,
+    "rating_distribution": {
+      "5.0": {
+        "count": 1,
+        "percentage": 0.02
+      },
+      "4.8 - 4.9": {
+        "count": 541,
+        "percentage": 9.02
+      },
+      "4.6 - 4.7": {
+        "count": 1434,
+        "percentage": 23.9
+      },
+      "4.4 - 4.5": {
+        "count": 2705,
+        "percentage": 45.08
+      },
+      "4.1 - 4.3": {
+        "count": 1319,
+        "percentage": 21.98
+      }
+    }
+  },
+  "validation_results": {
+    "status": "PASS",
+    "checks": {
+      "count_within_target": {
+        "passed": true,
+        "count": 6000,
+        "target_range": "[5000, 7500]"
+      },
+      "referential_integrity": {
+        "passed": true,
+        "orphan_restaurants": 0
+      },
+      "no_duplicates": {
+        "passed": true,
+        "duplicate_count": 0
+      },
+      "no_null_or_empty_fields": {
+        "passed": true,
+        "violating_rows": 0
+      },
+      "no_placeholders": {
+        "passed": true,
+        "placeholder_hits": []
+      },
+      "costs_valid": {
+        "passed": true,
+        "invalid_cost_count": 0,
+        "min_cost": 100.0,
+        "max_cost": 32000.0,
+        "avg_cost": 2095.32,
+        "median_cost": 1180.0
+      },
+      "ratings_valid": {
+        "passed": true,
+        "invalid_rating_count": 0,
+        "min_rating": 4.1,
+        "max_rating": 5.0,
+        "avg_rating": 4.49
+      },
+      "preserved_original_records": {
+        "passed": true,
+        "details": [
+          {
+            "id": 1,
+            "destination_id": 1,
+            "name": "Mylari Tiffin House",
+            "cuisine": "South Indian",
+            "average_cost_per_person": 250.0,
+            "rating": 4.8,
+            "preserved": true
+          },
+          {
+            "id": 2,
+            "destination_id": 1,
+            "name": "Gufha Cave Dining",
+            "cuisine": "North Indian & Mughlai",
+            "average_cost_per_person": 650.0,
+            "rating": 4.3,
+            "preserved": true
+          }
+        ]
+      },
+      "destination_coverage": {
+        "passed": true,
+        "total_destinations": 500,
+        "destinations_covered": 500,
+        "destinations_with_zero_restaurants": 0,
+        "min_restaurants_per_destination": 12,
+        "max_restaurants_per_destination": 12,
+        "avg_restaurants_per_destination": 12.0
+      },
+      "d1_destinations_preserved": {
+        "passed": true,
+        "destinations_count": 500,
+        "original_5_destinations_intact": true
+      },
+      "d2_attractions_preserved": {
+        "passed": true,
+        "attractions_count": 2517
+      },
+      "d3_hotels_preserved": {
+        "passed": true,
+        "hotels_count": 6000
+      },
+      "unrelated_tables_isolated": {
+        "passed": true,
+        "unrelated_table_counts": {
+          "destinations": 500,
+          "attractions": 2517,
+          "hotels": 6000,
+          "transport_options": 2,
+          "users": 3,
+          "user_preferences": 2,
+          "activity_preferences": 4,
+          "trips": 1,
+          "trip_members": 2,
+          "itineraries": 1,
+          "itinerary_days": 1,
+          "itinerary_items": 3,
+          "expenses": 1,
+          "packing_items": 1,
+          "saved_trips": 1,
+          "reviews": 1,
+          "weather_snapshots": 1,
+          "ai_conversations": 0,
+          "ai_messages": 0,
+          "trip_audit": 0
+        }
+      }
+    },
+    "issues": []
+  },
+  "duplicate_count": 0,
+  "orphan_count": 0,
+  "invalid_record_count": 0,
+  "preserved_records": [
+    {
+      "id": 1,
+      "destination_id": 1,
+      "name": "Mylari Tiffin House"
+    },
+    {
+      "id": 2,
+      "destination_id": 1,
+      "name": "Gufha Cave Dining"
+    }
+  ],
+  "assumptions_made": [
+    "Average dining cost per person is denominated in INR (₹) scaled realistically to destination cost-of-living standards and travel expense benchmarks.",
+    "Restaurants are cataloged across 4 core dining tiers (Fine Dining, Casual Specialty, Cafe & Bakery, Street & Tiffin) to enable personalized AI itinerary meal slotting and budget optimization.",
+    "Existing 2 seed restaurants (IDs 1-2 in Mysuru) were preserved and retained without modifications.",
+    "Every restaurant is foreign-key linked to a valid destination_id existing in the 500 live destinations."
+  ],
+  "files_created_or_modified": [
+    "scripts/database/restaurants_data.py",
+    "scripts/database/seed_restaurants_d4.py",
+    "scripts/database/validate_restaurants_d4.py",
+    "scripts/database/pre_insert_verification_d4.py",
+    "scripts/database/post_insert_verification_d4.py",
+    "database/seeds/restaurants_master_d4.json",
+    "database/seeds/manifest_d4_restaurants.json",
+    "database/reports/D4_RESTAURANTS_VALIDATION_REPORT.md",
+    "database/reports/D4_RESTAURANTS_DATASET_REPORT.md"
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "dataset_name": "RoamGenie Master Hotels Dataset (Phase D3)",
+  "generation_date": "2026-08-20",
+  "random_seed": 20260820,
+  "number_of_existing_records": 2,
+  "number_of_newly_inserted_records": 5998,
+  "final_record_count": 6000,
+  "destinations_covered": "500/500",
+  "destinations_with_zero_hotels": 0,
+  "min_hotels_per_destination": 12,
+  "max_hotels_per_destination": 12,
+  "avg_hotels_per_destination": 12.0,
+  "pricing_summary_inr": {
+    "min_price_per_night": 550.0,
+    "max_price_per_night": 115000.0,
+    "avg_price_per_night": 10202.07,
+    "median_price_per_night": 5650.0,
+    "price_bands": {
+      "budget_under_2500": {
+        "count": 1346,
+        "percentage": 22.43,
+        "description": "Hostels, homestays, traveler lodges, budget B&Bs"
+      },
+      "economy_2500_to_5000": {
+        "count": 1414,
+        "percentage": 23.57,
+        "description": "Standard 3-star city hotels, express business stays"
+      },
+      "midrange_5000_to_12000": {
+        "count": 1697,
+        "percentage": 28.28,
+        "description": "Upscale 4-star boutique, scenic resorts, executive suites"
+      },
+      "premium_12000_to_30000": {
+        "count": 1117,
+        "percentage": 18.62,
+        "description": "5-star luxury hotels, international business towers, grand havelis"
+      },
+      "luxury_30000_plus": {
+        "count": 426,
+        "percentage": 7.1,
+        "description": "Palace hotels, ultra-luxury suites, private island/view retreats"
+      }
+    }
+  },
+  "rating_summary": {
+    "rated_count": 6000,
+    "min_rating": 3.8,
+    "max_rating": 5.0,
+    "avg_rating": 4.36,
+    "rating_distribution": {
+      "5.0": {
+        "count": 1,
+        "percentage": 0.02
+      },
+      "4.8 - 4.9": {
+        "count": 531,
+        "percentage": 8.85
+      },
+      "4.6 - 4.7": {
+        "count": 984,
+        "percentage": 16.4
+      },
+      "4.4 - 4.5": {
+        "count": 1377,
+        "percentage": 22.95
+      },
+      "4.0 - 4.3": {
+        "count": 2848,
+        "percentage": 47.47
+      },
+      "under_4.0": {
+        "count": 259,
+        "percentage": 4.32
+      }
+    }
+  },
+  "validation_results": {
+    "status": "PASS",
+    "checks": {
+      "count_within_target": {
+        "passed": true,
+        "count": 6000,
+        "target_range": "[5000, 7500]"
+      },
+      "referential_integrity": {
+        "passed": true,
+        "orphan_hotels": 0
+      },
+      "no_duplicates": {
+        "passed": true,
+        "duplicate_count": 0
+      },
+      "no_null_or_empty_fields": {
+        "passed": true,
+        "violating_rows": 0
+      },
+      "no_placeholders": {
+        "passed": true,
+        "placeholder_hits": []
+      },
+      "prices_valid": {
+        "passed": true,
+        "invalid_price_count": 0,
+        "min_price": 550.0,
+        "max_price": 115000.0,
+        "avg_price": 10202.07,
+        "median_price": 5650.0
+      },
+      "ratings_valid": {
+        "passed": true,
+        "invalid_rating_count": 0,
+        "min_rating": 3.8,
+        "max_rating": 5.0,
+        "avg_rating": 4.36
+      },
+      "preserved_original_records": {
+        "passed": true,
+        "details": [
+          {
+            "id": 1,
+            "destination_id": 1,
+            "name": "Heritage Garden Stay",
+            "price_per_night": 2800.0,
+            "rating": 4.3,
+            "preserved": true
+          },
+          {
+            "id": 2,
+            "destination_id": 1,
+            "name": "Royal Orchid Metropole",
+            "price_per_night": 4500.0,
+            "rating": 4.7,
+            "preserved": true
+          }
+        ]
+      },
+      "destination_coverage": {
+        "passed": true,
+        "total_destinations": 500,
+        "destinations_covered": 500,
+        "destinations_with_zero_hotels": 0,
+        "min_hotels_per_destination": 12,
+        "max_hotels_per_destination": 12,
+        "avg_hotels_per_destination": 12.0
+      },
+      "d1_destinations_preserved": {
+        "passed": true,
+        "destinations_count": 500,
+        "original_5_destinations_intact": true
+      },
+      "d2_attractions_preserved": {
+        "passed": true,
+        "attractions_count": 2517
+      },
+      "unrelated_tables_isolated": {
+        "passed": true,
+        "unrelated_table_counts": {
+          "destinations": 500,
+          "attractions": 2517,
+          "restaurants": 2,
+          "transport_options": 2,
+          "users": 3,
+          "user_preferences": 2,
+          "activity_preferences": 4,
+          "trips": 1,
+          "trip_members": 2,
+          "itineraries": 1,
+          "itinerary_days": 1,
+          "itinerary_items": 3,
+          "expenses": 1,
+          "packing_items": 1,
+          "saved_trips": 1,
+          "reviews": 1,
+          "weather_snapshots": 1,
+          "ai_conversations": 0,
+          "ai_messages": 0,
+          "trip_audit": 0
+        }
+      }
+    },
+    "issues": []
+  },
+  "duplicate_count": 0,
+  "orphan_count": 0,
+  "invalid_record_count": 0,
+  "preserved_records": [
+    {
+      "id": 1,
+      "destination_id": 1,
+      "name": "Heritage Garden Stay"
+    },
+    {
+      "id": 2,
+      "destination_id": 1,
+      "name": "Royal Orchid Metropole"
+    }
+  ],
+  "assumptions_made": [
+    "Hotel nightly prices represent realistic accommodation room rates in INR (₹) scaled appropriately to destination cost-of-living and daily travel baselines.",
+    "Hotels are structured across 5 distinct accommodation tiers (Budget, Economy, Mid-Range, Premium, Luxury) to support flexible user budget optimization in the planner.",
+    "Existing 2 seed hotels (IDs 1-2 in Mysuru) were preserved and retained without modifications.",
+    "Every hotel is foreign-key linked to a valid destination_id existing in the 500 live destinations."
+  ],
+  "files_created_or_modified": [
+    "scripts/database/hotels_data.py",
+    "scripts/database/seed_hotels_d3.py",
+    "scripts/database/validate_hotels_d3.py",
+    "scripts/database/pre_insert_verification_d3.py",
+    "scripts/database/post_insert_verification_d3.py",
+    "database/seeds/hotels_master_d3.json",
+    "database/seeds/manifest_d3_hotels.json",
+    "database/reports/D3_HOTELS_VALIDATION_REPORT.md",
+    "database/reports/D3_HOTELS_DATASET_REPORT.md"
+  ]
+}

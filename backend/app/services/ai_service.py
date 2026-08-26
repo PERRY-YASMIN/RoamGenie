@@ -63,7 +63,7 @@ class MockAIService:
 
 
 def get_ai_service() -> MockAIService:
-    # TODO(M4/Madhu): choose a real provider adapter when configured, validate its
+    # TODO(Phase 3): choose a real provider adapter when configured, validate its
     # JSON, use one bounded retry, and fall back to this implementation.
     return MockAIService()
 

@@ -1,0 +1,3467 @@
+[
+  {
+    "city": "Agra",
+    "country": "India",
+    "description": "Home to the iconic Taj Mahal, Agra Fort, and rich Mughal architectural masterpieces along the Yamuna River.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Varanasi",
+    "country": "India",
+    "description": "Spiritual capital of India famous for ancient Ganga ghats, sacred evening aarti, and silk weaving.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Bengaluru",
+    "country": "India",
+    "description": "The Garden City and technology hub boasting vibrant brewpubs, lush botanical gardens, and tech culture.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Mumbai",
+    "country": "India",
+    "description": "The bustling financial capital with historic colonial architecture, Bollywood glamour, and coastal promenades.",
+    "average_daily_cost": 6000.0,
+    "active": true
+  },
+  {
+    "city": "Delhi",
+    "country": "India",
+    "description": "Historic national capital brimming with centuries-old monuments, bustling Chandni Chowk bazaars, and street food.",
+    "average_daily_cost": 4500.0,
+    "active": true
+  },
+  {
+    "city": "Kolkata",
+    "country": "India",
+    "description": "Cultural and artistic soul of India known for colonial landmarks, vintage trams, and legendary Bengali sweets.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Chennai",
+    "country": "India",
+    "description": "Gateway to South India renowned for classical Carnatic music, Dravidian temples, and Marina Beach.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Hyderabad",
+    "country": "India",
+    "description": "City of Pearls featuring the historic Charminar, Golconda Fort, and world-renowned Hyderabadi biryani.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Amritsar",
+    "country": "India",
+    "description": "Spiritual center of Sikhism featuring the serene Golden Temple, Wagah Border ceremony, and Punjabi cuisine.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Rishikesh",
+    "country": "India",
+    "description": "Yoga capital of the world nestled in the Himalayan foothills along the sacred Ganges river with white-water rafting.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Haridwar",
+    "country": "India",
+    "description": "Ancient pilgrimage city along the holy Ganges known for Har Ki Pauri ghat and evening Ganga Aarti.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Shimla",
+    "country": "India",
+    "description": "Colonial summer capital nestled in pine-clad Himalayan hills with historic Ridge and toy train rides.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Manali",
+    "country": "India",
+    "description": "High-altitude Himalayan resort town popular for snow-capped Solang Valley, Rohtang Pass, and pine forests.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Dharamshala",
+    "country": "India",
+    "description": "Scenic hillside town home to the Dalai Lama, Tibetan monasteries, and views of the Dhauladhar range.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Leh",
+    "country": "India",
+    "description": "High-desert mountain wonderland featuring Buddhist gompas, Pangong Tso lake, and dramatic high passes.",
+    "average_daily_cost": 5500.0,
+    "active": true
+  },
+  {
+    "city": "Srinagar",
+    "country": "India",
+    "description": "Paradise on Earth famed for tranquil Dal Lake houseboats, Shikara rides, and Mughal terraced gardens.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Gulmarg",
+    "country": "India",
+    "description": "Premier Himalayan ski resort famous for the world's highest gondola, snow meadows, and alpine trails.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Pahalgam",
+    "country": "India",
+    "description": "Idyllic valley along the Lidder River known for lush pine meadows, Betaab Valley, and trekking trails.",
+    "average_daily_cost": 4600.0,
+    "active": true
+  },
+  {
+    "city": "Jodhpur",
+    "country": "India",
+    "description": "The Sun City distinguished by blue-painted houses beneath the massive Mehrangarh Fort and desert culture.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Jaisalmer",
+    "country": "India",
+    "description": "The Golden City surrounded by Thar desert dunes, yellow sandstone havelis, and camel safaris.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Pushkar",
+    "country": "India",
+    "description": "Holy lakeside town surrounded by desert hills featuring the rare Brahma Temple and vibrant camel fair.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Bikaner",
+    "country": "India",
+    "description": "Desert citadel known for Junagarh Fort, camel breeding farm, and delectable bhujia savories.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Mount Abu",
+    "country": "India",
+    "description": "Rajasthan's only hill station featuring the intricately carved marble Dilwara Jain temples and Nakki Lake.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Kumbhalgarh",
+    "country": "India",
+    "description": "Formidable Aravalli fortress featuring the world's second-longest continuous stone wall and wildlife sanctuary.",
+    "average_daily_cost": 3500.0,
+    "active": true
+  },
+  {
+    "city": "Mandu",
+    "country": "India",
+    "description": "Romantic ruined fortress city celebrating the architectural love story of Baz Bahadur and Rani Roopmati.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Hampi",
+    "country": "India",
+    "description": "UNESCO World Heritage site showcasing boulder-strewn landscapes and magnificent ruins of the Vijayanagara Empire.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Badami",
+    "country": "India",
+    "description": "Ancient Chalukya capital renowned for dramatic rock-cut cave temples carved into red sandstone cliffs.",
+    "average_daily_cost": 2900.0,
+    "active": true
+  },
+  {
+    "city": "Belur",
+    "country": "India",
+    "description": "Hoysala architectural marvel featuring the 12th-century Chennakeshava Temple with intricate soapstone sculptures.",
+    "average_daily_cost": 2900.0,
+    "active": true
+  },
+  {
+    "city": "Murudeshwar",
+    "country": "India",
+    "description": "Coastal pilgrimage destination home to the world's second-tallest Shiva statue and scenic Arabian Sea beach.",
+    "average_daily_cost": 3100.0,
+    "active": true
+  },
+  {
+    "city": "Gokarna",
+    "country": "India",
+    "description": "Serene coastal haven with pristine Om Beach, Mahabaleshwar temple, and laid-back Arabian Sea vibe.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Coorg",
+    "country": "India",
+    "description": "Lush mountain sanctuary known as Scotland of India, famous for coffee plantations, mist-covered hills, and waterfalls.",
+    "average_daily_cost": 4400.0,
+    "active": true
+  },
+  {
+    "city": "Chikmagalur",
+    "country": "India",
+    "description": "Birthplace of Indian coffee nestled in the Western Ghats with Mullayanagiri peak trekking and lush estates.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Kabini",
+    "country": "India",
+    "description": "Premier wildlife safari haven famous for river cruises, tiger sightings, and dense Nagarhole forest canopy.",
+    "average_daily_cost": 6500.0,
+    "active": true
+  },
+  {
+    "city": "Bandipur",
+    "country": "India",
+    "description": "Renowned tiger reserve in the Nilgiri biosphere with rich biodiversity and thrilling elephant safari tracks.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Munnar",
+    "country": "India",
+    "description": "Idyllic hill station draped in emerald tea gardens, mist-kissed hills, and Anamudi peak views.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Alleppey",
+    "country": "India",
+    "description": "Venice of the East world-renowned for tranquil backwaters, traditional Kettuvallam houseboats, and lagoons.",
+    "average_daily_cost": 4600.0,
+    "active": true
+  },
+  {
+    "city": "Wayanad",
+    "country": "India",
+    "description": "Pristine green paradise with spice plantations, Edakkal prehistoric rock art, and mist-covered Chembra Peak.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Varkala",
+    "country": "India",
+    "description": "Stunning coastal cliff beach overlooking the Arabian Sea, known for Janardhana Swami Temple and beach cafes.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Kovalam",
+    "country": "India",
+    "description": "Famous crescent beaches lined with lighthouse views, Ayurvedic retreats, and coastal fresh seafood.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Thekkady",
+    "country": "India",
+    "description": "Home to Periyar Tiger Reserve featuring scenic boat safaris, spice garden walks, and bamboo rafting.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Kumarakom",
+    "country": "India",
+    "description": "Picturesque backwater village on Vembanad Lake known for tranquil bird sanctuaries and luxury water stays.",
+    "average_daily_cost": 5000.0,
+    "active": true
+  },
+  {
+    "city": "Ooty",
+    "country": "India",
+    "description": "Queen of Hill Stations in the Nilgiri hills featuring botanical gardens, tea estates, and heritage toy train.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Kodaikanal",
+    "country": "India",
+    "description": "Princess of Hill Stations set around a star-shaped lake, pine forests, and misty Coaker's Walk.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Madurai",
+    "country": "India",
+    "description": "Ancient temple city celebrated for the towering gopurams of Meenakshi Amman Temple and rich Tamil culture.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Rameswaram",
+    "country": "India",
+    "description": "Sacred coastal island town famed for Ramanathaswamy Temple corridors, Agnitheertham, and Pamban Bridge.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Dhanushkodi",
+    "country": "India",
+    "description": "Evocative ghost town at the eastern tip of Pamban Island where the Bay of Bengal meets the Indian Ocean.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Kanyakumari",
+    "country": "India",
+    "description": "Southernmost tip of mainland India where three oceans meet, featuring Vivekananda Rock Memorial and sunrises.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Pondicherry",
+    "country": "India",
+    "description": "Charming coastal enclave blending French colonial architecture, serene Promenade Beach, and Auroville.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Thanjavur",
+    "country": "India",
+    "description": "Cultural capital of Chola architecture featuring the grand Brihadisvara Temple and classical bronze art.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Mahabalipuram",
+    "country": "India",
+    "description": "UNESCO-listed coastal town known for monolithic rock-cut Shore Temple, Pancha Rathas, and stone carvings.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Coimbatore",
+    "country": "India",
+    "description": "Industrial and textile gateway to the Nilgiris known for the iconic Adiyogi Shiva statue and local cuisine.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Pune",
+    "country": "India",
+    "description": "Cultural and educational capital of Maharashtra with historic Shaniwar Wada, Sinhagad Fort, and food culture.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Lonavala",
+    "country": "India",
+    "description": "Popular Western Ghats monsoon getaway famous for mist-covered hills, Karla Caves, and sweet chikki.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Mahabaleshwar",
+    "country": "India",
+    "description": "Scenic hill resort on the Sahyadri ranges known for strawberry farms, Arthur's Seat, and panoramic valley views.",
+    "average_daily_cost": 4400.0,
+    "active": true
+  },
+  {
+    "city": "Alibaug",
+    "country": "India",
+    "description": "Coastal getaway near Mumbai with historic sea forts, sandy beaches, and fresh konkani seafood.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Nashik",
+    "country": "India",
+    "description": "Wine capital of India and sacred Kumbh Mela destination set along the Godavari River with vineyard stays.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Aurangabad",
+    "country": "India",
+    "description": "Tourism gateway to the magnificent rock-cut UNESCO caves of Ajanta and Ellora and Bibi Ka Maqbara.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Nagpur",
+    "country": "India",
+    "description": "The Orange City of India and tiger capital surrounded by premier wildlife sanctuaries like Tadoba and Pench.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Tadoba",
+    "country": "India",
+    "description": "Maharashtra's oldest and largest national park famous for high tiger density and teak forest safaris.",
+    "average_daily_cost": 5400.0,
+    "active": true
+  },
+  {
+    "city": "Shirdi",
+    "country": "India",
+    "description": "Renowned pilgrimage destination drawing millions of devotees to the sacred temple of Sai Baba.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Darjeeling",
+    "country": "India",
+    "description": "Queen of the Himalayas offering spectacular views of Kanchenjunga, world-famous tea estates, and toy train.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Kalimpong",
+    "country": "India",
+    "description": "Tranquil hill station in West Bengal with Buddhist monasteries, orchid nurseries, and Teesta river views.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Sundarbans",
+    "country": "India",
+    "description": "World's largest mangrove delta famous for royal Bengal tigers, estuarine crocodiles, and boat safaris.",
+    "average_daily_cost": 4500.0,
+    "active": true
+  },
+  {
+    "city": "Shantiniketan",
+    "country": "India",
+    "description": "Rabindranath Tagore's historic cultural haven celebrated for Visva-Bharati University, baul music, and art.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Siliguri",
+    "country": "India",
+    "description": "Strategic gateway city connecting the Northeast with vibrant tea auction centres and Coronation Bridge.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Gangtok",
+    "country": "India",
+    "description": "Vibrant capital of Sikkim offering breathtaking Himalayan vistas, Enchey Monastery, and MG Marg cafes.",
+    "average_daily_cost": 4400.0,
+    "active": true
+  },
+  {
+    "city": "Pelling",
+    "country": "India",
+    "description": "Sikkimese mountain town known for panoramic Kanchenjunga panoramas, Skywalk, and Pemayangtse Monastery.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Lachung",
+    "country": "India",
+    "description": "Picturesque North Sikkim alpine village gateway to Yumthang Valley of Flowers and zero point snowfields.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Guwahati",
+    "country": "India",
+    "description": "Gateway to the Northeast on the Brahmaputra River, famous for Kamakhya Temple and river cruises.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Kaziranga",
+    "country": "India",
+    "description": "UNESCO World Heritage wildlife sanctuary home to the world's largest population of great one-horned rhinos.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Manas",
+    "country": "India",
+    "description": "UNESCO biosphere reserve along the Himalayan foothills known for wild water buffaloes and pygmy hogs.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Majuli",
+    "country": "India",
+    "description": "World's largest river island on the Brahmaputra known for Vaishnavite Neo-Sattras and indigenous crafts.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Shillong",
+    "country": "India",
+    "description": "Scotland of the East featuring cascading waterfalls, vibrant indie music scene, and pine-scented hills.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Cherrapunji",
+    "country": "India",
+    "description": "Fabled high-rainfall wonder famous for living root bridges, Nohkalikai Falls, and limestone caves.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Dawki",
+    "country": "India",
+    "description": "Border town famous for the crystal-clear emerald waters of the Umngot River and boat rides.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Tawang",
+    "country": "India",
+    "description": "High-altitude Tibetan Buddhist sanctuary featuring India's largest monastery and scenic Sela Pass.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Ziro",
+    "country": "India",
+    "description": "Scenic pine-clad valley inhabited by the Apatani tribe, famous for lush paddy fields and music festival.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Kohima",
+    "country": "India",
+    "description": "Capital of Nagaland known for the historic World War II cemetery, Naga heritage village, and Hornbill Festival.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Imphal",
+    "country": "India",
+    "description": "Historical capital of Manipur known for Kangla Fort, world's only floating national park on Loktak Lake.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Aizawl",
+    "country": "India",
+    "description": "Serene cliffside capital of Mizoram overlooking lush valleys with rich Mizo tribal traditions and markets.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Agartala",
+    "country": "India",
+    "description": "Capital of Tripura showcasing the regal Ujjayanta Palace, Neermahal water palace, and heritage temples.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Puri",
+    "country": "India",
+    "description": "Sacred coastal city famed for Jagannath Temple, annual Rath Yatra, and golden Bay of Bengal beaches.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Bhubaneswar",
+    "country": "India",
+    "description": "City of Temples showcasing magnificent Kalinga architecture at Lingaraj Temple and ancient Udayagiri caves.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Konark",
+    "country": "India",
+    "description": "Home to the colossal 13th-century Sun Temple carved like a grand chariot on the Bay of Bengal coast.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Chilika",
+    "country": "India",
+    "description": "Asia's largest brackish water lagoon famous for migratory birds, Irrawaddy dolphin sightings, and islands.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Ahmedabad",
+    "country": "India",
+    "description": "India's first UNESCO World Heritage City famed for Sabarmati Ashram, pols architecture, and street food.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Kutch",
+    "country": "India",
+    "description": "Fabled white salt desert renowned for the vibrant Rann Utsav, traditional handicrafts, and starry nights.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Bhuj",
+    "country": "India",
+    "description": "Historic cultural gateway of Kutch famous for Aina Mahal, Prag Mahal, and intricate Rogan and bandhani art.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Gir",
+    "country": "India",
+    "description": "The sole global sanctuary of the Asiatic lion featuring dry deciduous forests and thrilling jeep safaris.",
+    "average_daily_cost": 5400.0,
+    "active": true
+  },
+  {
+    "city": "Dwarka",
+    "country": "India",
+    "description": "Ancient sacred Char Dham holy city on the Arabian Sea dedicated to Lord Krishna with Dwarkadhish Temple.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Somnath",
+    "country": "India",
+    "description": "First of the twelve sacred Jyotirlinga shrines located directly on the rugged Arabian Sea shoreline.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Vadodara",
+    "country": "India",
+    "description": "Cultural capital of Gujarat showcasing the opulent Laxmi Vilas Palace and Maharaja Fateh Singh Museum.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Surat",
+    "country": "India",
+    "description": "Diamond and textile metropolis known for Dutch colonial cemeteries, Dumas Beach, and street delicacies.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Khajuraho",
+    "country": "India",
+    "description": "UNESCO World Heritage site world-renowned for intricately sculpted medieval Hindu and Jain temples.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Gwalior",
+    "country": "India",
+    "description": "Historic fortress city boasting the formidable Gwalior Fort, Jai Vilas Palace, and classical musical legacy.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Orchha",
+    "country": "India",
+    "description": "Charming medieval town on the Betwa River frozen in time with cenotaphs, Raja Mahal, and Jahangir Mahal.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Bhopal",
+    "country": "India",
+    "description": "City of Lakes blending historic mosques, Upper Lake boating, and proximity to Sanchi Buddhist stupas.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Indore",
+    "country": "India",
+    "description": "India's cleanest city celebrated for Rajwada Palace, Sarafa Night Food Market, and culinary culture.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Ujjain",
+    "country": "India",
+    "description": "Ancient holy city on the Shipra River hosting the Kumbh Mela and the revered Mahakaleshwar Jyotirlinga.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Kanha",
+    "country": "India",
+    "description": "Iconic national park that inspired Rudyard Kipling's Jungle Book, famed for royal Bengal tigers and barasingha.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Bandhavgarh",
+    "country": "India",
+    "description": "Famed tiger reserve boasting the highest density of Royal Bengal tigers and ancient hilltop fort ruins.",
+    "average_daily_cost": 6000.0,
+    "active": true
+  },
+  {
+    "city": "Pench",
+    "country": "India",
+    "description": "Teak forest wildlife sanctuary straddling MP and Maharashtra, celebrated for predator sightings and nature camps.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Lucknow",
+    "country": "India",
+    "description": "City of Nawabs celebrated for its refined Awadhi culinary culture, Chikankari embroidery, and Bara Imambara.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Mathura",
+    "country": "India",
+    "description": "Sacred birthplace of Lord Krishna along the Yamuna River bustling with ancient temples and Janmashtami gaiety.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Vrindavan",
+    "country": "India",
+    "description": "Sacred Vaishnavite pilgrimage town filled with hundreds of historic temples dedicated to Radha and Krishna.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Ayodhya",
+    "country": "India",
+    "description": "Ancient sacred city along the Sarayu River celebrated for the grand Ram Mandir and deep spiritual heritage.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Prayagraj",
+    "country": "India",
+    "description": "Holy city at the sacred confluence of Ganga, Yamuna, and Saraswati, world-famous for the Maha Kumbh Mela.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Nainital",
+    "country": "India",
+    "description": "Scenic lake district in Kumaon hills centered around emerald Naini Lake with Naina Peak viewpoints.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Mussoorie",
+    "country": "India",
+    "description": "The Queen of the Hills perched on the Garhwal range with Mall Road strolls, Kempty Falls, and Gun Hill.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Almora",
+    "country": "India",
+    "description": "Cultural heart of Kumaon boasting panoramic Himalayan views, Bright End Corner sunsets, and Kasar Devi temple.",
+    "average_daily_cost": 3300.0,
+    "active": true
+  },
+  {
+    "city": "Auli",
+    "country": "India",
+    "description": "Premier Himalayan skiing haven offering panoramic vistas of Nanda Devi peak and alpine meadows.",
+    "average_daily_cost": 5600.0,
+    "active": true
+  },
+  {
+    "city": "Jim Corbett",
+    "country": "India",
+    "description": "India's oldest national park nestled in the Himalayan foothills, famed for wild tigers and riverine forests.",
+    "average_daily_cost": 5500.0,
+    "active": true
+  },
+  {
+    "city": "Kausani",
+    "country": "India",
+    "description": "Tranquil hill village offering spectacular 300-km wide views of snow-clad Himalayan peaks.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Kedarnath",
+    "country": "India",
+    "description": "Revered high-altitude Jyotirlinga shrine set against snow-clad Himalayan peaks in the Mandakini valley.",
+    "average_daily_cost": 4500.0,
+    "active": true
+  },
+  {
+    "city": "Badrinath",
+    "country": "India",
+    "description": "Sacred Char Dham shrine dedicated to Lord Vishnu situated between Nar and Narayana mountain ranges.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Spiti Valley",
+    "country": "India",
+    "description": "High-altitude cold desert valley featuring ancient Ki Monastery, fossil villages, and lunar landscapes.",
+    "average_daily_cost": 4600.0,
+    "active": true
+  },
+  {
+    "city": "Kasol",
+    "country": "India",
+    "description": "Scenic Parvati Valley haven popular with backpackers for pine-shaded riverside trails and Israeli cafes.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Dalhousie",
+    "country": "India",
+    "description": "Colonial-era hill station built across five hills with pine forests, Victorian buildings, and Khajjiar meadows.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Chandigarh",
+    "country": "India",
+    "description": "India's first planned modernist city designed by Le Corbusier, famous for Rock Garden and Sukhna Lake.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Patna",
+    "country": "India",
+    "description": "Ancient historical city of Pataliputra along the Ganges with Golghar, Bihar Museum, and Sikh pilgrimage sites.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Bodh Gaya",
+    "country": "India",
+    "description": "Supreme Buddhist pilgrimage site where Lord Buddha attained enlightenment beneath the sacred Bodhi Tree.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Nalanda",
+    "country": "India",
+    "description": "UNESCO World Heritage ruins of the ancient 5th-century residential monastic university.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Ranchi",
+    "country": "India",
+    "description": "City of Waterfalls surrounded by lush forests, Hundru Falls, and tribal cultural museums.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Jamshedpur",
+    "country": "India",
+    "description": "Steel city renowned for urban planning, Jubilee Park, and Dalma Wildlife Sanctuary.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Hazaribagh",
+    "country": "India",
+    "description": "Scenic plateau town known for dense wildlife sanctuary, Canary Hill viewpoints, and indigenous Sohrai wall art.",
+    "average_daily_cost": 2700.0,
+    "active": true
+  },
+  {
+    "city": "Raipur",
+    "country": "India",
+    "description": "Gateway to Chhattisgarh with ancient temples, tribal art hubs, and proximity to Chitrakote Falls.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Lepakshi",
+    "country": "India",
+    "description": "Historic Vijayanagara heritage village famous for the hanging pillar of Veerabhadra Temple and monolithic Nandi.",
+    "average_daily_cost": 2800.0,
+    "active": true
+  },
+  {
+    "city": "Visakhapatnam",
+    "country": "India",
+    "description": "Scenic coastal port city surrounded by Eastern Ghats with RK Beach, submarine museum, and Araku Valley.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Araku Valley",
+    "country": "India",
+    "description": "Picturesque hill station in the Eastern Ghats known for coffee plantations, tribal culture, and Borra Caves.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Tirupati",
+    "country": "India",
+    "description": "World-renowned holy pilgrimage destination home to the sacred hilltop Venkateswara Temple on Tirumala.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Vijayawada",
+    "country": "India",
+    "description": "Vibrant city on the Krishna River famous for Kanaka Durga Temple and ancient Undavalli rock caves.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Warangal",
+    "country": "India",
+    "description": "Historic Kakatiya capital showcasing the Thousand Pillar Temple, Ramappa Temple, and massive stone gateways.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Port Blair",
+    "country": "India",
+    "description": "Tropical island capital of Andaman & Nicobar, home to historic Cellular Jail and coral marine life.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Havelock Island",
+    "country": "India",
+    "description": "Tropical island paradise famous for Radhanagar Beach sunsets, scuba diving, and elephant beach reefs.",
+    "average_daily_cost": 6800.0,
+    "active": true
+  },
+  {
+    "city": "Neil Island",
+    "country": "India",
+    "description": "Tranquil Andaman island known for natural rock bridges, organic fruit farming, and pristine coral reefs.",
+    "average_daily_cost": 5500.0,
+    "active": true
+  },
+  {
+    "city": "Kavaratti",
+    "country": "India",
+    "description": "Pristine capital island of Lakshadweep famous for turquoise lagoons, coral atolls, and water sports.",
+    "average_daily_cost": 7500.0,
+    "active": true
+  },
+  {
+    "city": "Diu",
+    "country": "India",
+    "description": "Charming coastal island enclave with Portuguese sea fortress, Nagoa Beach, and relaxed coastal atmosphere.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Daman",
+    "country": "India",
+    "description": "Twin coastal heritage town featuring Portuguese forts of Moti Daman and Nani Daman with seaside promenades.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Silvassa",
+    "country": "India",
+    "description": "Green capital of Dadra and Nagar Haveli known for Portuguese churches, tribal art, and lake gardens.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Tokyo",
+    "country": "Japan",
+    "description": "Ultra-modern metropolis blending futuristic skyscrapers, neon districts, ancient Shinto shrines, and world-class dining.",
+    "average_daily_cost": 15500.0,
+    "active": true
+  },
+  {
+    "city": "Kyoto",
+    "country": "Japan",
+    "description": "Cultural heart of Japan boasting classical wooden machiya, thousands of Zen temples, Shinto shrines, and geisha districts.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Osaka",
+    "country": "Japan",
+    "description": "Japan's street-food capital renowned for lively Dotonbori canal, Osaka Castle, takoyaki, and nightlife.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Sapporo",
+    "country": "Japan",
+    "description": "Capital of Hokkaido famous for winter snow festivals, fresh seafood markets, ramen alley, and beer culture.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Hiroshima",
+    "country": "Japan",
+    "description": "City of peace showcasing the Peace Memorial Park, Atomic Bomb Dome, and nearby scenic Miyajima shrine island.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Nara",
+    "country": "Japan",
+    "description": "Historic first capital of Japan renowned for free-roaming sacred deer, Todai-ji giant Buddha, and ancient temples.",
+    "average_daily_cost": 10500.0,
+    "active": true
+  },
+  {
+    "city": "Fukuoka",
+    "country": "Japan",
+    "description": "Vibrant southern gateway known for Hakata tonkotsu ramen yatai street food stalls and ancient coastal shrines.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Hakone",
+    "country": "Japan",
+    "description": "Scenic mountain retreat nestled near Mount Fuji featuring relaxing volcanic onsen hot springs and Lake Ashi.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Takayama",
+    "country": "Japan",
+    "description": "Charming Edo-period historic town nestled in the Japanese Alps famous for morning markets and timber architecture.",
+    "average_daily_cost": 12000.0,
+    "active": true
+  },
+  {
+    "city": "Kanazawa",
+    "country": "Japan",
+    "description": "Edo-period arts capital known for Kenroku-en garden, preserved geisha and samurai quarters, and gold leaf crafts.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Nagoya",
+    "country": "Japan",
+    "description": "Historic castle city and industrial hub renowned for Nagoya Castle, Atsuta Jingu shrine, and hitsumabushi eel cuisine.",
+    "average_daily_cost": 11800.0,
+    "active": true
+  },
+  {
+    "city": "Okinawa",
+    "country": "Japan",
+    "description": "Subtropical island paradise known for turquoise waters, coral diving, Ryukyu kingdom castles, and beach resorts.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Seoul",
+    "country": "South Korea",
+    "description": "Dynamic capital blending royal Joseon palaces, futuristic Dongdaemun design plaza, K-pop culture, and night markets.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Busan",
+    "country": "South Korea",
+    "description": "Coastal metropolis famous for Haeundae Beach, Jagalchi fish market, Gamcheon Culture Village, and seafood.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Jeju City",
+    "country": "South Korea",
+    "description": "Volcanic island haven featuring dramatic basalt lava tubes, Hallasan mountain hiking, and pristine beaches.",
+    "average_daily_cost": 12000.0,
+    "active": true
+  },
+  {
+    "city": "Gyeongju",
+    "country": "South Korea",
+    "description": "The museum without walls showcasing ancient Silla royal burial mounds, Bulguksa Temple, and Cheomseongdae.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Incheon",
+    "country": "South Korea",
+    "description": "Coastal gateway city featuring Chinatown, Songdo futuristic smart city district, and island promenades.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Jeonju",
+    "country": "South Korea",
+    "description": "UNESCO City of Gastronomy celebrated for its sprawling traditional Hanok Village and authentic Jeonju bibimbap.",
+    "average_daily_cost": 9000.0,
+    "active": true
+  },
+  {
+    "city": "Beijing",
+    "country": "China",
+    "description": "Historic imperial capital home to the Forbidden City, Temple of Heaven, Summer Palace, and nearby Great Wall.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Shanghai",
+    "country": "China",
+    "description": "Futuristic financial mega-city featuring the historic Bund waterfront, Pudong skyline, and French Concession tree-lined avenues.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Xi'an",
+    "country": "China",
+    "description": "Ancient Silk Road starting point famed for the world-renowned Terracotta Army, city wall cycling, and Muslim Quarter.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Guilin",
+    "country": "China",
+    "description": "World-famous karst landscape along the winding Li River featuring limestone peaks, Reed Flute Cave, and rice terraces.",
+    "average_daily_cost": 8000.0,
+    "active": true
+  },
+  {
+    "city": "Chengdu",
+    "country": "China",
+    "description": "Laid-back capital of Sichuan celebrated for giant panda breeding centers, spicy hotpot, and teahouse culture.",
+    "average_daily_cost": 7800.0,
+    "active": true
+  },
+  {
+    "city": "Hangzhou",
+    "country": "China",
+    "description": "Scenic paradise celebrated for the tranquil West Lake, traditional Longjing tea plantations, and Lingyin Temple.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Guangzhou",
+    "country": "China",
+    "description": "Southern trade hub and culinary birthplace of Cantonese dim sum featuring Canton Tower and Shamian Island.",
+    "average_daily_cost": 9000.0,
+    "active": true
+  },
+  {
+    "city": "Lijiang",
+    "country": "China",
+    "description": "Picturesque ancient Naxi heritage town with cobblestone alleys, traditional water canals, and Jade Dragon Snow Mountain.",
+    "average_daily_cost": 8200.0,
+    "active": true
+  },
+  {
+    "city": "Hong Kong",
+    "country": "Hong Kong",
+    "description": "High-octane world city blending Victoria Harbour skyline, dim sum heritage, Peak Tram, and lively night markets.",
+    "average_daily_cost": 17500.0,
+    "active": true
+  },
+  {
+    "city": "Macau",
+    "country": "Macau",
+    "description": "Vibrant fusion of Portuguese colonial architecture at Ruins of St. Paul's, opulent casino resorts, and Macanese cuisine.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "description": "Vibrant capital renowned for Taipei 101, bustling Shilin Night Market, National Palace Museum, and street food.",
+    "average_daily_cost": 10500.0,
+    "active": true
+  },
+  {
+    "city": "Kaohsiung",
+    "country": "Taiwan",
+    "description": "Southern maritime city known for Lotus Pond pagodas, Pier-2 Art Center, and Liuhe Night Market.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Taichung",
+    "country": "Taiwan",
+    "description": "Cultural hub in central Taiwan famous for Sun Moon Lake gateway, Rainbow Village, and Fengjia Night Market.",
+    "average_daily_cost": 8000.0,
+    "active": true
+  },
+  {
+    "city": "Tainan",
+    "country": "Taiwan",
+    "description": "Taiwan's oldest historic city celebrated for centuries-old Dutch forts, historic temples, and traditional street food.",
+    "average_daily_cost": 7500.0,
+    "active": true
+  },
+  {
+    "city": "Bangkok",
+    "country": "Thailand",
+    "description": "Vibrant capital known for ornate Grand Palace, Wat Arun, bustling street food stalls, and Chao Phraya river life.",
+    "average_daily_cost": 5500.0,
+    "active": true
+  },
+  {
+    "city": "Chiang Mai",
+    "country": "Thailand",
+    "description": "Cultural northern hub nestled in misty mountains featuring ancient Lanna temples, elephant sanctuaries, and night bazaars.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Phuket",
+    "country": "Thailand",
+    "description": "Thailand's largest island famous for Patong nightlife, Kata and Karon beaches, Big Buddha, and luxury resorts.",
+    "average_daily_cost": 7200.0,
+    "active": true
+  },
+  {
+    "city": "Krabi",
+    "country": "Thailand",
+    "description": "Coastal province renowned for towering limestone sea cliffs, Railay Beach rock climbing, and emerald lagoons.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Pattaya",
+    "country": "Thailand",
+    "description": "Lively seaside resort city known for Walking Street entertainment, Sanctuary of Truth temple, and water sports.",
+    "average_daily_cost": 5000.0,
+    "active": true
+  },
+  {
+    "city": "Koh Samui",
+    "country": "Thailand",
+    "description": "Tropical palm-fringed island paradise with luxury beachfront villas, Fisherman's Village, and coral diving.",
+    "average_daily_cost": 8000.0,
+    "active": true
+  },
+  {
+    "city": "Ayutthaya",
+    "country": "Thailand",
+    "description": "UNESCO-listed ancient Siamese capital featuring evocative red-brick temple ruins and Buddha head in tree roots.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Hua Hin",
+    "country": "Thailand",
+    "description": "Royal coastal resort town featuring peaceful sandy beaches, night food markets, and heritage railway station.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Hanoi",
+    "country": "Vietnam",
+    "description": "Historic capital known for French-colonial Old Quarter, tranquil Hoan Kiem Lake, and fragrant street phở.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Ho Chi Minh City",
+    "country": "Vietnam",
+    "description": "Bustling southern metropolis featuring War Remnants Museum, Ben Thanh Market, and vibrant rooftop cafe culture.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Da Nang",
+    "country": "Vietnam",
+    "description": "Modern coastal hub known for My Khe Beach, illuminated Dragon Bridge, and the Golden Bridge at Ba Na Hills.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Hoi An",
+    "country": "Vietnam",
+    "description": "UNESCO-listed lantern-lit ancient port town famous for bespoke tailoring, wooden shophouses, and riverside dining.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Ha Long",
+    "country": "Vietnam",
+    "description": "Gateway city to world-famous Ha Long Bay emerald waters dotted with thousands of towering karst limestone islands.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Nha Trang",
+    "country": "Vietnam",
+    "description": "High-energy coastal resort city known for sweeping sandy beaches, island hopping cruises, and scuba diving.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Sapa",
+    "country": "Vietnam",
+    "description": "Misty northern mountain sanctuary surrounded by sculpted rice terraces, Fansipan peak, and ethnic hill tribes.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Hue",
+    "country": "Vietnam",
+    "description": "Imperial capital of the Nguyen Dynasty boasting the sprawling Citadel, royal mausoleums along the Perfume River.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Bali",
+    "country": "Indonesia",
+    "description": "Island of the Gods famous for lush rice terraces, sacred sea temples, surf breaks, and vibrant beach clubs.",
+    "average_daily_cost": 6200.0,
+    "active": true
+  },
+  {
+    "city": "Ubud",
+    "country": "Indonesia",
+    "description": "Cultural heart of Bali known for sacred Monkey Forest, traditional dance performances, yoga retreats, and art galleries.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "description": "Sprawling Indonesian mega-capital featuring Monas monument, Old Batavia colonial square, and modern shopping malls.",
+    "average_daily_cost": 4500.0,
+    "active": true
+  },
+  {
+    "city": "Yogyakarta",
+    "country": "Indonesia",
+    "description": "Javanese cultural capital gateway to the majestic UNESCO temples of Borobudur and Prambanan and batik arts.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Lombok",
+    "country": "Indonesia",
+    "description": "Pristine island retreat featuring Mount Rinjani volcano trekking, deserted white beaches, and Gili island ferries.",
+    "average_daily_cost": 4400.0,
+    "active": true
+  },
+  {
+    "city": "Labuan Bajo",
+    "country": "Indonesia",
+    "description": "Harbor town gateway to Komodo National Park, famous for giant Komodo dragons and pink sand beaches.",
+    "average_daily_cost": 7500.0,
+    "active": true
+  },
+  {
+    "city": "Bandung",
+    "country": "Indonesia",
+    "description": "Lush highland city in West Java known for Art Deco architecture, volcano crater tea estates, and factory outlets.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Kuala Lumpur",
+    "country": "Malaysia",
+    "description": "Dynamic metropolis crowned by the glittering Petronas Twin Towers, Batu Caves, and multicultural food havens.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "George Town",
+    "country": "Malaysia",
+    "description": "UNESCO-listed cultural gem in Penang famed for world-class street food, street murals, and heritage clan houses.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Langkawi",
+    "country": "Malaysia",
+    "description": "Duty-free tropical archipelago featuring the Langkawi Sky Bridge, mangrove boat safaris, and luxury beach resorts.",
+    "average_daily_cost": 6500.0,
+    "active": true
+  },
+  {
+    "city": "Melaka",
+    "country": "Malaysia",
+    "description": "Historic trading port showcasing Dutch red square architecture, Jonker Street night market, and Baba-Nyonya culture.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Kota Kinabalu",
+    "country": "Malaysia",
+    "description": "Coastal capital of Sabah in Malaysian Borneo, gateway to Mount Kinabalu climbing and rainforest wildlife.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Kuching",
+    "country": "Malaysia",
+    "description": "Charming riverside capital of Sarawak in Borneo known for historic waterfront, orangutan sanctuaries, and caves.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Singapore",
+    "country": "Singapore",
+    "description": "Futuristic garden city-state featuring Marina Bay Sands, Gardens by the Bay supertrees, and UNESCO hawker centres.",
+    "average_daily_cost": 18500.0,
+    "active": true
+  },
+  {
+    "city": "Manila",
+    "country": "Philippines",
+    "description": "High-energy historic capital featuring walled Intramuros fortress, Rizal Park, and vibrant modern BGC dining.",
+    "average_daily_cost": 4500.0,
+    "active": true
+  },
+  {
+    "city": "Cebu City",
+    "country": "Philippines",
+    "description": "Queen City of the South known for Magellan's Cross, Kawasan Falls canyoneering, and whale shark swimming in Oslob.",
+    "average_daily_cost": 4400.0,
+    "active": true
+  },
+  {
+    "city": "Boracay",
+    "country": "Philippines",
+    "description": "World-renowned island paradise famous for powder-soft White Beach, vibrant nightlife, and water sports.",
+    "average_daily_cost": 6800.0,
+    "active": true
+  },
+  {
+    "city": "El Nido",
+    "country": "Philippines",
+    "description": "Stunning paradise in Palawan famous for dramatic limestone cliffs, secret lagoons, and Bacuit Bay island hopping.",
+    "average_daily_cost": 6200.0,
+    "active": true
+  },
+  {
+    "city": "Coron",
+    "country": "Philippines",
+    "description": "Pristine diving haven in Palawan famous for crystal Kayangan Lake, WWII shipwrecks, and coral gardens.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Siargao",
+    "country": "Philippines",
+    "description": "Surfing capital of the Philippines known for Cloud 9 wave break, palm tree roads, and Magpupungko rock pools.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Siem Reap",
+    "country": "Cambodia",
+    "description": "Gateway to the magnificent 12th-century Angkor Wat temple complex, ancient jungle ruins, and Pub Street.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Phnom Penh",
+    "country": "Cambodia",
+    "description": "Riverside capital city featuring the Royal Palace, Silver Pagoda, and bustling Tonle Sap promenade.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Luang Prabang",
+    "country": "Laos",
+    "description": "UNESCO-listed serene town at the confluence of Mekong and Nam Khan rivers with morning almsgiving and Kuang Si Falls.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Vang Vieng",
+    "country": "Laos",
+    "description": "Riverside adventure town framed by dramatic karst peaks, famous for blue lagoons, cave tubing, and hot air balloons.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Yangon",
+    "country": "Myanmar",
+    "description": "Former capital dominated by the glittering 325-foot Shwedagon Pagoda, colonial architecture, and street markets.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Bagan",
+    "country": "Myanmar",
+    "description": "Ancient archaeological wonderland with thousands of historic Buddhist temples rising across the plains at sunrise.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Colombo",
+    "country": "Sri Lanka",
+    "description": "Commercial capital blending colonial architecture, Galle Face Green sunset promenade, and Pettah bazaars.",
+    "average_daily_cost": 4000.0,
+    "active": true
+  },
+  {
+    "city": "Kandy",
+    "country": "Sri Lanka",
+    "description": "Sacred mountain city home to the Temple of the Sacred Tooth Relic, scenic lake, and royal botanical gardens.",
+    "average_daily_cost": 3600.0,
+    "active": true
+  },
+  {
+    "city": "Galle",
+    "country": "Sri Lanka",
+    "description": "Historic southern coastal city enclosed by the 17th-century UNESCO-listed Dutch Galle Fort and ocean ramparts.",
+    "average_daily_cost": 4500.0,
+    "active": true
+  },
+  {
+    "city": "Ella",
+    "country": "Sri Lanka",
+    "description": "Picturesque hill country haven famous for Demodara Nine Arches Bridge, tea plantations, and Ella Rock hike.",
+    "average_daily_cost": 3200.0,
+    "active": true
+  },
+  {
+    "city": "Sigiriya",
+    "country": "Sri Lanka",
+    "description": "Home to the monumental 5th-century Lion Rock fortress with ancient frescoes, water gardens, and viewpoints.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Nuwara Eliya",
+    "country": "Sri Lanka",
+    "description": "Little England hill station perched among rolling tea estates with cool climate, colonial bungalows, and Gregory Lake.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Male",
+    "country": "Maldives",
+    "description": "Dense island capital featuring colorful buildings, Islamic Centre, fish market, and speedboats to resort atolls.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Maafushi",
+    "country": "Maldives",
+    "description": "Popular local island in South Male Atoll famous for bikini beaches, manta ray excursions, and budget water stays.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Kathmandu",
+    "country": "Nepal",
+    "description": "Historic Himalayan capital filled with UNESCO heritage squares, Swayambhunath monkey temple, and Pashupatinath.",
+    "average_daily_cost": 3000.0,
+    "active": true
+  },
+  {
+    "city": "Pokhara",
+    "country": "Nepal",
+    "description": "Tranquil lakeside adventure capital with Phewa Lake boating, Annapurna mountain views, and paragliding.",
+    "average_daily_cost": 3400.0,
+    "active": true
+  },
+  {
+    "city": "Paro",
+    "country": "Bhutan",
+    "description": "Scenic valley home to Bhutan's international airport and the legendary cliffside Tiger's Nest Monastery (Paro Taktsang).",
+    "average_daily_cost": 19500.0,
+    "active": true
+  },
+  {
+    "city": "London",
+    "country": "United Kingdom",
+    "description": "World capital brimming with iconic landmarks like Big Ben, Tower Bridge, West End theatre, and British Museum.",
+    "average_daily_cost": 19500.0,
+    "active": true
+  },
+  {
+    "city": "Edinburgh",
+    "country": "United Kingdom",
+    "description": "Scotland's majestic historic capital crowned by Edinburgh Castle, the Royal Mile, and Arthur's Seat hike.",
+    "average_daily_cost": 15500.0,
+    "active": true
+  },
+  {
+    "city": "Oxford",
+    "country": "United Kingdom",
+    "description": "Historic university city known as the City of Dreaming Spires with historic colleges and Bodleian Library.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Cambridge",
+    "country": "United Kingdom",
+    "description": "Prestigious university town famous for punting along the River Cam, King's College Chapel, and gothic courts.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Manchester",
+    "country": "United Kingdom",
+    "description": "Vibrant northern powerhouse celebrated for industrial heritage, world-famous football clubs, and music scene.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Belfast",
+    "country": "United Kingdom",
+    "description": "Northern Irish capital known for Titanic Belfast shipyard museum, vibrant murals, and culinary pubs.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Bath",
+    "country": "United Kingdom",
+    "description": "UNESCO-listed Georgian city renowned for ancient Roman Baths, honey-colored Royal Crescent, and thermal spas.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Dublin",
+    "country": "Ireland",
+    "description": "Friendly literary capital famous for Trinity College, the Book of Kells, lively Temple Bar pubs, and Guinness Storehouse.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Galway",
+    "country": "Ireland",
+    "description": "Bohemian harbor city on the Wild Atlantic Way renowned for traditional Irish folk music, buskers, and seafood.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Paris",
+    "country": "France",
+    "description": "The City of Light famed for the Eiffel Tower, Louvre Museum, Notre-Dame, haute cuisine, and romantic Seine river cruises.",
+    "average_daily_cost": 21000.0,
+    "active": true
+  },
+  {
+    "city": "Nice",
+    "country": "France",
+    "description": "Glamorous French Riviera coastal resort city boasting the palm-lined Promenade des Anglais and Mediterranean beaches.",
+    "average_daily_cost": 17500.0,
+    "active": true
+  },
+  {
+    "city": "Lyon",
+    "country": "France",
+    "description": "Gastronomic capital of France featuring UNESCO Renaissance Old Lyon, hidden traboules passageways, and bouchon bistros.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Marseille",
+    "country": "France",
+    "description": "Vibrant Mediterranean port city known for historic Old Port, Basilique Notre-Dame de la Garde, and Calanques.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Bordeaux",
+    "country": "France",
+    "description": "World-renowned wine capital with elegant 18th-century architecture, Place de la Bourse water mirror, and vineyards.",
+    "average_daily_cost": 15000.0,
+    "active": true
+  },
+  {
+    "city": "Strasbourg",
+    "country": "France",
+    "description": "Alsatian cultural bridge city featuring a stunning Gothic cathedral, timbered Petite France canal district, and European Parliament.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Annecy",
+    "country": "France",
+    "description": "Venice of the Alps featuring crystal-clear Lake Annecy, pastel canals, and panoramic mountain backdrop.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Avignon",
+    "country": "France",
+    "description": "Historic Provencal city enclosed by medieval ramparts, celebrated for the Gothic Palais des Papes and historic bridge.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Colmar",
+    "country": "France",
+    "description": "Fairytale Alsatian town with vibrant half-timbered houses, flower-lined Little Venice canals, and wine route.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Cannes",
+    "country": "France",
+    "description": "Glamorous French Riviera film festival resort known for luxury yacht marinas, Boulevard de la Croisette, and sandy private beaches.",
+    "average_daily_cost": 19500.0,
+    "active": true
+  },
+  {
+    "city": "Rome",
+    "country": "Italy",
+    "description": "The Eternal City filled with ancient monuments including the Colosseum, Roman Forum, Vatican City, and Trevi Fountain.",
+    "average_daily_cost": 17500.0,
+    "active": true
+  },
+  {
+    "city": "Florence",
+    "country": "Italy",
+    "description": "Cradle of the Renaissance boasting the iconic Duomo, Uffizi Gallery masterworks, Ponte Vecchio, and Tuscan cuisine.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Venice",
+    "country": "Italy",
+    "description": "Floating city of romantic canals, gondolas, Saint Mark's Basilica, Doge's Palace, and marble palazzos.",
+    "average_daily_cost": 19000.0,
+    "active": true
+  },
+  {
+    "city": "Milan",
+    "country": "Italy",
+    "description": "Global fashion and design capital featuring the magnificent Duomo di Milano, Galleria Vittorio Emanuele II, and Da Vinci art.",
+    "average_daily_cost": 18000.0,
+    "active": true
+  },
+  {
+    "city": "Naples",
+    "country": "Italy",
+    "description": "Birthplace of wood-fired pizza with vibrant historic center, Royal Palace, and gateway to Pompeii and Mount Vesuvius.",
+    "average_daily_cost": 12000.0,
+    "active": true
+  },
+  {
+    "city": "Bologna",
+    "country": "Italy",
+    "description": "Italy's culinary powerhouse known as La Grassa, featuring medieval two towers, endless porticoes, and handmade pasta.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Amalfi",
+    "country": "Italy",
+    "description": "Dramatic cliffside coastal gem along the Amalfi Coast with pastel villas, lemon groves, and azure Mediterranean vistas.",
+    "average_daily_cost": 22000.0,
+    "active": true
+  },
+  {
+    "city": "Verona",
+    "country": "Italy",
+    "description": "Romantic setting of Shakespeare's Romeo and Juliet featuring the ancient Roman Arena amphitheater and Piazza delle Erbe.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Palermo",
+    "country": "Italy",
+    "description": "Capital of Sicily known for Arab-Norman architecture, bustling street markets like Ballaro, and Sicilian cannoli.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Siena",
+    "country": "Italy",
+    "description": "Tuscan medieval hill town famous for the fan-shaped Piazza del Campo, Gothic cathedral, and Palio horse race.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Lucca",
+    "country": "Italy",
+    "description": "Charming Tuscan gem enclosed by intact Renaissance tree-lined defensive walls, Roman amphitheater plaza, and cobblestone alleys.",
+    "average_daily_cost": 12800.0,
+    "active": true
+  },
+  {
+    "city": "Madrid",
+    "country": "Spain",
+    "description": "Vibrant capital renowned for the Prado Museum, grand Royal Palace, lively tapas bars, and Retiro Park.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Barcelona",
+    "country": "Spain",
+    "description": "Catalan coastal capital celebrated for Antoni Gaudi's Sagrada Familia, Park Guell, Gothic Quarter, and beaches.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Seville",
+    "country": "Spain",
+    "description": "Sun-drenched Andalusian capital famous for the grand Alcazar palace, Plaza de Espana, and passionate Flamenco dance.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Valencia",
+    "country": "Spain",
+    "description": "Coastal birthplace of authentic paella featuring the futuristic City of Arts and Sciences and Mediterranean beaches.",
+    "average_daily_cost": 12000.0,
+    "active": true
+  },
+  {
+    "city": "Granada",
+    "country": "Spain",
+    "description": "Moorish jewel nestled beneath the Sierra Nevada mountains boasting the breathtaking UNESCO Alhambra palace complex.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Malaga",
+    "country": "Spain",
+    "description": "Costa del Sol coastal city featuring Picasso's birthplace museum, Moorish Alcazaba fortress, and sandy beaches.",
+    "average_daily_cost": 12000.0,
+    "active": true
+  },
+  {
+    "city": "San Sebastian",
+    "country": "Spain",
+    "description": "Basque culinary capital famous for La Concha crescent beach and world-renowned pintxos bars.",
+    "average_daily_cost": 17000.0,
+    "active": true
+  },
+  {
+    "city": "Bilbao",
+    "country": "Spain",
+    "description": "Basque industrial hub transformed into an arts metropolis by Frank Gehry's titanium Guggenheim Museum.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Cordoba",
+    "country": "Spain",
+    "description": "Historic Andalusian city famed for the stunning Mezquita-Cathedral with hundreds of red-and-white Moorish arches.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Toledo",
+    "country": "Spain",
+    "description": "Imperial City of Three Cultures perched on a gorge above the Tagus River with medieval Alcazar and El Greco art.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Palma de Mallorca",
+    "country": "Spain",
+    "description": "Mediterranean island capital boasting a grand Gothic seaside cathedral, historic Arab baths, and yacht marinas.",
+    "average_daily_cost": 15000.0,
+    "active": true
+  },
+  {
+    "city": "Lisbon",
+    "country": "Portugal",
+    "description": "Sun-kissed coastal capital famous for yellow Tram 28, Belem Tower, pastel de nata pastries, and Fado music.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Porto",
+    "country": "Portugal",
+    "description": "Historic northern riverside city famous for Douro River bridges, colorful Ribeira district, and Port wine cellars.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Sintra",
+    "country": "Portugal",
+    "description": "Romantic fairytale mountain town filled with colorful Pena Palace, Quinta da Regaleira estate, and misty forests.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Faro",
+    "country": "Portugal",
+    "description": "Charming gateway to the Algarve region featuring a walled old town and access to pristine golden barrier islands.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Funchal",
+    "country": "Portugal",
+    "description": "Subtropical capital of Madeira island known for lush botanical gardens, dramatic ocean cliffs, and cable car rides.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Berlin",
+    "country": "Germany",
+    "description": "Dynamic capital celebrated for the Brandenburg Gate, Berlin Wall art, Museum Island, and avant-garde culture.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Munich",
+    "country": "Germany",
+    "description": "Bavarian capital famous for Marienplatz, historic beer halls, Oktoberfest grounds, and gateway to Neuschwanstein Castle.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Hamburg",
+    "country": "Germany",
+    "description": "Maritime port metropolis known for the UNESCO Speicherstadt warehouse district, Elbphilharmonie, and harbor cruises.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Frankfurt",
+    "country": "Germany",
+    "description": "Financial center blending modern banking skyscrapers with rebuilt medieval Romerberg historic square.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Cologne",
+    "country": "Germany",
+    "description": "Rhine river cultural hub dominated by the awe-inspiring Gothic twin-spired Cologne Cathedral.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Dresden",
+    "country": "Germany",
+    "description": "Baroque jewel on the Elbe River known as Florence on the Elbe, featuring the reconstructed Frauenkirche and Zwinger palace.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Heidelberg",
+    "country": "Germany",
+    "description": "Romantic university town on the Neckar River featuring ruined sandstone castle and Philosopher's Walk.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Nuremberg",
+    "country": "Germany",
+    "description": "Historic Bavarian city famous for Imperial Castle, medieval city walls, and famous gingerbread Christmas markets.",
+    "average_daily_cost": 12000.0,
+    "active": true
+  },
+  {
+    "city": "Zurich",
+    "country": "Switzerland",
+    "description": "Lakeside banking metropolis known for luxury shopping on Bahnhofstrasse, historic Altstadt, and alpine views.",
+    "average_daily_cost": 24000.0,
+    "active": true
+  },
+  {
+    "city": "Geneva",
+    "country": "Switzerland",
+    "description": "International diplomatic hub on Lake Geneva featuring the iconic Jet d'Eau water fountain and UN headquarters.",
+    "average_daily_cost": 23000.0,
+    "active": true
+  },
+  {
+    "city": "Lucerne",
+    "country": "Switzerland",
+    "description": "Picturesque lakeside town known for the 14th-century wooden Chapel Bridge, Lion Monument, and Mount Pilatus.",
+    "average_daily_cost": 21000.0,
+    "active": true
+  },
+  {
+    "city": "Interlaken",
+    "country": "Switzerland",
+    "description": "Alpine adventure capital nestled between Lake Thun and Lake Brienz, gateway to Jungfraujoch and Eiger peak.",
+    "average_daily_cost": 22000.0,
+    "active": true
+  },
+  {
+    "city": "Zermatt",
+    "country": "Switzerland",
+    "description": "Car-free mountain resort town at the foot of the iconic pyramid-shaped Matterhorn peak, famous for skiing.",
+    "average_daily_cost": 26000.0,
+    "active": true
+  },
+  {
+    "city": "St. Moritz",
+    "country": "Switzerland",
+    "description": "Glamorous alpine resort town world-famous for champagne climate, frozen lake polo, and world-class ski slopes.",
+    "average_daily_cost": 28000.0,
+    "active": true
+  },
+  {
+    "city": "Basel",
+    "country": "Switzerland",
+    "description": "Cultural city on the Rhine River bordering France and Germany, celebrated for Art Basel and world-class museums.",
+    "average_daily_cost": 21000.0,
+    "active": true
+  },
+  {
+    "city": "Vienna",
+    "country": "Austria",
+    "description": "Imperial capital of classical music featuring Schonbrunn Palace, St. Stephen's Cathedral, and historic coffeehouses.",
+    "average_daily_cost": 15500.0,
+    "active": true
+  },
+  {
+    "city": "Salzburg",
+    "country": "Austria",
+    "description": "Mozart's birthplace and Sound of Music setting featuring Hohensalzburg Fortress and baroque Mirabell Gardens.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Innsbruck",
+    "country": "Austria",
+    "description": "Capital of the Alps featuring the Golden Roof (Goldenes Dachl), Nordkette cable cars, and alpine winter sports.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Hallstatt",
+    "country": "Austria",
+    "description": "Breathtaking UNESCO alpine lake village surrounded by sheer mountains, 7000-year-old salt mines, and wooden chalets.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Graz",
+    "country": "Austria",
+    "description": "Styrian capital known for the hilltop Schlossberg clock tower, futuristic Kunsthaus Graz, and culinary heritage.",
+    "average_daily_cost": 12000.0,
+    "active": true
+  },
+  {
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "description": "Canal-ringed capital famous for Rijksmuseum, Van Gogh masterpieces, Anne Frank House, and cycling culture.",
+    "average_daily_cost": 18000.0,
+    "active": true
+  },
+  {
+    "city": "Rotterdam",
+    "country": "Netherlands",
+    "description": "Architectural innovation hub known for futuristic Cube Houses, Erasmus Bridge, and bustling modern port.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Utrecht",
+    "country": "Netherlands",
+    "description": "Charming student city featuring split-level canals, centuries-old Dom Tower, and vibrant waterside cafes.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Brussels",
+    "country": "Belgium",
+    "description": "Belgian capital and EU seat known for the ornate Grand Place, Atomium, chocolate boutiques, and waffle shops.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Bruges",
+    "country": "Belgium",
+    "description": "Fairytale medieval town crisscrossed by picturesque canals, cobblestone squares, and towering Belfry.",
+    "average_daily_cost": 15000.0,
+    "active": true
+  },
+  {
+    "city": "Ghent",
+    "country": "Belgium",
+    "description": "Vibrant medieval university city boasting Gravensteen castle, Saint Bavo's Cathedral, and canal walkways.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Antwerp",
+    "country": "Belgium",
+    "description": "Global diamond trading capital and fashion hub featuring Rubens' home and magnificent Central Station.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "description": "Danish design capital known for colorful Nyhavn waterfront, Tivoli Gardens, Little Mermaid, and New Nordic cuisine.",
+    "average_daily_cost": 19000.0,
+    "active": true
+  },
+  {
+    "city": "Stockholm",
+    "country": "Sweden",
+    "description": "Capital built across 14 islands featuring historic Gamla Stan, Vasa maritime museum, and Royal Palace.",
+    "average_daily_cost": 18000.0,
+    "active": true
+  },
+  {
+    "city": "Oslo",
+    "country": "Norway",
+    "description": "Fjord-side capital famous for the futuristic Oslo Opera House, Munch Museum, Vigeland sculpture park, and fjord cruises.",
+    "average_daily_cost": 20500.0,
+    "active": true
+  },
+  {
+    "city": "Bergen",
+    "country": "Norway",
+    "description": "Gateway to the dramatic Norwegian fjords featuring the UNESCO-listed Bryggen colorful wooden wharf.",
+    "average_daily_cost": 19500.0,
+    "active": true
+  },
+  {
+    "city": "Stavanger",
+    "country": "Norway",
+    "description": "Coastal city famous for historic wooden old town and launching point for hiking to Preikestolen Pulpit Rock.",
+    "average_daily_cost": 18500.0,
+    "active": true
+  },
+  {
+    "city": "Helsinki",
+    "country": "Finland",
+    "description": "Design-centric Nordic seaside capital known for neoclassical Senate Square, Suomenlinna sea fortress, and saunas.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Reykjavik",
+    "country": "Iceland",
+    "description": "World's northernmost capital, gateway to the Golden Circle, geothermal Blue Lagoon, and Northern Lights.",
+    "average_daily_cost": 22000.0,
+    "active": true
+  },
+  {
+    "city": "Tromso",
+    "country": "Norway",
+    "description": "Arctic adventure hub in northern Norway famous for Northern Lights viewing, dog sledding, and Arctic Cathedral.",
+    "average_daily_cost": 21000.0,
+    "active": true
+  },
+  {
+    "city": "Rovaniemi",
+    "country": "Finland",
+    "description": "Official hometown of Santa Claus on the Arctic Circle with reindeer sleigh rides and snow hotels.",
+    "average_daily_cost": 20000.0,
+    "active": true
+  },
+  {
+    "city": "Prague",
+    "country": "Czech Republic",
+    "description": "City of a Hundred Spires famous for Charles Bridge, Prague Castle, Old Town Astronomical Clock, and Bohemian beer.",
+    "average_daily_cost": 9800.0,
+    "active": true
+  },
+  {
+    "city": "Budapest",
+    "country": "Hungary",
+    "description": "Pearl of the Danube boasting Hungarian Parliament, historic Szechenyi thermal baths, and Buda Castle hill.",
+    "average_daily_cost": 9200.0,
+    "active": true
+  },
+  {
+    "city": "Krakow",
+    "country": "Poland",
+    "description": "Historic royal capital with Europe's largest medieval market square, Wawel Royal Castle, and Kazimierz Jewish quarter.",
+    "average_daily_cost": 8000.0,
+    "active": true
+  },
+  {
+    "city": "Gdansk",
+    "country": "Poland",
+    "description": "Baltic amber port city boasting magnificent Flemish-style Long Market, historic shipyard, and seaside pier.",
+    "average_daily_cost": 7800.0,
+    "active": true
+  },
+  {
+    "city": "Warsaw",
+    "country": "Poland",
+    "description": "Resilient Polish capital featuring the faithfully reconstructed Old Town, Royal Castle, and bustling modern center.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Bratislava",
+    "country": "Slovakia",
+    "description": "Danube riverside capital crowned by Bratislava Castle, charming pedestrian old town, and quirky street statues.",
+    "average_daily_cost": 8800.0,
+    "active": true
+  },
+  {
+    "city": "Bucharest",
+    "country": "Romania",
+    "description": "Romania's vibrant Little Paris featuring the colossal Palace of the Parliament and lively Lipscani nightlife.",
+    "average_daily_cost": 7500.0,
+    "active": true
+  },
+  {
+    "city": "Dubrovnik",
+    "country": "Croatia",
+    "description": "Pearl of the Adriatic renowned for intact medieval stone walls, limestone Stradun street, and ocean panoramas.",
+    "average_daily_cost": 15500.0,
+    "active": true
+  },
+  {
+    "city": "Split",
+    "country": "Croatia",
+    "description": "Coastal Dalmatian city built inside the colossal 4th-century Roman ruins of Diocletian's Palace.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Zagreb",
+    "country": "Croatia",
+    "description": "Charming Austro-Hungarian capital featuring historic Upper Town, St. Mark's tiled roof church, and museum cafes.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Ljubljana",
+    "country": "Slovenia",
+    "description": "Green dragon capital featuring picturesque Triple Bridge, hilltop castle, and riverside outdoor cafes.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Bled",
+    "country": "Slovenia",
+    "description": "Enchanting emerald alpine lake with a tiny church island reached by wooden pletna boats and cliffside castle.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Tallinn",
+    "country": "Estonia",
+    "description": "Intact medieval fairytale walled town in the Baltics with cobblestone alleys and modern digital tech culture.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Riga",
+    "country": "Latvia",
+    "description": "Baltic capital celebrated for Europe's finest collection of Art Nouveau architecture and historic Old Town.",
+    "average_daily_cost": 8800.0,
+    "active": true
+  },
+  {
+    "city": "Vilnius",
+    "country": "Lithuania",
+    "description": "Baroque jewel of the Baltics featuring Gediminas Tower, bohemian Uzupis artistic republic, and church spires.",
+    "average_daily_cost": 8200.0,
+    "active": true
+  },
+  {
+    "city": "Sofia",
+    "country": "Bulgaria",
+    "description": "Ancient Balkan capital nestled under Vitosha mountain featuring the golden-domed Alexander Nevsky Cathedral.",
+    "average_daily_cost": 7000.0,
+    "active": true
+  },
+  {
+    "city": "Belgrade",
+    "country": "Serbia",
+    "description": "High-energy Balkan crossroads city at the confluence of Sava and Danube rivers with Kalemegdan fortress.",
+    "average_daily_cost": 7200.0,
+    "active": true
+  },
+  {
+    "city": "Athens",
+    "country": "Greece",
+    "description": "Cradle of Western civilization crowned by the ancient Acropolis, Parthenon temple, and vibrant Plaka district.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Santorini",
+    "country": "Greece",
+    "description": "Iconic Aegean volcanic island renowned for whitewashed cliffside villages of Oia, blue-domed churches, and caldera sunsets.",
+    "average_daily_cost": 21000.0,
+    "active": true
+  },
+  {
+    "city": "Mykonos",
+    "country": "Greece",
+    "description": "Glamorous Cycladic island famous for vibrant beach clubs, historic 16th-century windmills, and Little Venice.",
+    "average_daily_cost": 22000.0,
+    "active": true
+  },
+  {
+    "city": "Crete",
+    "country": "Greece",
+    "description": "Largest Greek island boasting Minoan palace ruins of Knossos, dramatic Samaria Gorge, and pink sand beaches.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Rhodes",
+    "country": "Greece",
+    "description": "Sun-drenched Aegean island featuring the massive walled medieval Old Town of the Knights of Saint John.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Thessaloniki",
+    "country": "Greece",
+    "description": "Greece's cultural co-capital renowned for Byzantine UNESCO monuments, waterfront White Tower, and vibrant culinary scene.",
+    "average_daily_cost": 10500.0,
+    "active": true
+  },
+  {
+    "city": "New York City",
+    "country": "United States",
+    "description": "Global metropolis featuring Times Square, Central Park, Broadway theatres, Statue of Liberty, and diverse food.",
+    "average_daily_cost": 24000.0,
+    "active": true
+  },
+  {
+    "city": "San Francisco",
+    "country": "United States",
+    "description": "Iconic hilly city by the bay famous for Golden Gate Bridge, historic cable cars, Alcatraz, and tech culture.",
+    "average_daily_cost": 22500.0,
+    "active": true
+  },
+  {
+    "city": "Los Angeles",
+    "country": "United States",
+    "description": "Entertainment capital home to Hollywood Walk of Fame, Beverly Hills glamour, Santa Monica Pier, and Pacific beaches.",
+    "average_daily_cost": 21000.0,
+    "active": true
+  },
+  {
+    "city": "Chicago",
+    "country": "United States",
+    "description": "Architectural showcase city on Lake Michigan famous for Millennium Park Bean, deep-dish pizza, and blues music.",
+    "average_daily_cost": 17500.0,
+    "active": true
+  },
+  {
+    "city": "Las Vegas",
+    "country": "United States",
+    "description": "World-famous desert entertainment capital known for dazzling Strip casino resorts, world-class dining, and shows.",
+    "average_daily_cost": 18500.0,
+    "active": true
+  },
+  {
+    "city": "Miami",
+    "country": "United States",
+    "description": "Sun-soaked coastal metropolis celebrated for South Beach Art Deco architecture, Latin dining, and nightlife.",
+    "average_daily_cost": 19500.0,
+    "active": true
+  },
+  {
+    "city": "Seattle",
+    "country": "United States",
+    "description": "Pacific Northwest tech and coffee hub featuring the Space Needle, Pike Place Market, and Puget Sound waters.",
+    "average_daily_cost": 18000.0,
+    "active": true
+  },
+  {
+    "city": "Boston",
+    "country": "United States",
+    "description": "Historic birthplace of American revolution featuring the Freedom Trail, Harvard University, and seafood.",
+    "average_daily_cost": 19000.0,
+    "active": true
+  },
+  {
+    "city": "Washington D.C.",
+    "country": "United States",
+    "description": "National capital featuring free Smithsonian museums, Lincoln Memorial, Capitol Hill, and cherry blossoms.",
+    "average_daily_cost": 18500.0,
+    "active": true
+  },
+  {
+    "city": "New Orleans",
+    "country": "United States",
+    "description": "Cultural gem on the Mississippi River famous for French Quarter jazz, Mardi Gras celebrations, and Creole cuisine.",
+    "average_daily_cost": 15500.0,
+    "active": true
+  },
+  {
+    "city": "Austin",
+    "country": "United States",
+    "description": "Live music capital of the world known for South Congress food trucks, Zilker Park, and barbecue.",
+    "average_daily_cost": 15000.0,
+    "active": true
+  },
+  {
+    "city": "Honolulu",
+    "country": "United States",
+    "description": "Hawaiian island capital boasting Waikiki Beach, Diamond Head volcanic crater, and Polynesian culture.",
+    "average_daily_cost": 23000.0,
+    "active": true
+  },
+  {
+    "city": "Orlando",
+    "country": "United States",
+    "description": "Global theme park capital home to Walt Disney World, Universal Studios, and family entertainment resorts.",
+    "average_daily_cost": 17000.0,
+    "active": true
+  },
+  {
+    "city": "San Diego",
+    "country": "United States",
+    "description": "SoCal coastal haven known for idyllic year-round climate, Balboa Park, world-famous zoo, and Pacific beaches.",
+    "average_daily_cost": 17500.0,
+    "active": true
+  },
+  {
+    "city": "Denver",
+    "country": "United States",
+    "description": "The Mile High City gateway to the Rocky Mountains, celebrated for craft breweries and Red Rocks Amphitheatre.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Nashville",
+    "country": "United States",
+    "description": "Music City USA celebrated for the Grand Ole Opry, Ryman Auditorium, Broadway honky-tonks, and hot chicken.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Portland",
+    "country": "United States",
+    "description": "Quirky Pacific Northwest city known for microbreweries, Powell's Books, urban food cart pods, and gardens.",
+    "average_daily_cost": 15000.0,
+    "active": true
+  },
+  {
+    "city": "Philadelphia",
+    "country": "United States",
+    "description": "Historic city of brotherly love featuring the Liberty Bell, Independence Hall, and famous Philly cheesesteaks.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Salt Lake City",
+    "country": "United States",
+    "description": "Scenic mountain capital surrounded by Wasatch peaks, world-class ski resorts, and historic Temple Square.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Savannah",
+    "country": "United States",
+    "description": "Charming Southern coastal city famous for historic oak-canopied squares, antebellum architecture, and ghost tours.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Santa Fe",
+    "country": "United States",
+    "description": "Artistic desert capital known for Pueblo-style adobe architecture, Georgia O'Keeffe art, and Southwestern cuisine.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Anchorage",
+    "country": "United States",
+    "description": "Alaskan wilderness hub offering glacier cruises, wildlife viewing, Chugach mountain trails, and midnight sun.",
+    "average_daily_cost": 21000.0,
+    "active": true
+  },
+  {
+    "city": "Sedona",
+    "country": "United States",
+    "description": "Arizona red rock sanctuary renowned for towering sandstone formations, spiritual energy vortexes, and hiking.",
+    "average_daily_cost": 18000.0,
+    "active": true
+  },
+  {
+    "city": "San Antonio",
+    "country": "United States",
+    "description": "Historic Texan city famous for the iconic Alamo mission and the scenic tree-lined River Walk promenade.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "Atlanta",
+    "country": "United States",
+    "description": "Southern cultural and civil rights hub featuring the Georgia Aquarium, World of Coca-Cola, and Martin Luther King Jr. sites.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Charleston",
+    "country": "United States",
+    "description": "Historic coastal South Carolina port known for pastel antebellum French Quarter houses, cobblestone streets, and Lowcountry cuisine.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Vancouver",
+    "country": "Canada",
+    "description": "Scenic Pacific coast metropolis nestled between snow-capped mountains and ocean, featuring Stanley Park.",
+    "average_daily_cost": 19000.0,
+    "active": true
+  },
+  {
+    "city": "Toronto",
+    "country": "Canada",
+    "description": "Multicultural commercial metropolis crowned by the CN Tower, Royal Ontario Museum, and diverse neighborhoods.",
+    "average_daily_cost": 17500.0,
+    "active": true
+  },
+  {
+    "city": "Montreal",
+    "country": "Canada",
+    "description": "French-Canadian cultural hub known for historic Old Montreal, Mount Royal park, and world-class culinary scene.",
+    "average_daily_cost": 15000.0,
+    "active": true
+  },
+  {
+    "city": "Quebec City",
+    "country": "Canada",
+    "description": "Charming fortified French-speaking city featuring the iconic Fairmont Le Chateau Frontenac and cobblestone alleys.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Banff",
+    "country": "Canada",
+    "description": "Premier Canadian Rockies alpine resort town surrounded by turquoise Lake Louise and Moraine Lake.",
+    "average_daily_cost": 21000.0,
+    "active": true
+  },
+  {
+    "city": "Calgary",
+    "country": "Canada",
+    "description": "Western Canadian gateway famous for the Calgary Stampede rodeo, cowboy heritage, and proximity to the Rockies.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Victoria",
+    "country": "Canada",
+    "description": "British Columbia's island capital known for Butchart Gardens, Inner Harbour, and British colonial tea rooms.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Ottawa",
+    "country": "Canada",
+    "description": "National capital showcasing the Gothic Parliament Hill, Rideau Canal ice skating, and national art galleries.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Jasper",
+    "country": "Canada",
+    "description": "Pristine Rocky Mountain national park sanctuary famous for dark sky stargazing, Athabasca glaciers, and wildlife.",
+    "average_daily_cost": 19000.0,
+    "active": true
+  },
+  {
+    "city": "Whistler",
+    "country": "Canada",
+    "description": "World-renowned ski and mountain resort offering Peak 2 Peak gondola, alpine downhill trails, and village nightlife.",
+    "average_daily_cost": 22500.0,
+    "active": true
+  },
+  {
+    "city": "Halifax",
+    "country": "Canada",
+    "description": "Historic Atlantic maritime port city known for seaside boardwalk, Citadel fortress, and fresh lobster dining.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "description": "Vibrant high-altitude capital featuring Zocalo historic square, Frida Kahlo Museum, and world-class street food.",
+    "average_daily_cost": 7200.0,
+    "active": true
+  },
+  {
+    "city": "Cancun",
+    "country": "Mexico",
+    "description": "World-famous Caribbean beach resort destination known for turquoise waters, Hotel Zone nightlife, and Mayan ruins.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Playa del Carmen",
+    "country": "Mexico",
+    "description": "Riviera Maya coastal town with vibrant Fifth Avenue shopping, pristine beaches, and nearby cenotes.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Oaxaca",
+    "country": "Mexico",
+    "description": "Culinary and indigenous cultural soul of Mexico celebrated for mole sauces, mezcal tastings, and Monte Alban ruins.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Guadalajara",
+    "country": "Mexico",
+    "description": "Birthplace of mariachi music and tequila featuring historic colonial plazas, Hospicio Cabanas, and vibrant markets.",
+    "average_daily_cost": 6200.0,
+    "active": true
+  },
+  {
+    "city": "Puerto Vallarta",
+    "country": "Mexico",
+    "description": "Pacific coastal resort town blending traditional cobblestone Romantic Zone with golden beaches and whale watching.",
+    "average_daily_cost": 9000.0,
+    "active": true
+  },
+  {
+    "city": "San Miguel de Allende",
+    "country": "Mexico",
+    "description": "UNESCO colonial hill town renowned for the pink neo-Gothic Parroquia church, art galleries, and rooftop bars.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Tulum",
+    "country": "Mexico",
+    "description": "Bohemian eco-chic beach town famous for cliffside Mayan ruins overlooking turquoise Caribbean waters and cenotes.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Merida",
+    "country": "Mexico",
+    "description": "Cultural capital of Yucatan known for pastel colonial mansions on Paseo de Montejo and gateway to Chichen Itza.",
+    "average_daily_cost": 6000.0,
+    "active": true
+  },
+  {
+    "city": "Havana",
+    "country": "Cuba",
+    "description": "Timeless Caribbean capital filled with vintage classic cars, Spanish colonial plazas in Old Havana, and salsa rhythms.",
+    "average_daily_cost": 6500.0,
+    "active": true
+  },
+  {
+    "city": "San Jose",
+    "country": "Costa Rica",
+    "description": "Capital city gateway to Costa Rica's cloud forests, active volcanoes, and biodiverse national parks.",
+    "average_daily_cost": 7800.0,
+    "active": true
+  },
+  {
+    "city": "Panama City",
+    "country": "Panama",
+    "description": "Modern skyline metropolis famous for the engineering marvel of the Panama Canal and historic Casco Viejo.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Antigua Guatemala",
+    "country": "Guatemala",
+    "description": "UNESCO World Heritage city framed by three volcanoes, featuring preserved Spanish Baroque colonial ruins.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "San Juan",
+    "country": "Puerto Rico",
+    "description": "Vibrant Caribbean city featuring colorful Old San Juan cobblestone streets, El Morro fortress, and beach resorts.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Lima",
+    "country": "Peru",
+    "description": "Gastronomic capital of the Americas known for fresh ceviche, cliffside Miraflores district, and colonial architecture.",
+    "average_daily_cost": 6200.0,
+    "active": true
+  },
+  {
+    "city": "Cusco",
+    "country": "Peru",
+    "description": "Historic capital of the Inca Empire nestled in the Andes, gateway to the sacred wonder of Machu Picchu.",
+    "average_daily_cost": 5500.0,
+    "active": true
+  },
+  {
+    "city": "Arequipa",
+    "country": "Peru",
+    "description": "The White City built from volcanic sillar stone featuring the Santa Catalina Monastery and Colca Canyon access.",
+    "average_daily_cost": 4600.0,
+    "active": true
+  },
+  {
+    "city": "Puno",
+    "country": "Peru",
+    "description": "High-altitude city on Lake Titicaca famous for the floating reed islands of the indigenous Uros people.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Rio de Janeiro",
+    "country": "Brazil",
+    "description": "The Marvelous City famous for Christ the Redeemer, Sugarloaf Mountain, Copacabana and Ipanema beaches, and Samba.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Sao Paulo",
+    "country": "Brazil",
+    "description": "Vast cultural and financial mega-city renowned for world-class gastronomy, MASP art museum, and Ibirapuera Park.",
+    "average_daily_cost": 8000.0,
+    "active": true
+  },
+  {
+    "city": "Salvador",
+    "country": "Brazil",
+    "description": "Afro-Brazilian cultural heart in Bahia featuring colorful colonial Pelourinho district and capoeira martial arts.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Foz do Iguacu",
+    "country": "Brazil",
+    "description": "Home to the monumental Iguazu Falls, one of the world's most spectacular waterfalls in the rainforest.",
+    "average_daily_cost": 7200.0,
+    "active": true
+  },
+  {
+    "city": "Manaus",
+    "country": "Brazil",
+    "description": "Jungle metropolis in the heart of the Amazon rainforest featuring the historic Amazon Theatre opera house and river trips.",
+    "average_daily_cost": 6500.0,
+    "active": true
+  },
+  {
+    "city": "Florianopolis",
+    "country": "Brazil",
+    "description": "Island city famous for 42 stunning Atlantic beaches, surfing culture, and fresh oyster farming.",
+    "average_daily_cost": 6800.0,
+    "active": true
+  },
+  {
+    "city": "Paraty",
+    "country": "Brazil",
+    "description": "Preserved Portuguese colonial coastal town nestled between lush rainforest mountains and emerald tropical bays.",
+    "average_daily_cost": 6400.0,
+    "active": true
+  },
+  {
+    "city": "Buenos Aires",
+    "country": "Argentina",
+    "description": "Paris of South America celebrated for passionate Tango, colorful La Boca, historic cafes, and prime beef steakhouses.",
+    "average_daily_cost": 7200.0,
+    "active": true
+  },
+  {
+    "city": "Bariloche",
+    "country": "Argentina",
+    "description": "Andean resort town known for Swiss-style wooden architecture, artisanal chocolates, and Nahuel Huapi lake.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Mendoza",
+    "country": "Argentina",
+    "description": "World-renowned wine region in the shadow of the Andes mountains famous for Malbec vineyards and outdoor adventures.",
+    "average_daily_cost": 6800.0,
+    "active": true
+  },
+  {
+    "city": "Ushuaia",
+    "country": "Argentina",
+    "description": "The End of the World southernmost city on Tierra del Fuego, gateway to Beagle Channel and Antarctic cruises.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Salta",
+    "country": "Argentina",
+    "description": "Charming colonial city in northwest Argentina known as Salta the Beautiful, surrounded by colorful desert gorges.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "El Calafate",
+    "country": "Argentina",
+    "description": "Patagonian gateway town to Los Glaciares National Park and the awe-inspiring Perito Moreno glacier.",
+    "average_daily_cost": 10500.0,
+    "active": true
+  },
+  {
+    "city": "Santiago",
+    "country": "Chile",
+    "description": "Dynamic capital framed by snow-capped Andes mountains, featuring historic Plaza de Armas and vineyard valleys.",
+    "average_daily_cost": 8200.0,
+    "active": true
+  },
+  {
+    "city": "Valparaiso",
+    "country": "Chile",
+    "description": "Bohemian coastal port city celebrated for hillside funicular elevators, vibrant street art, and Pablo Neruda's home.",
+    "average_daily_cost": 6500.0,
+    "active": true
+  },
+  {
+    "city": "San Pedro de Atacama",
+    "country": "Chile",
+    "description": "Desert oasis town gateway to the otherworldly Moon Valley salt flats, geysers, and premier stargazing.",
+    "average_daily_cost": 10000.0,
+    "active": true
+  },
+  {
+    "city": "Puerto Varas",
+    "country": "Chile",
+    "description": "Picturesque lake district town with German heritage overlooking Lake Llanquihue and snow-capped Osorno volcano.",
+    "average_daily_cost": 7800.0,
+    "active": true
+  },
+  {
+    "city": "Bogota",
+    "country": "Colombia",
+    "description": "High-altitude cultural capital featuring the Gold Museum, Monserrate hilltop sanctuary, and historic La Candelaria.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Medellin",
+    "country": "Colombia",
+    "description": "City of Eternal Spring transformed by innovative cable cars, Botero sculpture plaza, and lush flower festivals.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Cartagena",
+    "country": "Colombia",
+    "description": "Fabled Caribbean walled city boasting colorful bougainvillea-draped colonial balconies and sea ramparts.",
+    "average_daily_cost": 6800.0,
+    "active": true
+  },
+  {
+    "city": "Quito",
+    "country": "Ecuador",
+    "description": "Highest constitutional capital in the world featuring South America's best-preserved UNESCO colonial historic center.",
+    "average_daily_cost": 5000.0,
+    "active": true
+  },
+  {
+    "city": "La Paz",
+    "country": "Bolivia",
+    "description": "High-altitude Andean metropolis featuring the world's highest cable car network (Mi Teleferico) and Witches' Market.",
+    "average_daily_cost": 3800.0,
+    "active": true
+  },
+  {
+    "city": "Dubai",
+    "country": "United Arab Emirates",
+    "description": "Futuristic desert metropolis featuring Burj Khalifa, Dubai Mall, Palm Jumeirah, and luxury desert safaris.",
+    "average_daily_cost": 18500.0,
+    "active": true
+  },
+  {
+    "city": "Abu Dhabi",
+    "country": "United Arab Emirates",
+    "description": "Sophisticated UAE capital boasting the majestic Sheikh Zayed Grand Mosque and Louvre Abu Dhabi museum.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Sharjah",
+    "country": "United Arab Emirates",
+    "description": "UNESCO Cultural Capital of the Arab World celebrated for art heritage museums and Islamic architecture.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Ras Al Khaimah",
+    "country": "United Arab Emirates",
+    "description": "Scenic northern emirate known for rugged Jebel Jais mountain ziplines, terracotta desert dunes, and beaches.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Riyadh",
+    "country": "Saudi Arabia",
+    "description": "Dynamic Saudi capital blending futuristic skyscrapers like Kingdom Centre with historic Diriyah mud-brick city.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Jeddah",
+    "country": "Saudi Arabia",
+    "description": "Historic coastal Red Sea gateway famous for Al-Balad coral architecture, modern waterfront Corniche, and diving.",
+    "average_daily_cost": 13000.0,
+    "active": true
+  },
+  {
+    "city": "AlUla",
+    "country": "Saudi Arabia",
+    "description": "Ancient living museum featuring the rock-cut Nabataean tombs of Hegra, Elephant Rock, and oasis trails.",
+    "average_daily_cost": 22000.0,
+    "active": true
+  },
+  {
+    "city": "Medina",
+    "country": "Saudi Arabia",
+    "description": "Sacred Islamic holy city home to the Prophet's Mosque (Al-Masjid an-Nabawi) with towering umbrella architecture.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Doha",
+    "country": "Qatar",
+    "description": "Modern Gulf capital featuring the stunning Museum of Islamic Art, traditional Souq Waqif, and futuristic Katara village.",
+    "average_daily_cost": 15500.0,
+    "active": true
+  },
+  {
+    "city": "Muscat",
+    "country": "Oman",
+    "description": "Graceful coastal capital boasting the Sultan Qaboos Grand Mosque, Mutrah Corniche, and rugged mountain backdrops.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Salalah",
+    "country": "Oman",
+    "description": "Lush subtropical southern oasis famous for monsoon Khareef greenery, frankincense trees, and coconut beaches.",
+    "average_daily_cost": 11000.0,
+    "active": true
+  },
+  {
+    "city": "Manama",
+    "country": "Bahrain",
+    "description": "Island capital blending ancient Bahrain Fort, bustling Bab Al Bahrain souqs, and modern culinary dining.",
+    "average_daily_cost": 12000.0,
+    "active": true
+  },
+  {
+    "city": "Kuwait City",
+    "country": "Kuwait",
+    "description": "Gulf metropolis famous for the iconic Kuwait Towers, Grand Mosque, and modern waterfront promenades.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Istanbul",
+    "country": "Turkey",
+    "description": "Historic transcontinental city spanning Europe and Asia, home to Hagia Sophia, Blue Mosque, Grand Bazaar, and Bosphorus.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Goreme",
+    "country": "Turkey",
+    "description": "Heart of Cappadocia famous for sunrise hot air balloon flights over fairy chimneys and underground rock-cut cities.",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Antalya",
+    "country": "Turkey",
+    "description": "Turquoise Coast resort city featuring the historic Kaleici old town, Roman Hadrian's Gate, and Mediterranean beaches.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Bodrum",
+    "country": "Turkey",
+    "description": "Charming Aegean coastal haven with whitewashed houses, Castle of St. Peter, and luxury sailing gulets.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Izmir",
+    "country": "Turkey",
+    "description": "Vibrant Aegean port city with historic Clock Tower, lively Kordon seaside promenade, and gateway to ancient Ephesus.",
+    "average_daily_cost": 7800.0,
+    "active": true
+  },
+  {
+    "city": "Fethiye",
+    "country": "Turkey",
+    "description": "Stunning coastal hub famous for the blue lagoon of Oludeniz, Lycian rock tombs, and paragliding from Babadag.",
+    "average_daily_cost": 8200.0,
+    "active": true
+  },
+  {
+    "city": "Amman",
+    "country": "Jordan",
+    "description": "Historic capital built across seven hills featuring the Roman Citadel, Roman Theatre, and bustling Rainbow Street.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Petra",
+    "country": "Jordan",
+    "description": "Rose-red city carved directly into sandstone cliffs by the Nabataeans, featuring the iconic Treasury and Monastery.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Aqaba",
+    "country": "Jordan",
+    "description": "Jordan's Red Sea port city renowned for colorful coral reef diving and access to the desert sands of Wadi Rum.",
+    "average_daily_cost": 10500.0,
+    "active": true
+  },
+  {
+    "city": "Cairo",
+    "country": "Egypt",
+    "description": "Sprawling capital on the Nile featuring the ancient Giza Pyramids, Great Sphinx, Khan el-Khalili bazaar, and Egyptian Museum.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Luxor",
+    "country": "Egypt",
+    "description": "World's greatest open-air museum featuring Karnak Temple, Luxor Temple, and the tombs of the Valley of the Kings.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Aswan",
+    "country": "Egypt",
+    "description": "Picturesque Nile city known for Philae Temple island, colorful Nubian villages, and serene felucca sailboat rides.",
+    "average_daily_cost": 4600.0,
+    "active": true
+  },
+  {
+    "city": "Alexandria",
+    "country": "Egypt",
+    "description": "Historic Mediterranean coastal city founded by Alexander the Great, featuring the modern Bibliotheca Alexandrina and Qaitbay citadel.",
+    "average_daily_cost": 4200.0,
+    "active": true
+  },
+  {
+    "city": "Sharm El Sheikh",
+    "country": "Egypt",
+    "description": "Red Sea resort capital renowned for world-class scuba diving at Ras Mohammed National Park and coral reefs.",
+    "average_daily_cost": 7500.0,
+    "active": true
+  },
+  {
+    "city": "Hurghada",
+    "country": "Egypt",
+    "description": "Vibrant Red Sea coastal resort town offering water sports, desert quad biking, and offshore coral island excursions.",
+    "average_daily_cost": 6800.0,
+    "active": true
+  },
+  {
+    "city": "Marrakech",
+    "country": "Morocco",
+    "description": "The Red City famous for the bustling Jemaa el-Fnaa square, Majorelle Garden, Bahia Palace, and souk spice stalls.",
+    "average_daily_cost": 6500.0,
+    "active": true
+  },
+  {
+    "city": "Casablanca",
+    "country": "Morocco",
+    "description": "Modern Atlantic coastal metropolis home to the colossal Hassan II Mosque with ocean-facing minaret.",
+    "average_daily_cost": 7200.0,
+    "active": true
+  },
+  {
+    "city": "Fes",
+    "country": "Morocco",
+    "description": "Medieval cultural and spiritual heart of Morocco boasting the labyrinthine Fes el-Bali medina and historic Chouara Tannery.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Chefchaouen",
+    "country": "Morocco",
+    "description": "The Blue Pearl nestled in the Rif mountains, famous for photogenic blue-washed buildings and peaceful mountain air.",
+    "average_daily_cost": 4600.0,
+    "active": true
+  },
+  {
+    "city": "Tangier",
+    "country": "Morocco",
+    "description": "Historic gateway port on the Strait of Gibraltar where the Mediterranean meets the Atlantic, rich in bohemian legacy.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Essaouira",
+    "country": "Morocco",
+    "description": "Laid-back Atlantic coastal port town enclosed by 18th-century sea ramparts, famous for seafood and windsurfing.",
+    "average_daily_cost": 5000.0,
+    "active": true
+  },
+  {
+    "city": "Cape Town",
+    "country": "South Africa",
+    "description": "Stunning coastal city set beneath Table Mountain, featuring Cape Point, Boulders Beach penguins, and winelands.",
+    "average_daily_cost": 9500.0,
+    "active": true
+  },
+  {
+    "city": "Johannesburg",
+    "country": "South Africa",
+    "description": "South Africa's vibrant economic hub featuring the Apartheid Museum, Soweto history, and bustling Maboneng arts precinct.",
+    "average_daily_cost": 7500.0,
+    "active": true
+  },
+  {
+    "city": "Durban",
+    "country": "South Africa",
+    "description": "Golden Mile beachfront city on the Indian Ocean known for subtropical climate, Zulu culture, and Durban bunny chow.",
+    "average_daily_cost": 6500.0,
+    "active": true
+  },
+  {
+    "city": "Nelspruit",
+    "country": "South Africa",
+    "description": "Scenic gateway city in Mpumalanga to the premier wildlife safari landscapes of Kruger National Park.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Port Elizabeth",
+    "country": "South Africa",
+    "description": "Friendly City on the Sunshine Coast known for whale watching, clean beaches, and Addo Elephant National Park.",
+    "average_daily_cost": 7200.0,
+    "active": true
+  },
+  {
+    "city": "Stellenbosch",
+    "country": "South Africa",
+    "description": "Historic Cape Dutch town in the Cape Winelands surrounded by oak trees, vineyards, and mountain peaks.",
+    "average_daily_cost": 9000.0,
+    "active": true
+  },
+  {
+    "city": "Nairobi",
+    "country": "Kenya",
+    "description": "High-energy East African safari capital featuring the world's only national park within a capital city, and giraffe center.",
+    "average_daily_cost": 7800.0,
+    "active": true
+  },
+  {
+    "city": "Mombasa",
+    "country": "Kenya",
+    "description": "Historic coastal island port featuring the 16th-century Fort Jesus, Old Town spice markets, and white sandy beaches.",
+    "average_daily_cost": 6200.0,
+    "active": true
+  },
+  {
+    "city": "Narok",
+    "country": "Kenya",
+    "description": "Safari base town for the legendary Maasai Mara National Reserve, home to the Great Wildebeest Migration.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Diani Beach",
+    "country": "Kenya",
+    "description": "Award-winning tropical Indian Ocean beach paradise with powdery white sand, coral reefs, and water sports.",
+    "average_daily_cost": 8200.0,
+    "active": true
+  },
+  {
+    "city": "Nakuru",
+    "country": "Kenya",
+    "description": "Rift Valley city famous for Lake Nakuru National Park, flamingos, baboons, and sanctuary for endangered rhinos.",
+    "average_daily_cost": 7000.0,
+    "active": true
+  },
+  {
+    "city": "Zanzibar City",
+    "country": "Tanzania",
+    "description": "Island spice paradise featuring the UNESCO-listed labyrinthine Stone Town, spice tours, and turquoise beaches.",
+    "average_daily_cost": 8500.0,
+    "active": true
+  },
+  {
+    "city": "Dar es Salaam",
+    "country": "Tanzania",
+    "description": "Bustling coastal commercial port city blending Swahili culture, fish markets, and ferry access to Zanzibar.",
+    "average_daily_cost": 5500.0,
+    "active": true
+  },
+  {
+    "city": "Arusha",
+    "country": "Tanzania",
+    "description": "Northern safari capital situated beneath Mount Meru, gateway to Serengeti, Ngorongoro Crater, and Kilimanjaro.",
+    "average_daily_cost": 14500.0,
+    "active": true
+  },
+  {
+    "city": "Seronera",
+    "country": "Tanzania",
+    "description": "Wildlife hub in central Serengeti National Park celebrated for predator sightings, savannah plains, and balloon safaris.",
+    "average_daily_cost": 22000.0,
+    "active": true
+  },
+  {
+    "city": "Kigali",
+    "country": "Rwanda",
+    "description": "Clean and orderly capital city nestled across lush hills, featuring the Kigali Genocide Memorial and coffee culture.",
+    "average_daily_cost": 6800.0,
+    "active": true
+  },
+  {
+    "city": "Musanze",
+    "country": "Rwanda",
+    "description": "Northern mountain base town for tracking endangered mountain gorillas in Volcanoes National Park.",
+    "average_daily_cost": 24000.0,
+    "active": true
+  },
+  {
+    "city": "Kampala",
+    "country": "Uganda",
+    "description": "Sprawling capital city perched on seven hills, home to Kasubi Tombs, vibrant craft markets, and Lake Victoria views.",
+    "average_daily_cost": 5200.0,
+    "active": true
+  },
+  {
+    "city": "Entebbe",
+    "country": "Uganda",
+    "description": "Tranquil peninsula town on Lake Victoria featuring historic botanical gardens, reptile sanctuary, and international airport.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Addis Ababa",
+    "country": "Ethiopia",
+    "description": "Diplomatic capital of Africa featuring the National Museum with the Lucy fossil, Entoto hills, and coffee ceremonies.",
+    "average_daily_cost": 4600.0,
+    "active": true
+  },
+  {
+    "city": "Lalibela",
+    "country": "Ethiopia",
+    "description": "Spiritual mountain town world-famous for eleven monolithic rock-hewn medieval churches, including Church of St. George.",
+    "average_daily_cost": 5400.0,
+    "active": true
+  },
+  {
+    "city": "Victoria Falls",
+    "country": "Zimbabwe",
+    "description": "Adventure resort town home to the world's largest waterfall curtain, known locally as Mosi-oa-Tunya (The Smoke That Thunders).",
+    "average_daily_cost": 12500.0,
+    "active": true
+  },
+  {
+    "city": "Livingstone",
+    "country": "Zambia",
+    "description": "Zambian riverside base for Victoria Falls adventures, featuring the Devil's Pool and Zambezi river sunset cruises.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Windhoek",
+    "country": "Namibia",
+    "description": "Orderly desert capital blending German colonial architecture with modern African culture in the Khomas Highland.",
+    "average_daily_cost": 8200.0,
+    "active": true
+  },
+  {
+    "city": "Swakopmund",
+    "country": "Namibia",
+    "description": "Coastal adventure town where desert dunes meet the Atlantic Ocean, famous for sandboarding and quad biking.",
+    "average_daily_cost": 8800.0,
+    "active": true
+  },
+  {
+    "city": "Sossusvlei",
+    "country": "Namibia",
+    "description": "Spectacular desert salt and clay pan surrounded by the monumental red dunes of Dune 45 and ancient dead trees at Deadvlei.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Maun",
+    "country": "Botswana",
+    "description": "Safari tourism capital and primary jumping-off point for exploring the pristine waterways of the Okavango Delta.",
+    "average_daily_cost": 18500.0,
+    "active": true
+  },
+  {
+    "city": "Kasane",
+    "country": "Botswana",
+    "description": "Four-corners border town on the Chobe River famous for colossal elephant herds in Chobe National Park.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Port Louis",
+    "country": "Mauritius",
+    "description": "Mauritian capital city blending Caudan Waterfront, Aapravasi Ghat UNESCO site, and multicultural street food.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Grand Baie",
+    "country": "Mauritius",
+    "description": "Lively seaside resort village in northern Mauritius famous for turquoise emerald lagoons, yachting, and nightlife.",
+    "average_daily_cost": 13500.0,
+    "active": true
+  },
+  {
+    "city": "Victoria",
+    "country": "Seychelles",
+    "description": "Charming small capital of Seychelles on Mahe island with a silver clock tower, botanical gardens, and granite beaches.",
+    "average_daily_cost": 18500.0,
+    "active": true
+  },
+  {
+    "city": "Antananarivo",
+    "country": "Madagascar",
+    "description": "Hilltop Malagasy capital featuring the historic Rova palace, colorful hillside markets, and French bakery culture.",
+    "average_daily_cost": 4800.0,
+    "active": true
+  },
+  {
+    "city": "Nosy Be",
+    "country": "Madagascar",
+    "description": "Scented island paradise off the northwest coast known for ylang-ylang plantations, coral reefs, and lemurs.",
+    "average_daily_cost": 7800.0,
+    "active": true
+  },
+  {
+    "city": "Accra",
+    "country": "Ghana",
+    "description": "Vibrant West African capital featuring historic Jamestown lighthouse, Makola Market, and rich Pan-African heritage.",
+    "average_daily_cost": 5800.0,
+    "active": true
+  },
+  {
+    "city": "Dakar",
+    "country": "Senegal",
+    "description": "Vibrant Atlantic capital on the Cap-Vert peninsula famous for Goree Island history, surf beaches, and lively music.",
+    "average_daily_cost": 6200.0,
+    "active": true
+  },
+  {
+    "city": "Sydney",
+    "country": "Australia",
+    "description": "Iconic harbour city renowned for the Sydney Opera House, Sydney Harbour Bridge, Bondi Beach, and coastal walks.",
+    "average_daily_cost": 19500.0,
+    "active": true
+  },
+  {
+    "city": "Melbourne",
+    "country": "Australia",
+    "description": "Cultural and sporting capital celebrated for hidden laneway street art, world-famous specialty coffee, and Yarra River.",
+    "average_daily_cost": 18000.0,
+    "active": true
+  },
+  {
+    "city": "Brisbane",
+    "country": "Australia",
+    "description": "Subtropical riverside city featuring South Bank parklands, Lone Pine Koala Sanctuary, and vibrant outdoor dining.",
+    "average_daily_cost": 16000.0,
+    "active": true
+  },
+  {
+    "city": "Perth",
+    "country": "Australia",
+    "description": "Sunniest Australian state capital featuring expansive Kings Park, Cottesloe Beach, and nearby Rottnest Island quokkas.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Cairns",
+    "country": "Australia",
+    "description": "Tropical north gateway city to the world-famous Great Barrier Reef coral diving and ancient Daintree Rainforest.",
+    "average_daily_cost": 17500.0,
+    "active": true
+  },
+  {
+    "city": "Gold Coast",
+    "country": "Australia",
+    "description": "Famous coastal playground featuring Surfers Paradise golden beaches, high-rise skyline, theme parks, and hinterlands.",
+    "average_daily_cost": 17000.0,
+    "active": true
+  },
+  {
+    "city": "Adelaide",
+    "country": "Australia",
+    "description": "Cosmopolitan city of churches surrounded by parklands, Barossa Valley wine region, and Glenelg beach tram.",
+    "average_daily_cost": 15500.0,
+    "active": true
+  },
+  {
+    "city": "Hobart",
+    "country": "Australia",
+    "description": "Tasmanian island capital situated beneath Mount Wellington, famous for MONA museum and Salamanca Market.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Darwin",
+    "country": "Australia",
+    "description": "Tropical Top End capital known for Mindil Beach sunset markets, Crocosaurus Cove, and gateway to Kakadu National Park.",
+    "average_daily_cost": 15500.0,
+    "active": true
+  },
+  {
+    "city": "Alice Springs",
+    "country": "Australia",
+    "description": "Heart of the Red Centre desert outback, rich in Aboriginal art and gateway to Uluru-Kata Tjuta National Park.",
+    "average_daily_cost": 17000.0,
+    "active": true
+  },
+  {
+    "city": "Auckland",
+    "country": "New Zealand",
+    "description": "City of Sails featuring the iconic Sky Tower, two natural harbours, volcanic cones, and Waiheke Island vineyards.",
+    "average_daily_cost": 18500.0,
+    "active": true
+  },
+  {
+    "city": "Queenstown",
+    "country": "New Zealand",
+    "description": "Global adventure capital on Lake Wakatipu surrounded by The Remarkables, famous for bungy jumping, skiing, and Milford Sound.",
+    "average_daily_cost": 22000.0,
+    "active": true
+  },
+  {
+    "city": "Christchurch",
+    "country": "New Zealand",
+    "description": "Garden City on the South Island featuring Avon River punting, modern cardboard cathedral, and Botanic Gardens.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Wellington",
+    "country": "New Zealand",
+    "description": "Windy cultural and film capital boasting the interactive Te Papa national museum, cable car, and craft beer.",
+    "average_daily_cost": 17000.0,
+    "active": true
+  },
+  {
+    "city": "Rotorua",
+    "country": "New Zealand",
+    "description": "Geothermal wonderland famous for bubbling mud pools, natural hot springs, and authentic Maori cultural experiences.",
+    "average_daily_cost": 16500.0,
+    "active": true
+  },
+  {
+    "city": "Wanaka",
+    "country": "New Zealand",
+    "description": "Scenic South Island alpine resort town known for the famous lone willow tree in Lake Wanaka and Roys Peak hike.",
+    "average_daily_cost": 18000.0,
+    "active": true
+  },
+  {
+    "city": "Napier",
+    "country": "New Zealand",
+    "description": "Art Deco capital of the world rebuilt after a 1931 earthquake, featuring Hawke's Bay wineries and seaside promenade.",
+    "average_daily_cost": 15000.0,
+    "active": true
+  },
+  {
+    "city": "Nadi",
+    "country": "Fiji",
+    "description": "Main gateway city on Viti Levu island featuring Sri Siva Subramaniya Hindu temple and access to Mamanuca island resorts.",
+    "average_daily_cost": 14000.0,
+    "active": true
+  },
+  {
+    "city": "Suva",
+    "country": "Fiji",
+    "description": "Lively South Pacific capital city featuring the Fiji Museum, Thurston Gardens, and vibrant colonial harbor.",
+    "average_daily_cost": 11500.0,
+    "active": true
+  },
+  {
+    "city": "Papeete",
+    "country": "French Polynesia",
+    "description": "Tropical capital of Tahiti featuring vibrant municipal markets, black sand beaches, and gateway to Bora Bora.",
+    "average_daily_cost": 24000.0,
+    "active": true
+  }
+]

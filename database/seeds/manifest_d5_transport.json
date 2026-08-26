@@ -1,0 +1,109 @@
+{
+  "dataset_name": "RoamGenie Master Transport Dataset (Phase D5)",
+  "generation_date": "2026-08-20",
+  "random_seed": 20260820,
+  "number_of_existing_records": 8,
+  "number_of_newly_inserted_records": 5992,
+  "final_record_count": 6000,
+  "destinations_covered": "500/500",
+  "destinations_with_zero_transports": 0,
+  "min_transports_per_destination": 12,
+  "max_transports_per_destination": 12,
+  "avg_transports_per_destination": 12.0,
+  "modes_count": 14,
+  "pricing_summary_inr": {
+    "min_cost": 20.0,
+    "max_cost": 16830.0,
+    "avg_cost": 2390.97,
+    "median_cost": 960.0,
+    "cost_bands": {
+      "budget_under_400": {
+        "count": 1518,
+        "percentage": 25.3,
+        "description": "Local city buses, ordinary metro, public ferries, shared autos, city bike shares"
+      },
+      "economy_400_to_1200": {
+        "count": 1809,
+        "percentage": 30.15,
+        "description": "Standard taxis, auto-rickshaws, express airport shuttles, sleeper trains, scooter rentals"
+      },
+      "midrange_1200_to_3500": {
+        "count": 1444,
+        "percentage": 24.07,
+        "description": "AC express trains (Shatabdi/Vande Bharat), intercity AC buses, self-drive rentals"
+      },
+      "premium_3500_to_9000": {
+        "count": 785,
+        "percentage": 13.08,
+        "description": "High-speed rail (TGV/Shinkansen/Eurostar), domestic flights, premium SUV transfers"
+      },
+      "luxury_9000_plus": {
+        "count": 444,
+        "percentage": 7.4,
+        "description": "Business class flights, luxury private chauffeur Mercedes, private yacht/boat transfers"
+      }
+    }
+  },
+  "duration_summary_minutes": {
+    "min_duration": 10,
+    "max_duration": 720,
+    "avg_duration": 203.77,
+    "median_duration": 94
+  },
+  "mode_distribution": {
+    "train": 758,
+    "bus": 838,
+    "taxi": 501,
+    "auto-rickshaw": 167,
+    "private-transfer": 499,
+    "car-rental": 496,
+    "bike-rental": 496,
+    "shuttle": 585,
+    "flight": 742,
+    "ferry": 49,
+    "metro": 162,
+    "ride-hailing": 499,
+    "cable-car": 16,
+    "tram": 192
+  },
+  "validation_results": {
+    "status": "PASS",
+    "checks": {
+      "count_within_target": {
+        "passed": true,
+        "count": 6000,
+        "target_range": "[5000, 7500]"
+      },
+      "referential_integrity": {
+        "passed": true,
+        "orphan_transports": 0
+      },
+      "no_duplicates": {
+        "passed": true,
+        "duplicate_count": 0
+      },
+      "no_null_or_empty_fields": {
+        "passed": true,
+        "violating_rows": 0
+      },
+      "costs_valid": {
+        "passed": true,
+        "min_cost": 20.0,
+        "max_cost": 16830.0
+      },
+      "durations_valid": {
+        "passed": true,
+        "min_duration": 10,
+        "max_duration": 720
+      },
+      "preserved_original_records": {
+        "passed": true,
+        "preserved_count": 8
+      },
+      "destination_coverage": {
+        "passed": true,
+        "destinations_covered": "500/500"
+      }
+    }
+  }
+}
