@@ -13,6 +13,12 @@ export default function HomePage() {
     getDestinations().then(setDestinations).catch(() => setDestinations([]));
   }, []);
 
+  const handleSelectDestination = (destination) => {
+    const next = selectedDestination?.id === destination.id ? null : destination;
+    setSelectedDestination(next);
+    window.dispatchEvent(new CustomEvent("roamgenie:environment-change", { detail: next }));
+  };
+
   const environment = getEnvironment(selectedDestination);
   const featuredDestinations = destinations.slice(0, 4);
 
@@ -67,7 +73,7 @@ export default function HomePage() {
               <button
                 className={`destination-preview ${active ? "is-selected" : ""}`}
                 key={destination.id}
-                onClick={() => setSelectedDestination(destination)}
+                onClick={() => handleSelectDestination(destination)}
                 type="button"
               >
                 <span className="preview-country">{destination.country}</span>

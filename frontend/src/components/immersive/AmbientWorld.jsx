@@ -4,10 +4,20 @@ import { getEnvironment } from "./environmentConfig";
 
 export default function AmbientWorld({ showScene = true }) {
   const [soundOn, setSoundOn] = useState(false);
+  const [activeEnv, setActiveEnv] = useState(() => getEnvironment());
   const audioRef = useRef(null);
 
-  useEffect(() => () => {
-    audioRef.current?.pause();
+  useEffect(() => {
+    function handleEnvChange(e) {
+      if (e.detail) {
+        setActiveEnv(getEnvironment(e.detail));
+      }
+    }
+    window.addEventListener("roamgenie:environment-change", handleEnvChange);
+    return () => {
+      window.removeEventListener("roamgenie:environment-change", handleEnvChange);
+      audioRef.current?.pause();
+    };
   }, []);
 
   async function toggleSound() {
@@ -31,7 +41,7 @@ export default function AmbientWorld({ showScene = true }) {
     <>
       {showScene && (
         <div className="global-world" aria-hidden="true">
-          <ImmersiveScene environment={getEnvironment()} />
+          <ImmersiveScene environment={activeEnv} />
         </div>
       )}
       <audio className="ambient-audio" ref={audioRef} src="/kargil-peaceful-wind.mp3" loop preload="auto" />

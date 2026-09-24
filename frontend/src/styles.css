@@ -1581,7 +1581,7 @@ textarea:focus {
   padding: 0;
   margin: 0;
   width: 100%;
-  background: #152d31;
+  background: transparent;
   color: #f8f4e8;
 }
 
@@ -2001,9 +2001,9 @@ textarea:focus {
 /* ================= KARGIL WINTER WORLD ================= */
 .environment-kargil .scene-sky {
   background:
-    linear-gradient(180deg, rgba(4, 18, 32, 0.24), rgba(112, 155, 177, 0.04) 48%, rgba(7, 28, 44, 0.3)),
-    var(--scene-image) center / cover;
-  filter: saturate(0.78) contrast(1.08) brightness(0.82);
+    linear-gradient(180deg, rgba(4, 18, 32, 0.2), rgba(112, 155, 177, 0.02) 48%, rgba(7, 28, 44, 0.25)),
+    var(--scene-image) center / cover no-repeat;
+  filter: saturate(0.95) contrast(1.05) brightness(0.92);
 }
 
 .environment-kargil .scene-clouds {
@@ -2922,6 +2922,9 @@ textarea:focus {
 .arrival-main {
   max-width: none;
   padding: 0;
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 .arrival-main + .app-footer {
@@ -2932,12 +2935,13 @@ textarea:focus {
 }
 
 .immersive-home {
-  background: #173c3e;
+  background: transparent;
 }
 
 .arrival-scene {
   min-height: max(720px, 100svh);
   height: max(720px, 100svh);
+  background: transparent;
 }
 
 .immersive-scene {
@@ -2986,7 +2990,7 @@ textarea:focus {
 }
 
 .global-world .scene-sky {
-  filter: saturate(0.96) contrast(1.02) brightness(0.82);
+  filter: saturate(0.96) contrast(1.02) brightness(0.92);
   animation-duration: 32s;
 }
 

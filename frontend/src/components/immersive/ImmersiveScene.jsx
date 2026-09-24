@@ -28,7 +28,7 @@ export default function ImmersiveScene({ environment, scrollProgress = 0 }) {
       className={`immersive-scene environment-${environment.key} terrain-${environment.terrain}`}
       style={{
         "--scene-progress": reducedMotion ? 0 : scrollProgress,
-        "--scene-image": `url("/fuji-sakura-dawn.jpg"), url("${environment.image}")`,
+        "--scene-image": `url("${environment?.image || "/fuji-sakura-dawn.jpg"}")`,
       }}
       aria-hidden="true"
     >

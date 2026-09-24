@@ -8,7 +8,7 @@ export const ENVIRONMENTS = {
     terrain: "mountain",
     weather: "Cold mountain wind",
     temperature: "−8°",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=90",
+    image: "/fuji-sakura-dawn.jpg",
   },
   mysuru: {
     key: "mysuru",

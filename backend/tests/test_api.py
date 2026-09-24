@@ -145,6 +145,7 @@ def test_guest_preview_negative_budget_fails_validation(client: TestClient) -> N
 
 def test_invalid_database_url_is_reported_safely(monkeypatch) -> None:
     """Verify database unavailability is handled gracefully without leaking stack trace."""
+    monkeypatch.setenv("DATABASE_ENV", "supabase")
     monkeypatch.setenv("DATABASE_URL", "not-a-connection-url")
     get_settings.cache_clear()
     get_engine.cache_clear()
@@ -153,3 +154,4 @@ def test_invalid_database_url_is_reported_safely(monkeypatch) -> None:
     finally:
         get_engine.cache_clear()
         get_settings.cache_clear()
+

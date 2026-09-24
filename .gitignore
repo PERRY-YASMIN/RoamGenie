@@ -24,3 +24,7 @@ backend/.env
 .supabase/
 database/backups/*
 !database/backups/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+
