@@ -274,7 +274,7 @@ class AIPlanOrchestrator:
             trip=trip,
             weather=weather,
         )
-        provider_label = "mock-ai-copilot" if self.provider.provider_name == "mock" else "ai-fallback"
+        provider_label = "ai-fallback"
         return fallback_reply, fallback_actions, provider_label
 
     def _parse_and_validate_ai_chat_response(self, raw_text: str) -> Optional[AIChatOutput]:
@@ -300,7 +300,36 @@ class AIPlanOrchestrator:
         dest_prefix = f"For your trip to {dest_city}" if dest_city else "For your journey"
         clean_q = user_message.lower()
 
-        if "pack" in clean_q or "wear" in clean_q or "clothes" in clean_q:
+        if "rain" in clean_q or "storm" in clean_q or "monsoon" in clean_q:
+            weather_desc = f" (Current forecast: {weather.current_summary})" if weather and weather.current_summary else ""
+            reply = (
+                f"{dest_prefix}{weather_desc}, if it rains, we recommend shifting to indoor attractions such as museums, "
+                f"royal palace galleries, and indoor culinary experiences. Be sure to pack a compact umbrella, rain poncho, "
+                f"and waterproof pouch for electronics. You can swap any open-air itinerary item using the ⇄ Swap button."
+            )
+            actions = ["Swap Itinerary Items", "Check Live Forecast", "View Packing Checklist"]
+        elif "itinerary" in clean_q or "improve" in clean_q or "schedule" in clean_q or "timeline" in clean_q or "day" in clean_q:
+            itin_info = ""
+            if trip and trip.itineraries:
+                itin = trip.itineraries[0]
+                day_cnt = len(itin.days)
+                items_cnt = sum(len(d.items) for d in itin.days)
+                itin_info = f" Your current schedule spans {day_cnt} days with {items_cnt} scheduled activities."
+            reply = (
+                f"{dest_prefix},{itin_info} To improve your itinerary pacing, schedule high-energy outdoor sights during the cool "
+                f"morning hours, reserved regional dining for midday, and scenic views or relaxed markets in the evening. "
+                f"You can rebalance any day by clicking ⇄ Swap on individual items to select alternative activities or dining."
+            )
+            actions = ["Swap Itinerary Items", "View Budget Breakdown", "What should I pack?"]
+        elif "know" in clean_q or "before" in clean_q or "tip" in clean_q or "advice" in clean_q or "culture" in clean_q:
+            desc = f" {trip.destination.description}." if trip and trip.destination and trip.destination.description else ""
+            reply = (
+                f"{dest_prefix}:{desc} Key things to know before travelling: carry a government photo ID, keep local currency "
+                f"or UPI ready for regional vendors, pre-check opening hours for heritage sites, and dress modestly at religious monuments. "
+                f"Check your packing checklist and local weather forecast before you head out."
+            )
+            actions = ["View Packing Checklist", "Check Weather Forecast", "Review Schedule"]
+        elif "pack" in clean_q or "wear" in clean_q or "clothes" in clean_q:
             weather_desc = ""
             if weather and weather.current_summary:
                 weather_desc = f" (Forecast: {weather.current_summary})"
@@ -309,7 +338,7 @@ class AIPlanOrchestrator:
                 f"a power bank, and required ID/prescriptions. Check the packing checklist on your trip dashboard to manage and toggle your packed items."
             )
             actions = ["View Packing Checklist", "Check Live Forecast", "Review Schedule"]
-        elif "budget" in clean_q or "cost" in clean_q or "cheap" in clean_q or "deficit" in clean_q:
+        elif "budget" in clean_q or "cost" in clean_q or "cheap" in clean_q or "deficit" in clean_q or "activities fit" in clean_q:
             budget_info = ""
             if trip:
                 rem = trip.total_budget - trip.estimated_total
@@ -329,7 +358,7 @@ class AIPlanOrchestrator:
                 f"You can also swap any meal in your itinerary timeline directly."
             )
             actions = ["Browse Restaurants", "Swap Dining Event", "View Itinerary"]
-        elif "attraction" in clean_q or "sight" in clean_q or "visit" in clean_q or "places" in clean_q:
+        elif "attraction" in clean_q or "sight" in clean_q or "visit" in clean_q or "places" in clean_q or "activity" in clean_q:
             att_info = ""
             if trip and trip.destination and trip.destination.attractions:
                 names = ", ".join([a.name for a in trip.destination.attractions[:3]])
@@ -340,13 +369,17 @@ class AIPlanOrchestrator:
             )
             actions = ["Explore Attractions", "Swap Sightseeing", "Check Itinerary"]
         else:
-            trip_info = ""
             if trip and trip.destination:
                 trip_info = f" to {trip.destination.city}, {trip.destination.country} ({trip.traveller_count} travellers, ₹{trip.total_budget:,.2f} budget)"
-            reply = (
-                f"I am your RoamGenie AI Travel Copilot. I can help optimize your day-by-day itinerary{trip_info}, "
-                f"explain budget allocations, analyze weather forecasts, and suggest destination attractions and dining spots."
-            )
+                reply = (
+                    f"I am RoamGenie AI, your personalized travel assistant. I can help optimize your day-by-day itinerary{trip_info}, "
+                    f"explain budget allocations, analyze weather forecasts, and suggest destination attractions and dining spots."
+                )
+            else:
+                reply = (
+                    "I am RoamGenie AI, your travel assistant. You can ask general travel questions, or connect a confirmed trip "
+                    "to receive personalized recommendations grounded in your destination, itinerary pacing, and budget."
+                )
             actions = ["What should I pack?", "How is my budget?", "Recommend local sights"]
 
         return reply, actions

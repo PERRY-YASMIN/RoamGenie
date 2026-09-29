@@ -70,6 +70,22 @@ export default function DestinationsPage() {
     }
   }
 
+  const [selectedFilter, setSelectedFilter] = useState("all");
+
+  const displayedDestinations = destinations.filter((dest) => {
+    if (selectedFilter === "india") return dest.country?.toLowerCase().includes("india");
+    if (selectedFilter === "europe") {
+      const euro = ["france", "italy", "spain", "germany", "united kingdom", "greece", "switzerland", "netherlands", "austria", "portugal"];
+      return euro.some((c) => dest.country?.toLowerCase().includes(c));
+    }
+    if (selectedFilter === "asia") {
+      const asia = ["japan", "thailand", "vietnam", "indonesia", "singapore", "malaysia", "south korea", "india"];
+      return asia.some((c) => dest.country?.toLowerCase().includes(c));
+    }
+    if (selectedFilter === "budget") return Number(dest.average_daily_cost || 0) <= 4000;
+    return true;
+  });
+
   return (
     <div className="destinations-container">
       <div className="page-header">
@@ -100,6 +116,25 @@ export default function DestinationsPage() {
             </button>
           )}
         </form>
+
+        <div className="destination-filter-chips" role="toolbar" aria-label="Filter destinations by region or cost">
+          {[
+            { id: "all", label: "All Destinations" },
+            { id: "india", label: "India" },
+            { id: "europe", label: "Europe" },
+            { id: "asia", label: "Asia" },
+            { id: "budget", label: "Budget Friendly (≤ ₹4,000/day)" },
+          ].map((f) => (
+            <button
+              key={f.id}
+              type="button"
+              className={`dest-filter-chip ${selectedFilter === f.id ? "active" : ""}`}
+              onClick={() => setSelectedFilter(f.id)}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {loading ? (
@@ -112,27 +147,28 @@ export default function DestinationsPage() {
           <p>⚠️ {error}</p>
           <button type="button" onClick={() => loadDestinations(search)}>Retry</button>
         </div>
-      ) : destinations.length === 0 ? (
+      ) : displayedDestinations.length === 0 ? (
         <div className="empty-state">
           <div className="placeholder-icon">📍</div>
           <h3>No Destinations Found</h3>
-          <p>{search ? `No destinations found matching "${search}".` : "No destination records found in database."}</p>
-          {search && (
+          <p>{search ? `No destinations found matching "${search}".` : "No destinations match the selected filter."}</p>
+          {(search || selectedFilter !== "all") && (
             <button
               type="button"
               className="button button-outline"
               onClick={() => {
                 setSearch("");
+                setSelectedFilter("all");
                 loadDestinations("");
               }}
             >
-              Reset Search
+              Reset Filters
             </button>
           )}
         </div>
       ) : (
         <div className="destinations-grid">
-          {destinations.map((dest) => (
+          {displayedDestinations.map((dest) => (
             <div key={dest.id} className="destination-card">
               <div className="dest-card-image-wrap">
                 <img

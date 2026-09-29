@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
+import { useCopilot } from "../context/CopilotContext";
 import {
   addPackingItem,
   chatAssistant,
@@ -20,6 +21,7 @@ import {
   swapItineraryItem,
   togglePackingItem,
   toggleSaveTrip,
+  updateTrip,
 } from "../services/api";
 
 const PREFERENCE_TAGS = [
@@ -34,11 +36,24 @@ const PREFERENCE_TAGS = [
   "relaxed",
 ];
 
+function getSuggestedStartDate() {
+  const d = new Date();
+  d.setDate(d.getDate() + 7);
+  return d.toISOString().split("T")[0];
+}
+
+function getSuggestedEndDate() {
+  const d = new Date();
+  d.setDate(d.getDate() + 11);
+  return d.toISOString().split("T")[0];
+}
+
 export default function PlanPage() {
   const { search } = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const { success, error: toastError, info, warning } = useToast();
+  const { openCopilot, selectTrip, refreshUserTrips } = useCopilot();
 
   const queryParams = new URLSearchParams(search);
   const initialDestId = queryParams.get("destinationId");
@@ -48,10 +63,10 @@ export default function PlanPage() {
   const [formData, setFormData] = useState({
     destination_id: initialDestId ? Number(initialDestId) : "",
     starting_location: "Delhi",
-    start_date: "2026-09-10",
-    end_date: "2026-09-13",
+    start_date: getSuggestedStartDate(),
+    end_date: getSuggestedEndDate(),
     traveller_count: 2,
-    total_budget: 20000,
+    total_budget: 35000,
     preferences: ["heritage", "culinary"],
     use_ai: false,
   });
@@ -61,19 +76,12 @@ export default function PlanPage() {
   const [generatedPlan, setGeneratedPlan] = useState(null);
   const [createdTripId, setCreatedTripId] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   // Weather & Packing state
   const [weather, setWeather] = useState(null);
   const [packingList, setPackingList] = useState([]);
   const [newPackItem, setNewPackItem] = useState("");
-
-  // AI Chat Drawer state
-  const [chatOpen, setChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState([]);
-  const [chatInput, setChatInput] = useState("");
-  const [chatLoading, setChatLoading] = useState(false);
-  const [chatConversationId, setChatConversationId] = useState(null);
-  const chatBottomRef = useRef(null);
 
   // Active day in timeline
   const [selectedDay, setSelectedDay] = useState(1);
@@ -95,16 +103,18 @@ export default function PlanPage() {
       try {
         const dests = await getDestinations("", true, 500);
         setDestinations(dests);
-        if (dests.length > 0 && !formData.destination_id) {
-          setFormData((prev) => ({ ...prev, destination_id: dests[0].id }));
-          setDestSearchText(`${dests[0].city}, ${dests[0].country} (₹${Number(dests[0].average_daily_cost || 3500).toLocaleString()}/day)`);
+        if (initialDestId && dests.length > 0) {
+          const matched = dests.find((d) => d.id === Number(initialDestId));
+          if (matched) {
+            setDestSearchText(`${matched.city}, ${matched.country} (₹${Number(matched.average_daily_cost || 3500).toLocaleString()}/day)`);
+          }
         }
       } catch (err) {
         console.error("Failed to load destinations", err);
       }
     }
     loadDests();
-  }, []);
+  }, [initialDestId]);
 
   // Sync displayed search text when destination_id changes and dropdown is closed
   useEffect(() => {
@@ -149,6 +159,7 @@ export default function PlanPage() {
 
         setCreatedTripId(tripData.id);
         setIsSaved(Boolean(tripData.is_saved));
+        setIsConfirmed(tripData.status === "planned" || tripData.status === "confirmed");
         setPackingList(tripData.packing_items || []);
 
         setFormData((prev) => ({
@@ -195,6 +206,8 @@ export default function PlanPage() {
           setStatus("idle");
         }
 
+        selectTrip(tripData.id);
+
         try {
           const wx = await getTripWeather(tripData.id);
           if (isMounted) setWeather(wx);
@@ -214,29 +227,18 @@ export default function PlanPage() {
     return () => {
       isMounted = false;
     };
-  }, [tripIdParam, isAuthenticated, toastError]);
+  }, [tripIdParam, isAuthenticated, toastError, selectTrip]);
 
   // Escape key listener for dialogs
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.key === "Escape") {
-        if (swapModalItem) {
-          handleCloseSwapModal();
-        } else if (chatOpen) {
-          setChatOpen(false);
-        }
+      if (e.key === "Escape" && swapModalItem) {
+        handleCloseSwapModal();
       }
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [swapModalItem, chatOpen]);
-
-  // Auto-scroll chat body on new messages
-  useEffect(() => {
-    if (chatOpen && chatBottomRef.current) {
-      chatBottomRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [chatMessages, chatLoading, chatOpen]);
+  }, [swapModalItem]);
 
   function handleInputChange(e) {
     const { name, value, type, checked } = e.target;
@@ -252,6 +254,19 @@ export default function PlanPage() {
       const next = exists ? prev.preferences.filter((t) => t !== tag) : [...prev.preferences, tag];
       return { ...prev, preferences: next };
     });
+  }
+
+  async function handleConfirmTrip() {
+    if (!createdTripId) return;
+    try {
+      await updateTrip(createdTripId, { status: "planned" });
+      setIsConfirmed(true);
+      selectTrip(createdTripId);
+      refreshUserTrips();
+      success("Trip confirmed! RoamGenie AI is now personalized with your destination itinerary.");
+    } catch (err) {
+      toastError(err.message || "Failed to confirm trip.");
+    }
   }
 
   async function handlePlanSubmit(e) {
@@ -286,6 +301,7 @@ export default function PlanPage() {
 
         const createdTrip = await createTrip(tripPayload);
         setCreatedTripId(createdTrip.id);
+        setIsConfirmed(false);
 
         const planResult = await generateTripPlan(
           createdTrip.id,
@@ -294,7 +310,7 @@ export default function PlanPage() {
         );
 
         setGeneratedPlan(planResult);
-        success("Itinerary generated and saved to your account!");
+        success("Itinerary generated! Review your plan and click 'Confirm & Activate Trip' to connect with RoamGenie AI.");
 
         // Load weather & packing items
         try {
@@ -417,40 +433,6 @@ export default function PlanPage() {
       console.error(err);
       toastError("Failed to delete packing item: " + err.message);
     }
-  }
-
-  async function executeChatMessage(text) {
-    if (!text.trim() || chatLoading) return;
-
-    const userMsg = { role: "user", text: text.trim() };
-    setChatMessages((prev) => [...prev, userMsg]);
-    setChatInput("");
-    setChatLoading(true);
-
-    try {
-      const res = await chatAssistant(userMsg.text, createdTripId, chatConversationId);
-      if (res.conversation_id) {
-        setChatConversationId(res.conversation_id);
-      }
-      setChatMessages((prev) => [
-        ...prev,
-        { role: "assistant", text: res.reply, actions: res.suggested_actions },
-      ]);
-    } catch (err) {
-      const errReply = err.message || "Sorry, I encountered an error connecting to the copilot.";
-      setChatMessages((prev) => [
-        ...prev,
-        { role: "assistant", text: `⚠️ ${errReply}` },
-      ]);
-      toastError(errReply);
-    } finally {
-      setChatLoading(false);
-    }
-  }
-
-  async function handleSendChatMessage(e) {
-    e.preventDefault();
-    executeChatMessage(chatInput);
   }
 
   async function handleOpenSwapModal(item) {
@@ -670,13 +652,51 @@ export default function PlanPage() {
         <p>Define your travel constraints, dates, and budget. Our relational engine schedules catalogue activities, computes itemized budgets, and detects deficits.</p>
       </div>
 
+      {/* 6-Stage Guided Planning Progress Bar */}
+      <div className="planner-stages-bar" role="navigation" aria-label="Trip planning steps">
+        <div className={`stage-step ${formData.destination_id ? "completed" : "active"}`}>
+          <span className="stage-num">01</span>
+          <span className="stage-text">Destination</span>
+        </div>
+        <div className="stage-connector" />
+        <div className={`stage-step ${formData.start_date && formData.end_date ? "completed" : "active"}`}>
+          <span className="stage-num">02</span>
+          <span className="stage-text">Dates</span>
+        </div>
+        <div className="stage-connector" />
+        <div className={`stage-step ${formData.total_budget > 0 ? "completed" : "active"}`}>
+          <span className="stage-num">03</span>
+          <span className="stage-text">Budget</span>
+        </div>
+        <div className="stage-connector" />
+        <div className={`stage-step ${formData.preferences.length > 0 ? "completed" : "active"}`}>
+          <span className="stage-num">04</span>
+          <span className="stage-text">Preferences</span>
+        </div>
+        <div className="stage-connector" />
+        <div className={`stage-step ${generatedPlan ? "completed" : status === "loading" ? "active" : ""}`}>
+          <span className="stage-num">05</span>
+          <span className="stage-text">Review</span>
+        </div>
+        <div className="stage-connector" />
+        <div className={`stage-step ${isConfirmed ? "completed" : generatedPlan ? "active" : ""}`}>
+          <span className="stage-num">06</span>
+          <span className="stage-text">Confirm</span>
+        </div>
+      </div>
+
       <div className="planner-layout">
         {/* Left Column: Multi-Step Input Wizard */}
         <section className="planner-form-card" aria-label="Trip Parameters Form">
-          <h2>Trip Parameters</h2>
+          <div className="form-card-header">
+            <h2>Trip Parameters</h2>
+            <span className="card-subtitle">Fill stages 01–04 to generate your day-wise itinerary</span>
+          </div>
           <form onSubmit={handlePlanSubmit}>
             <div className="form-group">
-              <label htmlFor="destination_input">Destination</label>
+              <label htmlFor="destination_input">
+                <span className="stage-badge">01</span> Select Destination
+              </label>
               <div className="dest-autocomplete-container" ref={destDropdownRef}>
                 <input
                   id="destination_input"
@@ -745,7 +765,9 @@ export default function PlanPage() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="starting_location">Starting Location</label>
+              <label htmlFor="starting_location">
+                <span className="stage-badge">02</span> Starting Location
+              </label>
               <input
                 id="starting_location"
                 name="starting_location"
@@ -804,7 +826,9 @@ export default function PlanPage() {
               </div>
 
               <div className="form-group">
-                <label htmlFor="total_budget">Total Budget (₹ INR)</label>
+                <label htmlFor="total_budget">
+                  <span className="stage-badge">03</span> Total Budget (₹ INR)
+                </label>
                 <input
                   id="total_budget"
                   name="total_budget"
@@ -820,7 +844,9 @@ export default function PlanPage() {
             </div>
 
             <div className="form-group">
-              <label>Travel Preferences & Activity Tags</label>
+              <label>
+                <span className="stage-badge">04</span> Travel Preferences & Activity Tags
+              </label>
               <div className="tag-cloud">
                 {PREFERENCE_TAGS.map((tag) => (
                   <button
@@ -846,7 +872,7 @@ export default function PlanPage() {
                   onChange={handleInputChange}
                   disabled={status === "loading"}
                 />
-                <span>Enable Bounded AI Copilot (with Mock Fallback)</span>
+                <span>Enable AI Travel Assistant (Weather & Pacing Intelligence)</span>
               </label>
             </div>
 
@@ -913,16 +939,66 @@ export default function PlanPage() {
                       {isSaved ? "★ Bookmarked" : "☆ Save to Bookmarks"}
                     </button>
                   )}
+                  {isAuthenticated && createdTripId && (
+                    <button
+                      type="button"
+                      className={`button ${isConfirmed ? "button-confirmed" : "button-primary"}`}
+                      onClick={handleConfirmTrip}
+                      disabled={isConfirmed}
+                    >
+                      {isConfirmed ? "✓ Trip Confirmed" : "✓ Confirm Trip"}
+                    </button>
+                  )}
                   <button
                     type="button"
                     className="button button-secondary"
-                    onClick={() => setChatOpen(true)}
-                    aria-label="Open AI Copilot chat drawer"
+                    onClick={() => openCopilot(createdTripId)}
+                    aria-label="Open RoamGenie AI chat drawer"
                   >
-                    💬 Ask AI Copilot
+                    ✨ Ask RoamGenie AI
                   </button>
                 </div>
               </div>
+
+              {/* Stage 06 Confirmation Card */}
+              {isAuthenticated && createdTripId && (
+                <div className={`trip-activation-banner ${isConfirmed ? "is-activated" : "is-pending"}`}>
+                  <div className="activation-info">
+                    <span className="stage-pill">
+                      {isConfirmed ? "Stage 06: ✓ Confirmed & Connected" : "Stage 06: Ready to Confirm"}
+                    </span>
+                    <h3>
+                      {isConfirmed
+                        ? "Trip Confirmed & Connected to RoamGenie AI"
+                        : "Confirm this itinerary to activate RoamGenie AI context"}
+                    </h3>
+                    <p>
+                      {isConfirmed
+                        ? `RoamGenie AI is now personalized with your ${itin.destination_city || "destination"} dates, budget, and daily activities.`
+                        : "Review your generated schedule and budget below. When you're satisfied, confirm the trip to connect RoamGenie AI."}
+                    </p>
+                  </div>
+                  <div className="activation-actions">
+                    {!isConfirmed ? (
+                      <button
+                        type="button"
+                        className="button button-primary"
+                        onClick={handleConfirmTrip}
+                      >
+                        ✓ Confirm & Activate Trip
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="button button-primary"
+                        onClick={() => openCopilot(createdTripId)}
+                      >
+                        ✨ Chat with RoamGenie AI →
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Budget Health Bar & Alert */}
               {budget && (
@@ -1084,101 +1160,6 @@ export default function PlanPage() {
           )}
         </section>
       </div>
-
-      {/* AI Copilot Drawer */}
-      {chatOpen && (
-        <div className="chat-drawer-backdrop" onClick={() => setChatOpen(false)}>
-          <div
-            className="chat-drawer"
-            role="dialog"
-            aria-modal="true"
-            aria-label="RoamGenie AI Copilot"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="chat-header">
-              <div>
-                <h3>🤖 RoamGenie AI Copilot</h3>
-                <p className="eyebrow">Bounded Travel Assistant</p>
-              </div>
-              <button
-                type="button"
-                className="close-btn"
-                onClick={() => setChatOpen(false)}
-                aria-label="Close AI Copilot drawer"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="chat-body">
-              {chatMessages.length === 0 ? (
-                <div className="chat-welcome">
-                  <p>Ask me anything about your destination, weather advice, packing tips, or budget suggestions!</p>
-                  <div className="quick-suggestions">
-                    <button
-                      type="button"
-                      className="quick-suggestion-btn"
-                      onClick={() => executeChatMessage("What should I pack for this trip?")}
-                    >
-                      What should I pack?
-                    </button>
-                    <button
-                      type="button"
-                      className="quick-suggestion-btn"
-                      onClick={() => executeChatMessage("How can I optimize my food budget?")}
-                    >
-                      Optimize food budget
-                    </button>
-                    <button
-                      type="button"
-                      className="quick-suggestion-btn"
-                      onClick={() => executeChatMessage("Recommend popular local attractions")}
-                    >
-                      Local attractions
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                chatMessages.map((msg, idx) => (
-                  <div key={idx} className={`chat-bubble ${msg.role}`}>
-                    <p>{msg.text}</p>
-                    {msg.actions && (
-                      <div className="suggested-actions-list">
-                        {msg.actions.map((act, aIdx) => (
-                          <button
-                            key={aIdx}
-                            type="button"
-                            className="action-pill-btn"
-                            onClick={() => executeChatMessage(act)}
-                          >
-                            {act}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))
-              )}
-              {chatLoading && <div className="chat-bubble assistant loading">Copilot is thinking...</div>}
-              <div ref={chatBottomRef} />
-            </div>
-
-            <form className="chat-footer" onSubmit={handleSendChatMessage}>
-              <input
-                type="text"
-                placeholder="Ask travel assistant..."
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-                disabled={chatLoading}
-                aria-label="Type your message to AI Copilot"
-              />
-              <button type="submit" disabled={chatLoading || !chatInput.trim()}>
-                {chatLoading ? "..." : "Send"}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
 
       {/* M4 Catalogue Item Swap Modal */}
       {swapModalItem && (

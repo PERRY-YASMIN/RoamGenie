@@ -84,4 +84,24 @@ describe("App Router & Navigation", () => {
 
     expect(screen.getByText("Your session has expired. Please log in again.")).toBeInTheDocument();
   });
+
+  it("renders the floating RoamGenie AI Assistant button and toggles drawer on click", () => {
+    window.history.pushState({}, "Test page", "/");
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+
+    const copilotBtn = screen.getByRole("button", { name: /Open RoamGenie AI Assistant/i });
+    expect(copilotBtn).toBeInTheDocument();
+    expect(screen.getByText("RoamGenie AI")).toBeInTheDocument();
+
+    act(() => {
+      copilotBtn.click();
+    });
+
+    expect(screen.getByRole("dialog", { name: /RoamGenie AI Travel Assistant/i })).toBeInTheDocument();
+    expect(screen.getByText("Personalized Travel Assistant")).toBeInTheDocument();
+  });
 });

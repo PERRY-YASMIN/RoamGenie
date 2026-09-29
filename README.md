@@ -2,8 +2,8 @@
 
 [![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg)](docs/release/RELEASE_NOTES.md)
 [![Status](https://img.shields.io/badge/status-RELEASE%20READY-success.svg)](docs/release/MVP_RELEASE_REPORT.md)
-[![Backend Tests](https://img.shields.io/badge/backend%20tests-147%2F147%20PASS-brightgreen.svg)](docs/testing/TEST_RESULTS.md)
-[![Frontend Tests](https://img.shields.io/badge/frontend%20tests-15%2F15%20PASS-brightgreen.svg)](docs/testing/TEST_RESULTS.md)
+[![Backend Tests](https://img.shields.io/badge/backend%20tests-172%2F172%20PASS-brightgreen.svg)](docs/testing/TEST_RESULTS.md)
+[![Frontend Tests](https://img.shields.io/badge/frontend%20tests-16%2F16%20PASS-brightgreen.svg)](docs/testing/TEST_RESULTS.md)
 [![Database](https://img.shields.io/badge/database-PostgreSQL%2015%2B%20%7C%2021%2C133%20rows-336791.svg)](docs/database/DATABASE_DESIGN.md)
 [![Course](https://img.shields.io/badge/course-DBMS%20Semester%205-orange.svg)](docs/requirements/PROBLEM_STATEMENT.md)
 
@@ -15,7 +15,7 @@ RoamGenie is an intelligent, relational database-backed travel itinerary planner
 
 * **MVP Release Status:** **RELEASE READY (v1.0.0)**
 * **All 12 Academic Milestones Completed (100%):** [docs/milestones/MILESTONE_COMPLETION_STATUS.md](docs/milestones/MILESTONE_COMPLETION_STATUS.md)
-* **Automated Tests:** **162 / 162 PASS (100%)** — 147 Backend Pytest + 15 Frontend Vitest
+* **Automated Tests:** **188 / 188 PASS (100%)** — 172 Backend Pytest + 16 Frontend Vitest
 * **Master Database:** **21,133 rows** across 23 base tables in PostgreSQL (Supabase) with 0 FK orphans.
 * **Master Documentation Index:** [docs/README.md](docs/README.md)
 * **Final Release Report:** [docs/release/MVP_RELEASE_REPORT.md](docs/release/MVP_RELEASE_REPORT.md)

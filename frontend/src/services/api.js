@@ -157,6 +157,15 @@ export async function getTrip(id) {
   return handleResponse(response, "Failed to load trip details.");
 }
 
+export async function updateTrip(id, payload) {
+  const response = await fetch(`${API_BASE}/trips/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", ...getAuthHeader() },
+    body: JSON.stringify(payload),
+  });
+  return handleResponse(response, "Failed to update trip.");
+}
+
 export async function deleteTrip(id) {
   const response = await fetch(`${API_BASE}/trips/${id}`, {
     method: "DELETE",

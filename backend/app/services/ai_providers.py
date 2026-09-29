@@ -44,7 +44,28 @@ class MockLLMProvider(BaseLLMProvider):
 
             # Check topic in prompt
             p_lower = prompt.lower()
-            if "pack" in p_lower or "wear" in p_lower or "weather" in p_lower:
+            if "rain" in p_lower or "monsoon" in p_lower:
+                reply = (
+                    f"If you encounter rain during your trip{dest_text}, plan for indoor cultural sightseeing such as local museums, "
+                    f"historic palace chambers, and covered markets. Pack a travel umbrella, waterproof footwear, and a dry pouch. "
+                    f"You can also use the ⇄ Swap tool on your itinerary timeline to shift outdoor activities to indoor alternatives!"
+                )
+                actions = ["Swap Itinerary Items", "Check Live Weather Forecast", "View Packing Checklist"]
+            elif "itinerary" in p_lower or "improve" in p_lower or "day" in p_lower or "schedule" in p_lower:
+                reply = (
+                    f"To improve your itinerary{dest_text}, balance high-energy morning sightseeing with relaxed afternoon local dining "
+                    f"and sunset leisure. Make sure travel times between activities are comfortable. You can click ⇄ Swap on any event "
+                    f"in your itinerary timeline to customize your schedule with alternative catalogue spots!"
+                )
+                actions = ["Swap Itinerary Items", "Review Budget Allocations", "What should I pack?"]
+            elif "know" in p_lower or "before" in p_lower or "tip" in p_lower or "advice" in p_lower:
+                reply = (
+                    f"Key tips before visiting{dest_text}: carry valid photo identification, keep digital and cash payment options ready, "
+                    f"check local monument timings in advance, and dress comfortably for extensive walking. Be sure to review your packing "
+                    f"checklist and live weather forecast on your RoamGenie dashboard before departure."
+                )
+                actions = ["View Packing Checklist", "Check Live Weather Forecast", "Review Itinerary"]
+            elif "pack" in p_lower or "wear" in p_lower or "weather" in p_lower:
                 reply = (
                     f"Based on the local forecast and your travel dates{dest_text}, I recommend packing lightweight breathable clothing, "
                     f"comfortable walking shoes, sunscreen, and an umbrella if rain is likely. Check your trip packing checklist to track packed items!"

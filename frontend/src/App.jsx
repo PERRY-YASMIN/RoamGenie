@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { ToastProvider, useToast } from "./context/ToastContext";
+import { CopilotProvider } from "./context/CopilotContext";
 import ToastContainer from "./components/ToastContainer";
+import TravelCopilotDrawer from "./components/TravelCopilotDrawer";
 import AuthPage from "./pages/AuthPage";
 import DestinationsPage from "./pages/DestinationsPage";
 import HomePage from "./pages/HomePage";
@@ -94,19 +96,22 @@ function AppContent() {
     <div className={`app-shell ${isArrival ? "is-arrival" : ""}`}>
       <ToastContainer />
       <AmbientWorld showScene />
+      <TravelCopilotDrawer />
       <div className="shell-header"><Navigation /></div>
       <main className={`app-main ${isArrival ? "arrival-main" : ""}`}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/plan" element={<PlanPage />} />
-          <Route path="/destinations" element={<DestinationsPage />} />
-          <Route path="/trips" element={<TripsPage />} />
-          <Route path="/showcase" element={<ShowcasePage />} />
-          <Route path="/login" element={<AuthPage />} />
-          <Route path="/register" element={<AuthPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div key={location.pathname} className="page-transition-wrap">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/plan" element={<PlanPage />} />
+            <Route path="/destinations" element={<DestinationsPage />} />
+            <Route path="/trips" element={<TripsPage />} />
+            <Route path="/showcase" element={<ShowcasePage />} />
+            <Route path="/login" element={<AuthPage />} />
+            <Route path="/register" element={<AuthPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </main>
       <footer className="app-footer">
         <div className="footer-content">
@@ -128,7 +133,9 @@ export default function App() {
   return (
     <ToastProvider>
       <AuthProvider>
-        <AppContent />
+        <CopilotProvider>
+          <AppContent />
+        </CopilotProvider>
       </AuthProvider>
     </ToastProvider>
   );

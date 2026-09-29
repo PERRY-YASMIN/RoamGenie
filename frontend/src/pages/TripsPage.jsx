@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
+import { useCopilot } from "../context/CopilotContext";
 import { deleteTrip, listSavedTrips, listTrips } from "../services/api";
 
 export default function TripsPage() {
   const { isAuthenticated } = useAuth();
   const { success, error: toastError, info } = useToast();
+  const { openCopilot } = useCopilot();
   const [activeTab, setActiveTab] = useState("all"); // all | saved
   const [trips, setTrips] = useState([]);
   const [savedTrips, setSavedTrips] = useState([]);
@@ -112,11 +114,11 @@ export default function TripsPage() {
         </div>
       ) : displayedTrips.length === 0 ? (
         <div className="empty-trips-card">
-          <div className="placeholder-icon">✈️</div>
-          <h3>No Trips Found</h3>
+          <div className="placeholder-icon">🗺️</div>
+          <h3>Your next journey starts here.</h3>
           <p>
             {activeTab === "all"
-              ? "You haven't created any trips yet. Set a destination, dates, and budget to generate your first itinerary."
+              ? "Create a trip and RoamGenie will help you plan every step."
               : "You haven't bookmarked any trips yet. Bookmark a trip from the itinerary planner to easily find it here."}
           </p>
           {activeTab === "saved" && trips.length > 0 ? (
@@ -128,7 +130,7 @@ export default function TripsPage() {
               View All Planned Trips ({trips.length}) →
             </button>
           ) : (
-            <Link className="button button-primary" to="/plan">Plan a New Trip →</Link>
+            <Link className="button button-primary" to="/plan">Plan a Trip →</Link>
           )}
         </div>
       ) : (
@@ -173,6 +175,14 @@ export default function TripsPage() {
                   >
                     Open Itinerary →
                   </Link>
+                  <button
+                    type="button"
+                    className="button button-secondary button-sm"
+                    onClick={() => openCopilot(trip.id)}
+                    aria-label={`Ask RoamGenie AI about trip in ${trip.destination_city || trip.id}`}
+                  >
+                    ✨ RoamGenie AI
+                  </button>
                   <button
                     type="button"
                     className="button button-danger button-sm"
