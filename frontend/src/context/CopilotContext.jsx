@@ -139,7 +139,7 @@ export function CopilotProvider({ children }) {
           ...prev,
           {
             role: "assistant",
-            text: `⚠️ ${errReply}`,
+            text: errReply,
             actions: ["Try again", "What should I pack?", "How can I reduce my budget?"],
           },
         ]);

@@ -104,4 +104,37 @@ describe("App Router & Navigation", () => {
     expect(screen.getByRole("dialog", { name: /RoamGenie AI Travel Assistant/i })).toBeInTheDocument();
     expect(screen.getByText("Personalized Travel Assistant")).toBeInTheDocument();
   });
+
+  it("renders the live mountain motion background on the home route", () => {
+    window.history.pushState({}, "Home page", "/");
+    const { container } = render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+
+    const world = container.querySelector(".global-world");
+    expect(world).toBeInTheDocument();
+    expect(world.querySelector(".immersive-scene")).toBeInTheDocument();
+    expect(world.querySelector(".scene-sky")).toBeInTheDocument();
+    expect(world.querySelector(".scene-clouds")).toBeInTheDocument();
+    expect(world.querySelector(".scene-mist")).toBeInTheDocument();
+    expect(world.querySelector(".scene-wind-streams")).toBeInTheDocument();
+    expect(world.querySelector(".scene-petals")).toBeInTheDocument();
+  });
+
+  it("renders the live mountain motion background on inner routes like /plan and /destinations", () => {
+    window.history.pushState({}, "Plan page", "/plan");
+    const { container } = render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+
+    const world = container.querySelector(".global-world");
+    expect(world).toBeInTheDocument();
+    expect(world.querySelector(".immersive-scene")).toBeInTheDocument();
+    expect(world.querySelector(".scene-sky")).toBeInTheDocument();
+    expect(world.querySelector(".scene-wind-streams")).toBeInTheDocument();
+  });
 });

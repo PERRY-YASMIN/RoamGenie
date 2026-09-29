@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
+import { IconAlert } from "../components/icons";
 
 export default function AuthPage() {
   const { search } = useLocation();
@@ -88,7 +89,7 @@ export default function AuthPage() {
 
         {error && (
           <div className="error-banner" role="alert">
-            <p>⚠️ {error}</p>
+            <p><IconAlert size={14} /> {error}</p>
           </div>
         )}
 

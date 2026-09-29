@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAttractions, getDestination, getDestinations, getHotels, getRestaurants } from "../services/api";
+import { getAttractions, getDestinations, getHotels, getRestaurants } from "../services/api";
 import { getAttractionImageUrl, getDestinationImageUrl, getGoogleMapsUrl } from "../utils/destinationImages";
+import { IconSearch, IconClose, IconArrowRight, IconExternalLink, IconStar, IconCompass } from "../components/icons";
 
 export default function DestinationsPage() {
   const [destinations, setDestinations] = useState([]);
@@ -14,6 +15,7 @@ export default function DestinationsPage() {
   const [modalTab, setModalTab] = useState("hotels");
   const [modalData, setModalData] = useState({ hotels: [], restaurants: [], attractions: [] });
   const [modalLoading, setModalLoading] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("all");
 
   useEffect(() => {
     loadDestinations();
@@ -70,8 +72,6 @@ export default function DestinationsPage() {
     }
   }
 
-  const [selectedFilter, setSelectedFilter] = useState("all");
-
   const displayedDestinations = destinations.filter((dest) => {
     if (selectedFilter === "india") return dest.country?.toLowerCase().includes("india");
     if (selectedFilter === "europe") {
@@ -86,76 +86,95 @@ export default function DestinationsPage() {
     return true;
   });
 
-  return (
-    <div className="destinations-container">
-      <div className="page-header">
-        <p className="eyebrow">Relational Catalogue Explorer</p>
-        <h1>Explore Travel Destinations</h1>
-        <p>Browse normalized catalogue data including hotels, local dining, attractions, and average daily expenses.</p>
+  const featuredDest = displayedDestinations.length > 0 ? displayedDestinations[0] : null;
+  const remainingDests = displayedDestinations.length > 1 ? displayedDestinations.slice(1) : [];
 
-        <form className="search-bar" onSubmit={handleSearchSubmit}>
+  return (
+    <div className="destinations-editorial-page">
+      {/* Editorial Header */}
+      <header className="editorial-page-header">
+        <p className="editorial-eyebrow">DESTINATIONS</p>
+        <h1 className="editorial-page-title">Find somewhere worth going.</h1>
+        <p className="editorial-page-subtitle">
+          An intentional catalogue of places, with accommodation options, local dining venues, and daily expense estimates.
+        </p>
+      </header>
+
+      {/* Editorial Search & Filter Bar */}
+      <section className="editorial-search-section" aria-label="Search and filter destinations">
+        <form className="editorial-search-bar" onSubmit={handleSearchSubmit}>
+          <span className="search-icon-slot" aria-hidden="true">
+            <IconSearch size={18} />
+          </span>
           <input
             type="text"
-            placeholder="Search by city (e.g., Jaipur, Kochi, Varanasi)..."
+            className="editorial-search-input"
+            placeholder="Search city or country (e.g. Kyoto, Shimla, Florence)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             aria-label="Search destinations by city"
           />
-          <button type="submit" disabled={loading}>Search</button>
           {search && (
             <button
               type="button"
-              className="button-clear"
+              className="editorial-clear-btn"
               onClick={() => {
                 setSearch("");
                 loadDestinations("");
               }}
-              aria-label="Clear search"
+              aria-label="Clear search query"
             >
-              Clear
+              <IconClose size={14} />
             </button>
           )}
+          <button type="submit" className="editorial-submit-btn" disabled={loading}>
+            Search
+          </button>
         </form>
 
-        <div className="destination-filter-chips" role="toolbar" aria-label="Filter destinations by region or cost">
+        <div className="editorial-filter-tabs" role="toolbar" aria-label="Filter destinations by region">
           {[
             { id: "all", label: "All Destinations" },
             { id: "india", label: "India" },
             { id: "europe", label: "Europe" },
             { id: "asia", label: "Asia" },
-            { id: "budget", label: "Budget Friendly (≤ ₹4,000/day)" },
+            { id: "budget", label: "Budget Friendly (≤ ₹4,000)" },
           ].map((f) => (
             <button
               key={f.id}
               type="button"
-              className={`dest-filter-chip ${selectedFilter === f.id ? "active" : ""}`}
+              className={`editorial-filter-link ${selectedFilter === f.id ? "active" : ""}`}
               onClick={() => setSelectedFilter(f.id)}
             >
               {f.label}
             </button>
           ))}
         </div>
-      </div>
+      </section>
 
+      {/* Main Content Area */}
       {loading ? (
-        <div className="loading-state" role="status" aria-live="polite">
-          <div className="spinner"></div>
-          <p>Loading destination catalogue from PostgreSQL...</p>
+        <div className="editorial-loading-state" role="status" aria-live="polite">
+          <div className="editorial-spinner" />
+          <p>Accessing destination catalogue...</p>
         </div>
       ) : error ? (
-        <div className="error-banner" role="alert">
-          <p>⚠️ {error}</p>
-          <button type="button" onClick={() => loadDestinations(search)}>Retry</button>
+        <div className="editorial-error-box" role="alert">
+          <p>{error}</p>
+          <button type="button" className="editorial-link-btn" onClick={() => loadDestinations(search)}>
+            Try again
+          </button>
         </div>
       ) : displayedDestinations.length === 0 ? (
-        <div className="empty-state">
-          <div className="placeholder-icon">📍</div>
-          <h3>No Destinations Found</h3>
-          <p>{search ? `No destinations found matching "${search}".` : "No destinations match the selected filter."}</p>
+        <div className="editorial-empty-state">
+          <p className="empty-title">No destinations found</p>
+          <p className="empty-desc">
+            {search ? `No catalogue entries match "${search}".` : "No destinations match the active filter criteria."}
+          </p>
           {(search || selectedFilter !== "all") && (
             <button
               type="button"
-              className="button button-outline"
+              className="editorial-action-btn"
               onClick={() => {
                 setSearch("");
                 setSelectedFilter("all");
@@ -167,93 +186,153 @@ export default function DestinationsPage() {
           )}
         </div>
       ) : (
-        <div className="destinations-grid">
-          {displayedDestinations.map((dest) => (
-            <div key={dest.id} className="destination-card">
-              <div className="dest-card-image-wrap">
+        <div className="editorial-destinations-layout">
+          {/* Featured Destination Hero Block */}
+          {featuredDest && (
+            <article className="featured-destination-block" aria-label={`Featured destination: ${featuredDest.city}`}>
+              <div className="featured-image-frame">
                 <img
-                  className="dest-card-img"
-                  src={getDestinationImageUrl(dest)}
-                  alt={`Scenic view of ${dest.city}, ${dest.country}`}
-                  loading="lazy"
+                  className="featured-image"
+                  src={getDestinationImageUrl(featuredDest)}
+                  alt={`Scenic landscape of ${featuredDest.city}, ${featuredDest.country}`}
+                  loading="eager"
                   onError={(e) => {
-                    e.target.src = "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80";
+                    e.target.src = "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80";
                   }}
                 />
-                <div className="dest-card-badge-overlay">
-                  <span className="dest-tag-badge">🏛️ {dest.country}</span>
-                  <span className="dest-cost-badge">₹{Number(dest.average_daily_cost || 3500).toLocaleString()}/day</span>
-                </div>
               </div>
 
-              <div className="dest-card-body">
-                <h2>{dest.city}</h2>
-                <p className="dest-desc">{dest.description || "Historical cultural and scenic travel destination."}</p>
+              <div className="featured-content">
+                <span className="featured-eyebrow">
+                  FEATURED DESTINATION · {featuredDest.country.toUpperCase()}
+                </span>
+                <h2 className="featured-city-title">{featuredDest.city}</h2>
+                <p className="featured-description">
+                  {featuredDest.description || "A storied landscape offering rich historical significance, cultural heritage, and memorable scenic routes."}
+                </p>
 
-                <div className="dest-actions">
+                <div className="featured-meta-row">
+                  <div className="featured-meta-item">
+                    <span className="meta-label">DAILY EXPENSE</span>
+                    <strong className="meta-val">₹{Number(featuredDest.average_daily_cost || 3500).toLocaleString()} <span className="meta-unit">/ day</span></strong>
+                  </div>
+                  <div className="featured-meta-item">
+                    <span className="meta-label">REGION</span>
+                    <strong className="meta-val">{featuredDest.country}</strong>
+                  </div>
+                </div>
+
+                <div className="featured-action-row">
+                  <Link
+                    to={`/plan?destinationId=${featuredDest.id}&city=${encodeURIComponent(featuredDest.city)}`}
+                    className="editorial-action-btn"
+                  >
+                    Plan Itinerary for {featuredDest.city} <IconArrowRight size={14} />
+                  </Link>
                   <button
                     type="button"
-                    className="button button-outline button-sm"
-                    onClick={() => openCatalogueModal(dest)}
-                    aria-label={`View catalogue items for ${dest.city}`}
+                    className="editorial-quiet-btn"
+                    onClick={() => openCatalogueModal(featuredDest)}
                   >
-                    View Catalogue
+                    View Catalogue Details
                   </button>
-                  <Link
-                    className="button button-primary button-sm"
-                    to={`/plan?destinationId=${dest.id}&city=${encodeURIComponent(dest.city)}`}
-                    aria-label={`Plan trip to ${dest.city}`}
-                  >
-                    Plan Trip
-                  </Link>
                 </div>
-
-                <a
-                  href={getGoogleMapsUrl(dest.city, dest.country)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="dest-maps-link"
-                  aria-label={`Explore ${dest.city} on Google Maps`}
-                >
-                  🗺️ Explore {dest.city} on Google Maps ↗
-                </a>
               </div>
+            </article>
+          )}
+
+          {/* Section Divider */}
+          {remainingDests.length > 0 && (
+            <div className="editorial-grid-divider">
+              <span className="divider-label">MORE DESTINATIONS</span>
+              <div className="divider-line" />
             </div>
-          ))}
+          )}
+
+          {/* Asymmetric Editorial Grid */}
+          {remainingDests.length > 0 && (
+            <div className="editorial-destinations-grid">
+              {remainingDests.map((dest) => (
+                <article key={dest.id} className="editorial-dest-item">
+                  <div className="dest-image-wrap">
+                    <img
+                      className="dest-image"
+                      src={getDestinationImageUrl(dest)}
+                      alt={`View of ${dest.city}, ${dest.country}`}
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.src = "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80";
+                      }}
+                    />
+                  </div>
+
+                  <div className="dest-item-body">
+                    <div className="dest-item-header">
+                      <span className="dest-item-country">{dest.country}</span>
+                      <span className="dest-item-cost">₹{Number(dest.average_daily_cost || 3500).toLocaleString()}/day</span>
+                    </div>
+
+                    <h3 className="dest-item-title">{dest.city}</h3>
+                    <p className="dest-item-desc">
+                      {dest.description || "A considered destination for exploration and travel."}
+                    </p>
+
+                    <div className="dest-item-actions">
+                      <Link
+                        className="dest-plan-link"
+                        to={`/plan?destinationId=${dest.id}&city=${encodeURIComponent(dest.city)}`}
+                        aria-label={`Plan trip to ${dest.city}`}
+                      >
+                        Plan trip <IconArrowRight size={13} />
+                      </Link>
+                      <button
+                        type="button"
+                        className="dest-details-link"
+                        onClick={() => openCatalogueModal(dest)}
+                        aria-label={`Inspect catalogue for ${dest.city}`}
+                      >
+                        Catalogue
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
-      {/* Catalogue Details Modal */}
+      {/* Catalogue Inspection Modal */}
       {selectedDest && (
-        <div className="modal-backdrop" onClick={() => setSelectedDest(null)}>
+        <div className="editorial-modal-backdrop" onClick={() => setSelectedDest(null)}>
           <div
-            className="modal-content"
+            className="editorial-modal-window"
             role="dialog"
             aria-modal="true"
             aria-label={`Catalogue Inspection for ${selectedDest.city}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="modal-header">
+            <div className="editorial-modal-header">
               <div>
-                <h2>{selectedDest.city}, {selectedDest.country}</h2>
-                <p className="eyebrow">Database Catalogue Inspection</p>
+                <p className="modal-eyebrow">DATABASE CATALOGUE</p>
+                <h2 className="modal-city-title">{selectedDest.city}, {selectedDest.country}</h2>
               </div>
               <button
                 type="button"
-                className="close-btn"
+                className="modal-close-btn"
                 onClick={() => setSelectedDest(null)}
                 aria-label="Close catalogue inspection dialog"
               >
-                ✕
+                <IconClose size={20} />
               </button>
             </div>
 
-            <div className="modal-tabs" role="tablist">
+            <div className="editorial-modal-tabs" role="tablist">
               <button
                 type="button"
                 role="tab"
                 aria-selected={modalTab === "hotels"}
-                className={`tab-btn ${modalTab === "hotels" ? "active" : ""}`}
+                className={`editorial-tab-btn ${modalTab === "hotels" ? "active" : ""}`}
                 onClick={() => setModalTab("hotels")}
               >
                 Accommodations ({modalData.hotels.length})
@@ -262,77 +341,86 @@ export default function DestinationsPage() {
                 type="button"
                 role="tab"
                 aria-selected={modalTab === "restaurants"}
-                className={`tab-btn ${modalTab === "restaurants" ? "active" : ""}`}
+                className={`editorial-tab-btn ${modalTab === "restaurants" ? "active" : ""}`}
                 onClick={() => setModalTab("restaurants")}
               >
-                Dining Venues ({modalData.restaurants.length})
+                Dining ({modalData.restaurants.length})
               </button>
               <button
                 type="button"
                 role="tab"
                 aria-selected={modalTab === "attractions"}
-                className={`tab-btn ${modalTab === "attractions" ? "active" : ""}`}
+                className={`editorial-tab-btn ${modalTab === "attractions" ? "active" : ""}`}
                 onClick={() => setModalTab("attractions")}
               >
-                Sightseeing & Sights ({modalData.attractions.length})
+                Sights & Culture ({modalData.attractions.length})
               </button>
             </div>
 
-            <div className="modal-body">
+            <div className="editorial-modal-body">
               {modalLoading ? (
-                <div className="loading-state" role="status" aria-live="polite">
-                  <div className="spinner"></div>
-                  <p>Loading catalogue items...</p>
+                <div className="editorial-loading-state" role="status" aria-live="polite">
+                  <div className="editorial-spinner" />
+                  <p>Retrieving database records...</p>
                 </div>
               ) : modalTab === "hotels" ? (
-                <div className="catalogue-list">
-                  {modalData.hotels.length === 0 ? <p className="empty-notice">No hotels recorded in database.</p> : (
+                <div className="editorial-catalogue-list">
+                  {modalData.hotels.length === 0 ? (
+                    <p className="empty-notice">No accommodations recorded in database.</p>
+                  ) : (
                     modalData.hotels.map((h) => (
-                      <div key={h.id} className="catalogue-item">
-                        <div className="item-title">
-                          <strong>{h.name}</strong>
-                          <span className="rating-badge">★ {h.rating || "4.5"}</span>
-                        </div>
-                        <p className="item-detail">{h.address || "Centrally located"}</p>
-                        <div className="item-footer">
-                          <span className="tier-tag">{h.tier}</span>
-                          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                            <span className="cost-tag">₹{Number(h.price_per_night).toLocaleString()} / night</span>
-                            <a
-                              href={getGoogleMapsUrl(h.name, selectedDest.city, selectedDest.country)}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="item-maps-link"
-                              aria-label={`Explore ${h.name} on Google Maps`}
-                            >
-                              🗺️ Maps ↗
-                            </a>
+                      <div key={h.id} className="editorial-catalogue-row">
+                        <div className="catalogue-row-main">
+                          <div className="catalogue-row-title">
+                            <strong>{h.name}</strong>
+                            <span className="rating-pill">
+                              <IconStar size={12} /> {h.rating || "4.5"}
+                            </span>
                           </div>
+                          <p className="catalogue-row-sub">{h.address || "Centrally located"} · {h.tier || "Standard"}</p>
+                        </div>
+                        <div className="catalogue-row-meta">
+                          <span className="cost-num">₹{Number(h.price_per_night).toLocaleString()} / night</span>
+                          <a
+                            href={getGoogleMapsUrl(h.name, selectedDest.city, selectedDest.country)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="maps-external-link"
+                            aria-label={`Explore ${h.name} on Google Maps`}
+                          >
+                            Map <IconExternalLink size={12} />
+                          </a>
                         </div>
                       </div>
                     ))
                   )}
                 </div>
               ) : modalTab === "restaurants" ? (
-                <div className="catalogue-list">
-                  {modalData.restaurants.length === 0 ? <p className="empty-notice">No dining venues recorded.</p> : (
+                <div className="editorial-catalogue-list">
+                  {modalData.restaurants.length === 0 ? (
+                    <p className="empty-notice">No dining venues recorded.</p>
+                  ) : (
                     modalData.restaurants.map((r) => (
-                      <div key={r.id} className="catalogue-item">
-                        <div className="item-title">
-                          <strong>{r.name}</strong>
-                          <span className="rating-badge">★ {r.rating || "4.5"}</span>
+                      <div key={r.id} className="editorial-catalogue-row">
+                        <div className="catalogue-row-main">
+                          <div className="catalogue-row-title">
+                            <strong>{r.name}</strong>
+                            <span className="rating-pill">
+                              <IconStar size={12} /> {r.rating || "4.5"}
+                            </span>
+                          </div>
+                          <p className="catalogue-row-sub">Cuisine: {r.cuisine}</p>
                         </div>
-                        <p className="item-detail">Cuisine: {r.cuisine}</p>
-                        <div className="item-footer">
-                          <span className="cost-tag">~₹{Number(r.average_cost_per_person).toLocaleString()} / person</span>
+                        <div className="catalogue-row-meta">
+                          <span className="cost-num">~₹{Number(r.average_cost_per_person).toLocaleString()} / person</span>
                           <a
                             href={getGoogleMapsUrl(r.name, selectedDest.city, selectedDest.country)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="item-maps-link"
+                            className="maps-external-link"
                             aria-label={`Explore ${r.name} on Google Maps`}
                           >
-                            🗺️ Maps ↗
+                            Map <IconExternalLink size={12} />
                           </a>
                         </div>
                       </div>
@@ -340,37 +428,42 @@ export default function DestinationsPage() {
                   )}
                 </div>
               ) : (
-                <div className="catalogue-list">
-                  {modalData.attractions.length === 0 ? <p className="empty-notice">No attractions recorded.</p> : (
+                <div className="editorial-catalogue-list">
+                  {modalData.attractions.length === 0 ? (
+                    <p className="empty-notice">No attractions recorded.</p>
+                  ) : (
                     modalData.attractions.map((a) => (
-                      <div key={a.id} className="catalogue-sight-item">
-                        <div className="sight-thumbnail-wrap">
+                      <div key={a.id} className="editorial-sight-row">
+                        <div className="sight-thumb">
                           <img
-                            className="sight-thumbnail-img"
                             src={getAttractionImageUrl(a)}
-                            alt={`Photo of ${a.name}`}
+                            alt={a.name}
                             loading="lazy"
                             onError={(e) => {
                               e.target.src = "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=400&q=80";
                             }}
                           />
                         </div>
-                        <div className="sight-info">
-                          <div className="item-title">
+                        <div className="sight-details">
+                          <div className="catalogue-row-title">
                             <strong>{a.name}</strong>
-                            <span className="rating-badge">★ {a.rating || "4.8"}</span>
+                            <span className="rating-pill">
+                              <IconStar size={12} /> {a.rating || "4.8"}
+                            </span>
                           </div>
-                          <p className="item-detail">Category: {a.category}</p>
-                          <div className="item-footer">
-                            <span className="cost-tag">Entry Fee: {Number(a.entry_fee) === 0 ? "Free Entry" : `₹${Number(a.entry_fee).toLocaleString()}`}</span>
+                          <p className="catalogue-row-sub">Category: {a.category}</p>
+                          <div className="sight-row-footer">
+                            <span className="cost-num">
+                              {Number(a.entry_fee) === 0 ? "Complimentary entry" : `Entry: ₹${Number(a.entry_fee).toLocaleString()}`}
+                            </span>
                             <a
                               href={getGoogleMapsUrl(a.name, selectedDest.city, selectedDest.country)}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="item-maps-link"
+                              className="maps-external-link"
                               aria-label={`Explore ${a.name} on Google Maps`}
                             >
-                              🗺️ Maps ↗
+                              Map <IconExternalLink size={12} />
                             </a>
                           </div>
                         </div>
@@ -381,13 +474,13 @@ export default function DestinationsPage() {
               )}
             </div>
 
-            <div className="modal-footer">
+            <div className="editorial-modal-footer">
               <Link
-                className="button button-primary"
+                className="editorial-action-btn"
                 to={`/plan?destinationId=${selectedDest.id}&city=${encodeURIComponent(selectedDest.city)}`}
                 onClick={() => setSelectedDest(null)}
               >
-                Plan Itinerary for {selectedDest.city}
+                Plan Itinerary for {selectedDest.city} <IconArrowRight size={14} />
               </Link>
             </div>
           </div>

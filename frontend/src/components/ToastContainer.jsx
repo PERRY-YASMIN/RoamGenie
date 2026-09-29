@@ -1,11 +1,5 @@
 import { useToast } from "../context/ToastContext";
-
-const TOAST_ICONS = {
-  success: "✓",
-  error: "✕",
-  warning: "⚠️",
-  info: "ℹ️",
-};
+import { IconCheck, IconClose, IconAlert } from "./icons";
 
 export default function ToastContainer() {
   const { toasts, removeToast } = useToast();
@@ -15,7 +9,6 @@ export default function ToastContainer() {
   return (
     <div className="toast-container" role="region" aria-label="Notifications">
       {toasts.map((toast) => {
-        const icon = TOAST_ICONS[toast.type] || "ℹ️";
         const role = toast.type === "error" ? "alert" : "status";
         return (
           <div
@@ -25,7 +18,10 @@ export default function ToastContainer() {
             aria-live={toast.type === "error" ? "assertive" : "polite"}
           >
             <span className="toast-icon" aria-hidden="true">
-              {icon}
+              {toast.type === "success" && <IconCheck size={14} />}
+              {toast.type === "error" && <IconClose size={14} />}
+              {toast.type === "warning" && <IconAlert size={14} />}
+              {toast.type === "info" && <IconAlert size={14} />}
             </span>
             <span className="toast-message">{toast.message}</span>
             <button
@@ -34,7 +30,7 @@ export default function ToastContainer() {
               onClick={() => removeToast(toast.id)}
               aria-label="Dismiss notification"
             >
-              ✕
+              <IconClose size={14} />
             </button>
           </div>
         );

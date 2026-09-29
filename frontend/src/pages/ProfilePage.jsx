@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import { getUserPreferences, updateUserPreferences } from "../services/api";
+import { IconUser, IconCheck, IconAlert } from "../components/icons";
 
 const ACTIVITY_OPTIONS = [
   "heritage",
@@ -55,7 +56,7 @@ export default function ProfilePage() {
         activities: data.activities || ["heritage", "culinary"],
       });
     } catch (err) {
-      console.error("Failed to load preferences", err);
+      console.error(err);
       toastError(err.message || "Failed to load preferences.");
     } finally {
       setLoading(false);
@@ -67,11 +68,15 @@ export default function ProfilePage() {
     setPreferences((prev) => ({ ...prev, [name]: value }));
   }
 
-  function toggleActivity(act) {
+  function toggleActivity(activity) {
     setPreferences((prev) => {
-      const exists = prev.activities.includes(act);
-      const next = exists ? prev.activities.filter((a) => a !== act) : [...prev.activities, act];
-      return { ...prev, activities: next };
+      const exists = prev.activities.includes(activity);
+      return {
+        ...prev,
+        activities: exists
+          ? prev.activities.filter((a) => a !== activity)
+          : [...prev.activities, activity],
+      };
     });
   }
 
@@ -80,14 +85,13 @@ export default function ProfilePage() {
     setSaving(true);
     setMessage(null);
     try {
-      await updateUserPreferences(preferences);
-      const msg = "Preferences and activity tags updated successfully!";
-      setMessage({ type: "success", text: msg });
-      success(msg);
+      const updated = await updateUserPreferences(preferences);
+      setPreferences(updated);
+      setMessage({ type: "success", text: "Travel preferences saved successfully." });
+      success("Preferences updated.");
     } catch (err) {
-      const msg = err.message || "Failed to update preferences.";
-      setMessage({ type: "error", text: msg });
-      toastError(msg);
+      setMessage({ type: "error", text: err.message || "Failed to update preferences." });
+      toastError(err.message || "Failed to save preferences.");
     } finally {
       setSaving(false);
     }
@@ -95,165 +99,197 @@ export default function ProfilePage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="panel" role="region" aria-label="Profile Required">
-        <h1>Profile & Preferences</h1>
-        <p>Please log in to manage your travel profile.</p>
-        <Link className="button button-primary" to="/login">Log In →</Link>
+      <div className="profile-editorial-page">
+        <header className="editorial-page-header">
+          <p className="editorial-eyebrow">ACCOUNT</p>
+          <h1 className="editorial-page-title">Traveller Profile</h1>
+          <p className="editorial-page-subtitle">Please log in to manage your account details and travel preferences.</p>
+          <div className="editorial-auth-actions">
+            <Link className="editorial-action-btn" to="/login">Log In →</Link>
+          </div>
+        </header>
       </div>
     );
   }
 
   return (
-    <div className="profile-container">
-      <div className="page-header">
-        <p className="eyebrow">User Customization & Normalized Preferences</p>
-        <h1>Traveller Profile</h1>
-        <p>Manage your account credentials, default travel preferences, and normalized activity interests.</p>
-      </div>
+    <div className="profile-editorial-page">
+      <header className="editorial-page-header">
+        <p className="editorial-eyebrow">ACCOUNT SETTINGS</p>
+        <h1 className="editorial-page-title">Traveller Profile</h1>
+        <p className="editorial-page-subtitle">
+          Manage your account credentials, default travel preferences, and activity interests.
+        </p>
+      </header>
 
-      <div className="profile-layout">
-        {/* User Card */}
-        <aside className="user-info-card" aria-label="Traveller Account Information">
-          <div className="avatar-placeholder">👤</div>
-          <h2>{user?.full_name || "Traveller"}</h2>
-          <p className="user-email">{user?.email}</p>
-          <span className="user-role-badge">Role: {user?.role || "traveller"}</span>
+      <div className="profile-editorial-layout">
+        {/* User Sidebar */}
+        <aside className="profile-editorial-aside" aria-label="Traveller Account Information">
+          <div className="profile-avatar-slot">
+            <IconUser size={28} />
+          </div>
+          <h2 className="profile-user-name">{user?.full_name || "Traveller"}</h2>
+          <p className="profile-user-email">{user?.email}</p>
+          <span className="profile-role-tag">ROLE: {(user?.role || "traveller").toUpperCase()}</span>
 
-          <div className="account-stats">
-            <div className="stat">
-              <span className="label">Registered</span>
-              <strong>{user?.created_at ? new Date(user.created_at).toLocaleDateString() : "Active"}</strong>
+          <div className="profile-stats-list">
+            <div className="profile-stat-row">
+              <span className="stat-label">REGISTERED</span>
+              <strong className="stat-val">
+                {user?.created_at ? new Date(user.created_at).toLocaleDateString() : "Active"}
+              </strong>
             </div>
-            <div className="stat">
-              <span className="label">Security</span>
-              <strong>Argon2id + JWT</strong>
+            <div className="profile-stat-row">
+              <span className="stat-label">AUTHENTICATION</span>
+              <strong className="stat-val">Argon2id + JWT</strong>
             </div>
           </div>
 
-          <button type="button" className="button button-outline button-full" onClick={logout} aria-label="Log out of account">
+          <button
+            type="button"
+            className="editorial-quiet-btn button-full"
+            onClick={logout}
+            aria-label="Log out of account"
+          >
             Log Out
           </button>
         </aside>
 
         {/* Preferences Form */}
-        <main className="preferences-card" aria-label="Default Travel Preferences">
-          <h2>Default Travel Preferences</h2>
-          <p>These settings automatically initialize the trip planner wizard for personalized itinerary recommendations.</p>
+        <main className="profile-editorial-main" aria-label="Default Travel Preferences">
+          <div className="profile-main-header">
+            <h3>Default Travel Preferences</h3>
+            <p className="profile-main-sub">
+              These settings initialize the trip planner wizard for personalized itinerary recommendations.
+            </p>
+          </div>
 
           {loading ? (
-            <div className="loading-state" role="status" aria-live="polite">
-              <div className="spinner"></div>
+            <div className="editorial-loading-state" role="status" aria-live="polite">
+              <div className="editorial-spinner" />
               <p>Loading your preferences from database...</p>
             </div>
           ) : (
             <>
               {message && (
-                <div className={`message-banner ${message.type}`} role="alert">
-                  <p>{message.type === "success" ? "✓" : "⚠️"} {message.text}</p>
+                <div className={`editorial-message-banner ${message.type}`} role="alert">
+                  {message.type === "success" ? <IconCheck size={14} /> : <IconAlert size={14} />}
+                  <span>{message.text}</span>
                 </div>
               )}
 
-              <form onSubmit={handleSave}>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="hotel_preference">Accommodation Tier</label>
+              <form onSubmit={handleSave} className="profile-editorial-form">
+                <div className="form-two-col">
+                  <div className="editorial-field-block">
+                    <label htmlFor="hotel_preference" className="field-label-editorial">
+                      Accommodation Tier
+                    </label>
                     <select
                       id="hotel_preference"
                       name="hotel_preference"
+                      className="editorial-select"
                       value={preferences.hotel_preference}
                       onChange={handleInputChange}
-                      disabled={saving}
                     >
                       <option value="budget">Budget (Hostels / Guesthouses)</option>
-                      <option value="moderate">Moderate (3-Star Boutique)</option>
-                      <option value="luxury">Luxury (Heritage Resorts / 5-Star)</option>
+                      <option value="moderate">Moderate (Boutique / 3-Star)</option>
+                      <option value="luxury">Luxury (Heritage / 5-Star)</option>
                     </select>
                   </div>
 
-                  <div className="form-group">
-                    <label htmlFor="food_preference">Food & Dining Preference</label>
+                  <div className="editorial-field-block">
+                    <label htmlFor="food_preference" className="field-label-editorial">
+                      Dining Style
+                    </label>
                     <select
                       id="food_preference"
                       name="food_preference"
+                      className="editorial-select"
                       value={preferences.food_preference}
                       onChange={handleInputChange}
-                      disabled={saving}
                     >
                       <option value="vegetarian">Vegetarian</option>
-                      <option value="non-veg">Non-Vegetarian</option>
                       <option value="vegan">Vegan</option>
                       <option value="halal">Halal</option>
+                      <option value="local_specialties">Local Specialties</option>
+                      <option value="fine_dining">Fine Dining</option>
+                      <option value="street_food">Street Food & Markets</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="transport_preference">Primary Transport Mode</label>
+                <div className="form-two-col">
+                  <div className="editorial-field-block">
+                    <label htmlFor="transport_preference" className="field-label-editorial">
+                      Transit Preference
+                    </label>
                     <select
                       id="transport_preference"
                       name="transport_preference"
+                      className="editorial-select"
                       value={preferences.transport_preference}
                       onChange={handleInputChange}
-                      disabled={saving}
                     >
-                      <option value="train">Train / Rail</option>
-                      <option value="flight">Flight / Air</option>
-                      <option value="bus">Bus / Coach</option>
-                      <option value="self-drive">Self-Drive / Car Rental</option>
+                      <option value="train">Rail & Train</option>
+                      <option value="bus">Regional Bus / Coach</option>
+                      <option value="flight">Domestic Flight</option>
+                      <option value="self_drive">Self Drive / Rental</option>
                     </select>
                   </div>
 
-                  <div className="form-group">
-                    <label htmlFor="travel_style">Travel Style</label>
+                  <div className="editorial-field-block">
+                    <label htmlFor="travel_style" className="field-label-editorial">
+                      Primary Pace
+                    </label>
                     <select
                       id="travel_style"
                       name="travel_style"
+                      className="editorial-select"
                       value={preferences.travel_style}
                       onChange={handleInputChange}
-                      disabled={saving}
                     >
-                      <option value="cultural">Cultural & Heritage Focus</option>
-                      <option value="relaxed">Relaxed & Leisure</option>
-                      <option value="fast-paced">Fast-Paced Explorer</option>
-                      <option value="adventure">Outdoor Adventure</option>
+                      <option value="relaxed">Relaxed (1-2 activities / day)</option>
+                      <option value="moderate">Balanced (3-4 activities / day)</option>
+                      <option value="fast_paced">Immersive / Fast Paced</option>
+                      <option value="cultural">Heritage & Cultural Focus</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="special_requirements">Special Requirements / Dietary Notes</label>
-                  <input
+                <div className="editorial-field-block">
+                  <label htmlFor="special_requirements" className="field-label-editorial">
+                    Special Notes or Dietary Needs
+                  </label>
+                  <textarea
                     id="special_requirements"
                     name="special_requirements"
-                    type="text"
+                    className="editorial-textarea"
+                    rows={3}
+                    placeholder="e.g. Accessibility needs, allergies, preferred arrival times..."
                     value={preferences.special_requirements}
                     onChange={handleInputChange}
-                    placeholder="e.g. Wheelchair access, gluten-free dining, near city center"
-                    disabled={saving}
                   />
                 </div>
 
-                <div className="form-group">
-                  <label>Normalized Activity Interests (Stored in <code>activity_preferences</code>)</label>
-                  <div className="tag-cloud">
+                <div className="editorial-field-block">
+                  <label className="field-label-editorial">Activity & Sights Interests</label>
+                  <div className="editorial-preference-list">
                     {ACTIVITY_OPTIONS.map((act) => (
                       <button
                         key={act}
                         type="button"
-                        className={`tag-btn ${preferences.activities.includes(act) ? "selected" : ""}`}
+                        className={`preference-text-link ${preferences.activities.includes(act) ? "selected" : ""}`}
                         onClick={() => toggleActivity(act)}
                         disabled={saving}
                         aria-label={`Toggle interest in ${act}`}
                       >
-                        {preferences.activities.includes(act) ? "✓ " : "+ "}
                         {act}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <button type="submit" className="button button-primary" disabled={saving}>
+                <button type="submit" className="editorial-action-btn" disabled={saving}>
                   {saving ? "Saving Changes..." : "Save Preferences"}
                 </button>
               </form>

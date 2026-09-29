@@ -39,15 +39,13 @@ function Navigation() {
         {isAuthenticated && (
           <Link className={isActive("/trips")} to="/trips">My Trips</Link>
         )}
-        <Link className={isActive("/showcase")} to="/showcase">
-          <span className="showcase-pill">DBMS Showcase</span>
-        </Link>
+        <Link className={isActive("/showcase")} to="/showcase">DBMS Showcase</Link>
       </nav>
 
       <div className="auth-actions">
         {isAuthenticated ? (
           <div className="user-dropdown">
-            <Link className="profile-link" to="/profile" aria-label="User Profile">
+            <Link className={`profile-link ${location.pathname === "/profile" ? "active" : ""}`} to="/profile" aria-label="User Profile">
               <span className="avatar-chip" aria-hidden="true" />
               <span className="user-name">{user?.full_name?.split(" ")[0] || "Profile"}</span>
             </Link>

@@ -2,6 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCopilot } from "../context/CopilotContext";
+import {
+  IconSparkles,
+  IconClose,
+  IconSend,
+  IconCompass,
+  IconSuitcase,
+  IconCalendar,
+  IconWallet,
+  IconSun,
+  IconMapPin,
+  IconTrash,
+} from "./icons";
 
 function formatTripDates(startDate, endDate) {
   if (!startDate || !endDate) return "";
@@ -97,11 +109,13 @@ export default function TravelCopilotDrawer() {
         aria-label="Open RoamGenie AI Assistant"
         aria-expanded={isOpen}
       >
-        <span className="copilot-btn-icon" aria-hidden="true">✨</span>
+        <span className="copilot-btn-icon" aria-hidden="true">
+          <IconSparkles size={16} />
+        </span>
         <span className="copilot-btn-label">RoamGenie AI</span>
         {destName && (
           <span className="copilot-btn-badge" title={`Active trip: ${destName}`}>
-            📍 {destName}
+            {destName}
           </span>
         )}
       </button>
@@ -110,7 +124,7 @@ export default function TravelCopilotDrawer() {
       {isOpen && (
         <div className="chat-drawer-backdrop" onClick={closeCopilot}>
           <div
-            className="chat-drawer"
+            className="chat-drawer editorial-drawer"
             role="dialog"
             aria-modal="true"
             aria-label="RoamGenie AI Travel Assistant"
@@ -119,30 +133,26 @@ export default function TravelCopilotDrawer() {
             {/* Header */}
             <div className="chat-header">
               <div className="chat-header-title-wrap">
-                <div className="chat-header-brand">
-                  <span className="brand-sparkle" aria-hidden="true">✨</span>
-                  <h3>RoamGenie AI</h3>
-                </div>
+                <div className="chat-eyebrow">INTELLIGENCE</div>
+                <h3 className="chat-title">RoamGenie AI</h3>
                 <p className="chat-header-subtitle">Personalized Travel Assistant</p>
               </div>
 
-              <div className="chat-header-actions">
-                <button
-                  type="button"
-                  className="chat-close-btn"
-                  onClick={closeCopilot}
-                  aria-label="Close RoamGenie AI drawer"
-                >
-                  ✕
-                </button>
-              </div>
+              <button
+                type="button"
+                className="chat-close-btn"
+                onClick={closeCopilot}
+                aria-label="Close RoamGenie AI drawer"
+              >
+                <IconClose size={18} />
+              </button>
             </div>
 
             {/* Trip Selector Toolbar */}
             {isAuthenticated && userTrips.length > 0 && (
               <div className="chat-trip-selector-bar">
                 <label htmlFor="ai-trip-select" className="selector-label">
-                  Planning with:
+                  JOURNEY
                 </label>
                 <select
                   id="ai-trip-select"
@@ -164,64 +174,62 @@ export default function TravelCopilotDrawer() {
 
             {/* Trip Context Card or Empty State */}
             {activeTrip ? (
-              <div className="chat-context-card">
-                <div className="context-card-header">
-                  <span className="context-dest-name">
-                    📍 {destName || `Trip #${activeTrip.id}`}
-                  </span>
+              <div className="chat-context-editorial">
+                <div className="context-hero-line">
+                  <h4 className="context-city-title">{destName || `Trip #${activeTrip.id}`}</h4>
                   {activeTrip.start_date && (
-                    <span className="context-dates">
+                    <span className="context-date-range">
                       {formatTripDates(activeTrip.start_date, activeTrip.end_date)}
                     </span>
                   )}
                 </div>
 
-                <div className="context-card-metrics">
-                  <div className="context-metric">
-                    <span className="metric-label">Travellers</span>
-                    <span className="metric-value">{activeTrip.traveller_count} persons</span>
+                <div className="context-details-row">
+                  <div className="context-meta-col">
+                    <span className="context-meta-label">TRAVELLERS</span>
+                    <span className="context-meta-val">{activeTrip.traveller_count} travellers</span>
                   </div>
-                  <div className="context-metric">
-                    <span className="metric-label">Budget</span>
-                    <span className="metric-value">₹{Number(activeTrip.total_budget || 0).toLocaleString()}</span>
+                  <div className="context-meta-col">
+                    <span className="context-meta-label">BUDGET</span>
+                    <span className="context-meta-val">₹{Number(activeTrip.total_budget || 0).toLocaleString()}</span>
                   </div>
-                  {isOverBudget ? (
-                    <div className="context-metric alert-deficit">
-                      <span className="metric-label">Status</span>
-                      <span className="metric-value text-danger">⚠️ ₹{deficitAmount.toLocaleString()} over</span>
-                    </div>
-                  ) : Number(activeTrip.estimated_total) > 0 ? (
-                    <div className="context-metric alert-ok">
-                      <span className="metric-label">Status</span>
-                      <span className="metric-value text-success">✓ On Track</span>
-                    </div>
-                  ) : null}
+                  <div className="context-meta-col">
+                    <span className="context-meta-label">STATUS</span>
+                    {isOverBudget ? (
+                      <span className="context-meta-val text-deficit">₹{deficitAmount.toLocaleString()} over</span>
+                    ) : (
+                      <span className="context-meta-val text-aligned">Aligned</span>
+                    )}
+                  </div>
                 </div>
 
-                <button
-                  type="button"
-                  className="context-disconnect-btn"
-                  onClick={() => selectTrip(null)}
-                  title="Switch to general travel mode"
-                >
-                  Disconnect trip context
-                </button>
+                <div className="context-action-line">
+                  <button
+                    type="button"
+                    className="context-link-btn"
+                    onClick={() => selectTrip(null)}
+                    title="Switch to general travel mode"
+                  >
+                    Disconnect journey context
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="chat-empty-context">
                 <div className="empty-context-inner">
-                  <span className="empty-context-icon" aria-hidden="true">🗺️</span>
+                  <span className="empty-context-icon" aria-hidden="true">
+                    <IconCompass size={24} />
+                  </span>
                   <div>
-                    <h4>Your trip isn&apos;t connected yet</h4>
+                    <h4>No trip is connected yet</h4>
                     <p>
-                      Confirm a trip and I&apos;ll personalize travel suggestions around your destination,
-                      dates, budget and itinerary.
+                      Confirm a trip and your travel preferences, itinerary and budget will become available here.
                     </p>
                   </div>
                 </div>
                 <Link
                   to="/plan"
-                  className="button button-sm button-primary empty-plan-btn"
+                  className="editorial-action-btn empty-plan-btn"
                   onClick={closeCopilot}
                 >
                   Plan a Trip →
@@ -233,18 +241,18 @@ export default function TravelCopilotDrawer() {
             <div className="chat-body">
               {!isAuthenticated ? (
                 <div className="chat-auth-prompt">
-                  <div className="placeholder-icon">🔐</div>
-                  <h4>Sign in to Unlock RoamGenie AI</h4>
+                  <div className="auth-prompt-eyebrow">AUTHENTICATION</div>
+                  <h4>Sign in to connect RoamGenie AI</h4>
                   <p>
-                    Log in to receive personalized travel recommendations grounded in your private itineraries,
-                    category budgets, packing lists, and local destination weather.
+                    Log in to receive personalized recommendations grounded in your private itineraries,
+                    category budgets, and local destination intelligence.
                   </p>
                   <div className="chat-auth-buttons">
-                    <Link className="button button-primary button-sm" to="/login" onClick={closeCopilot}>
+                    <Link className="editorial-action-btn" to="/login" onClick={closeCopilot}>
                       Log In →
                     </Link>
-                    <Link className="button button-outline button-sm" to="/register" onClick={closeCopilot}>
-                      Sign Up
+                    <Link className="editorial-quiet-btn" to="/register" onClick={closeCopilot}>
+                      Create Account
                     </Link>
                   </div>
                 </div>
@@ -252,60 +260,70 @@ export default function TravelCopilotDrawer() {
                 <div className="chat-welcome">
                   <p className="welcome-intro">
                     {activeTrip
-                      ? `Hello! I'm ready to assist with your trip to ${destName}. Ask me anything about your itinerary pacing, category budgets, packing essentials, or local attractions.`
-                      : "Hello! I'm RoamGenie AI. Ask me general travel questions, or connect a confirmed trip above for personalized advice."}
+                      ? `Ready to assist with your journey to ${destName}. Inquire about itinerary pacing, budget allocations, or local context.`
+                      : "RoamGenie AI is ready. Inquire about destinations, planning principles, or connect a journey above."}
                   </p>
 
-                  <div className="quick-actions-label">Suggested Inquiries</div>
-                  <div className="quick-suggestions">
+                  <div className="quick-actions-label">SUGGESTED INQUIRIES</div>
+                  <div className="quick-suggestions-editorial">
                     <button
                       type="button"
-                      className="quick-suggestion-btn"
+                      className="quick-suggestion-item"
                       onClick={() => handleQuickPrompt("What should I pack?")}
                     >
-                      🎒 What should I pack?
+                      <span className="suggestion-bullet">—</span>
+                      <span>Packing essentials & checklist</span>
                     </button>
                     <button
                       type="button"
-                      className="quick-suggestion-btn"
+                      className="quick-suggestion-item"
                       onClick={() => handleQuickPrompt("How can I reduce my budget?")}
                     >
-                      💰 Optimize my budget
+                      <span className="suggestion-bullet">—</span>
+                      <span>Budget review & optimization</span>
                     </button>
                     <button
                       type="button"
-                      className="quick-suggestion-btn"
+                      className="quick-suggestion-item"
                       onClick={() => handleQuickPrompt("Can you improve my itinerary?")}
                     >
-                      📅 Improve my itinerary
+                      <span className="suggestion-bullet">—</span>
+                      <span>Itinerary pacing suggestions</span>
                     </button>
                     <button
                       type="button"
-                      className="quick-suggestion-btn"
+                      className="quick-suggestion-item"
                       onClick={() => handleQuickPrompt("What should I do if it rains?")}
                     >
-                      🌧️ What if it rains?
+                      <span className="suggestion-bullet">—</span>
+                      <span>Weather context & contingency plans</span>
                     </button>
                     <button
                       type="button"
-                      className="quick-suggestion-btn"
+                      className="quick-suggestion-item"
                       onClick={() => handleQuickPrompt("Suggest places to visit")}
                     >
-                      📍 Suggest places
+                      <span className="suggestion-bullet">—</span>
+                      <span>Local recommendations & highlights</span>
                     </button>
                   </div>
                 </div>
               ) : (
                 chatMessages.map((msg, idx) => (
-                  <div key={idx} className={`chat-bubble ${msg.role}`}>
-                    <p style={{ whiteSpace: "pre-line" }}>{msg.text}</p>
+                  <div key={idx} className={`chat-bubble-editorial ${msg.role}`}>
+                    <div className="bubble-speaker">
+                      {msg.role === "user" ? "YOU" : "ROAMGENIE AI"}
+                    </div>
+                    <div className="bubble-content" style={{ whiteSpace: "pre-line" }}>
+                      {msg.text}
+                    </div>
                     {msg.actions && msg.actions.length > 0 && (
-                      <div className="suggested-actions-list">
+                      <div className="suggested-actions-editorial">
                         {msg.actions.map((act, aIdx) => (
                           <button
                             key={aIdx}
                             type="button"
-                            className="action-pill action-pill-btn"
+                            className="editorial-action-chip"
                             onClick={() => handleQuickPrompt(act)}
                           >
                             {act}
@@ -318,13 +336,16 @@ export default function TravelCopilotDrawer() {
               )}
 
               {chatLoading && (
-                <div className="chat-bubble assistant loading" role="status" aria-live="polite">
-                  <span className="thinking-text">RoamGenie AI is thinking</span>
-                  <span className="typing-dots" aria-hidden="true">
-                    <span />
-                    <span />
-                    <span />
-                  </span>
+                <div className="chat-bubble-editorial assistant loading" role="status" aria-live="polite">
+                  <div className="bubble-speaker">ROAMGENIE AI</div>
+                  <div className="thinking-row">
+                    <span className="thinking-text">Analyzing journey parameters...</span>
+                    <span className="typing-dots" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                  </div>
                 </div>
               )}
               <div ref={chatBottomRef} />
@@ -332,15 +353,16 @@ export default function TravelCopilotDrawer() {
 
             {/* Footer with Input */}
             {isAuthenticated && (
-              <form className="chat-footer" onSubmit={handleSubmit}>
-                <div className="chat-input-wrapper">
+              <form className="chat-footer-editorial" onSubmit={handleSubmit}>
+                <div className="chat-input-row">
                   <input
                     ref={inputRef}
                     type="text"
+                    className="chat-text-input"
                     placeholder={
                       destName
                         ? `Ask about your trip to ${destName}...`
-                        : "Ask travel questions or connect a trip..."
+                        : "Ask about travel destinations or planning..."
                     }
                     value={inputVal}
                     onChange={(e) => setInputVal(e.target.value)}
@@ -350,23 +372,25 @@ export default function TravelCopilotDrawer() {
                   />
                   <button
                     type="submit"
-                    className="chat-send-btn"
+                    className="chat-submit-btn"
                     disabled={chatLoading || !inputVal.trim()}
                     aria-label="Send message"
                   >
-                    ↑
+                    <IconSend size={15} />
                   </button>
                 </div>
                 {chatMessages.length > 0 && (
-                  <button
-                    type="button"
-                    className="chat-clear-link"
-                    onClick={clearChat}
-                    title="Clear message history and start a new conversation"
-                    aria-label="Clear chat history"
-                  >
-                    Clear chat
-                  </button>
+                  <div className="chat-footer-meta">
+                    <button
+                      type="button"
+                      className="chat-clear-link"
+                      onClick={clearChat}
+                      title="Clear message history and start a new conversation"
+                      aria-label="Clear chat history"
+                    >
+                      <IconTrash size={12} /> Clear history
+                    </button>
+                  </div>
                 )}
               </form>
             )}
