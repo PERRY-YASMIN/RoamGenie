@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
       try {
         const profile = await getMe();
         setUser(profile);
-      } catch (err) {
+      } catch {
         localStorage.removeItem("roamgenie_token");
         setUser(null);
       } finally {

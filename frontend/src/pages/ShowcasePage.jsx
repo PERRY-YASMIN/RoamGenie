@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useToast } from "../context/ToastContext";
 import { executeCustomSQL, executeReportQuery, getAuditLogs, getReportQueries } from "../services/api";
 import { IconDatabase, IconCode, IconShield, IconCopy, IconCheck, IconRefresh } from "../components/icons";
@@ -23,6 +23,21 @@ export default function ShowcasePage() {
   const [auditLogs, setAuditLogs] = useState([]);
   const [auditLoading, setAuditLoading] = useState(false);
 
+  const runPredefinedQuery = useCallback(async (qid) => {
+    setExecuting(true);
+    setExecError(null);
+    try {
+      const res = await executeReportQuery(qid);
+      setQueryResult(res);
+    } catch (err) {
+      setExecError(err.message);
+      setQueryResult(null);
+      toastError(err.message || `Failed to execute ${qid}.`);
+    } finally {
+      setExecuting(false);
+    }
+  }, [toastError]);
+
   useEffect(() => {
     async function loadQueries() {
       try {
@@ -38,22 +53,7 @@ export default function ShowcasePage() {
       }
     }
     loadQueries();
-  }, []);
-
-  async function runPredefinedQuery(qid) {
-    setExecuting(true);
-    setExecError(null);
-    try {
-      const res = await executeReportQuery(qid);
-      setQueryResult(res);
-    } catch (err) {
-      setExecError(err.message);
-      setQueryResult(null);
-      toastError(err.message || `Failed to execute ${qid}.`);
-    } finally {
-      setExecuting(false);
-    }
-  }
+  }, [runPredefinedQuery, toastError]);
 
   async function handleCustomSQLExecute(e) {
     e.preventDefault();
@@ -72,7 +72,7 @@ export default function ShowcasePage() {
     }
   }
 
-  async function loadAuditTriggerLogs() {
+  const loadAuditTriggerLogs = useCallback(async () => {
     setAuditLoading(true);
     try {
       const logs = await getAuditLogs(50);
@@ -83,13 +83,13 @@ export default function ShowcasePage() {
     } finally {
       setAuditLoading(false);
     }
-  }
+  }, [toastError]);
 
   useEffect(() => {
     if (activeTab === "audit") {
       loadAuditTriggerLogs();
     }
-  }, [activeTab]);
+  }, [activeTab, loadAuditTriggerLogs]);
 
   const categories = useMemo(() => {
     const set = new Set();

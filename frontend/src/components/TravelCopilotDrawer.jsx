@@ -7,11 +7,6 @@ import {
   IconClose,
   IconSend,
   IconCompass,
-  IconSuitcase,
-  IconCalendar,
-  IconWallet,
-  IconSun,
-  IconMapPin,
   IconTrash,
 } from "./icons";
 

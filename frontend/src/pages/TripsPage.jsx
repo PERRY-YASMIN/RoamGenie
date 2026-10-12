@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
@@ -31,15 +31,7 @@ export default function TripsPage() {
   const [error, setError] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadData();
-    } else {
-      setLoading(false);
-    }
-  }, [isAuthenticated]);
-
-  async function loadData() {
+  const loadData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -55,7 +47,15 @@ export default function TripsPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [toastError]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadData();
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, loadData]);
 
   async function handleDeleteTrip(tripId) {
     if (!window.confirm("Are you sure you want to remove this journey entry?")) return;

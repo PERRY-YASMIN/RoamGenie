@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAttractions, getDestinations, getHotels, getRestaurants } from "../services/api";
 import { getAttractionImageUrl, getDestinationImageUrl, getGoogleMapsUrl } from "../utils/destinationImages";
-import { IconSearch, IconClose, IconArrowRight, IconExternalLink, IconStar, IconCompass } from "../components/icons";
+import { IconSearch, IconClose, IconArrowRight, IconExternalLink, IconStar } from "../components/icons";
 
 export default function DestinationsPage() {
   const [destinations, setDestinations] = useState([]);

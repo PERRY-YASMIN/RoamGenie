@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
@@ -35,15 +35,7 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadPreferences();
-    } else {
-      setLoading(false);
-    }
-  }, [isAuthenticated]);
-
-  async function loadPreferences() {
+  const loadPreferences = useCallback(async () => {
     setLoading(true);
     try {
       const data = await getUserPreferences();
@@ -61,7 +53,15 @@ export default function ProfilePage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [toastError]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadPreferences();
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, loadPreferences]);
 
   function handleInputChange(e) {
     const { name, value } = e.target;

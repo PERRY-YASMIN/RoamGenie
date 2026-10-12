@@ -16,16 +16,12 @@ import {
   getTransportOptions,
   getTrip,
   getTripWeather,
-  previewPlan,
   swapItineraryItem,
   togglePackingItem,
   toggleSaveTrip,
   updateTrip,
 } from "../services/api";
-import { getAttractionImageUrl, getDestinationImageUrl } from "../utils/destinationImages";
 import {
-  IconArrowRight,
-  IconCalendar,
   IconCheck,
   IconClose,
   IconCompass,
@@ -34,9 +30,6 @@ import {
   IconSparkles,
   IconSuitcase,
   IconSun,
-  IconTrash,
-  IconUsers,
-  IconWallet,
 } from "../components/icons";
 
 const PREFERENCE_TAGS = [
@@ -79,7 +72,7 @@ export default function PlanPage() {
 
   const { isAuthenticated } = useAuth();
   const { success, error: toastError, info } = useToast();
-  const { selectTrip, activeTripId } = useCopilot();
+  const { selectTrip } = useCopilot();
 
   const [destinations, setDestinations] = useState([]);
   const [destSearchText, setDestSearchText] = useState(cityParam || "");
@@ -1208,8 +1201,8 @@ export default function PlanPage() {
               ) : (
                 <div className="editorial-catalogue-list">
                   {swapAlternatives.map((alt) => {
-                    let costText = "";
-                    let detailText = "";
+                    let costText;
+                    let detailText;
                     if (swapCategory === "hotel") {
                       costText = `₹${Number(alt.price_per_night).toLocaleString()} / night`;
                       detailText = alt.rating ? `Rating: ${alt.rating}/5.0` : "Accommodations";

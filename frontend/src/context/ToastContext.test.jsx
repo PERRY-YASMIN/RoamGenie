@@ -4,7 +4,7 @@ import ToastContainer from "../components/ToastContainer";
 import { ToastProvider, useToast } from "./ToastContext";
 
 function TestConsumer() {
-  const { showToast, success, error, warning, info } = useToast();
+  const { showToast, success, error, warning } = useToast();
   return (
     <div>
       <button onClick={() => showToast("General message", "info", 0)}>Show Info</button>

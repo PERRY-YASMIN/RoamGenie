@@ -8,6 +8,7 @@ export default function AmbientWorld({ showScene = true }) {
   const audioRef = useRef(null);
 
   useEffect(() => {
+    const audio = audioRef.current;
     function handleEnvChange(e) {
       if (e.detail) {
         setActiveEnv(getEnvironment(e.detail));
@@ -16,7 +17,7 @@ export default function AmbientWorld({ showScene = true }) {
     window.addEventListener("roamgenie:environment-change", handleEnvChange);
     return () => {
       window.removeEventListener("roamgenie:environment-change", handleEnvChange);
-      audioRef.current?.pause();
+      audio?.pause();
     };
   }, []);
 
