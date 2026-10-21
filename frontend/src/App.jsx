@@ -29,7 +29,8 @@ function Navigation() {
   return (
     <header className="app-header">
       <Link className="brand" to="/" aria-label="RoamGenie Home">
-        <span className="brand-mark" aria-hidden="true" /> RoamGenie
+        <span className="brand-mark snowflake-emoji" aria-hidden="true">❄️</span>
+        <span className="brand-text">RoamGenie</span>
       </Link>
 
       <nav aria-label="Main navigation" className="main-nav">

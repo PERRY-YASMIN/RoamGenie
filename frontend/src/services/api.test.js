@@ -100,3 +100,55 @@ describe("chatAssistant", () => {
   });
 });
 
+describe("executeChatProposal", () => {
+  it("sends POST request to /assistant/execute-proposal with proposal payload", async () => {
+    const { executeChatProposal } = await import("./api");
+    const mockSuccessResp = {
+      success: true,
+      message: "Successfully executed 'swap' on trip #5.",
+      trip: { id: 5, estimated_total: "12000.00" },
+      proposal_id: "prop-5-1234",
+    };
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => mockSuccessResp,
+      })
+    );
+
+    const payload = {
+      trip_id: 5,
+      action: "swap",
+      target_item_id: 10,
+      replacement_type: "hotel",
+      replacement_id: 2,
+    };
+    const res = await executeChatProposal(payload);
+
+    expect(res).toEqual(mockSuccessResp);
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringContaining("/assistant/execute-proposal"),
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify(payload),
+      })
+    );
+  });
+
+  it("handles constraint violation error with specific message", async () => {
+    const { executeChatProposal } = await import("./api");
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: false,
+        json: async () => ({ detail: "This change violates your budget constraints: allocated budget amounts must be valid positive values." }),
+      })
+    );
+
+    await expect(executeChatProposal({ trip_id: 5 })).rejects.toThrow(
+      "This change violates your budget constraints"
+    );
+  });
+});

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import { getAttractions, getDestinations, getHotels, getRestaurants } from "../services/api";
+import { getAttractions, getDestinations, getHotels, getRestaurants, getTransportOptions } from "../services/api";
 import { getAttractionImageUrl, getDestinationImageUrl, getGoogleMapsUrl } from "../utils/destinationImages";
 import { IconSearch, IconClose, IconArrowRight, IconExternalLink, IconStar } from "../components/icons";
 
@@ -13,23 +14,32 @@ export default function DestinationsPage() {
   // Selected destination modal state
   const [selectedDest, setSelectedDest] = useState(null);
   const [modalTab, setModalTab] = useState("hotels");
-  const [modalData, setModalData] = useState({ hotels: [], restaurants: [], attractions: [] });
+  const [modalData, setModalData] = useState({ hotels: [], restaurants: [], attractions: [], transports: [] });
   const [modalLoading, setModalLoading] = useState(false);
+  const [modalError, setModalError] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("all");
 
   useEffect(() => {
     loadDestinations();
   }, []);
 
-  // Escape key listener to close catalogue modal
+  // Escape key listener & body scroll lock to close catalogue modal
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === "Escape" && selectedDest) {
         setSelectedDest(null);
       }
     }
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    if (selectedDest) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [selectedDest]);
 
   async function loadDestinations(query = "") {
@@ -54,22 +64,30 @@ export default function DestinationsPage() {
     loadDestinations(search);
   }
 
-  async function openCatalogueModal(dest) {
-    setSelectedDest(dest);
-    setModalTab("hotels");
+  async function loadCatalogueData(dest) {
+    if (!dest?.id) return;
     setModalLoading(true);
+    setModalError(null);
     try {
-      const [hotels, restaurants, attractions] = await Promise.all([
-        getHotels(dest.id).catch(() => []),
-        getRestaurants(dest.id).catch(() => []),
-        getAttractions(dest.id).catch(() => []),
+      const [hotels, restaurants, attractions, transports] = await Promise.all([
+        getHotels(dest.id),
+        getRestaurants(dest.id),
+        getAttractions(dest.id),
+        getTransportOptions(dest.id).catch(() => []),
       ]);
-      setModalData({ hotels, restaurants, attractions });
+      setModalData({ hotels, restaurants, attractions, transports });
     } catch (err) {
-      console.error(err);
+      console.error("Failed to load destination catalogue records:", err);
+      setModalError(err.message || "Failed to retrieve catalogue data from the database.");
     } finally {
       setModalLoading(false);
     }
+  }
+
+  function openCatalogueModal(dest) {
+    setSelectedDest(dest);
+    setModalTab("hotels");
+    loadCatalogueData(dest);
   }
 
   const displayedDestinations = destinations.filter((dest) => {
@@ -233,6 +251,7 @@ export default function DestinationsPage() {
                     type="button"
                     className="editorial-quiet-btn"
                     onClick={() => openCatalogueModal(featuredDest)}
+                    aria-label={`View catalogue for ${featuredDest.city}`}
                   >
                     View Catalogue Details
                   </button>
@@ -289,9 +308,9 @@ export default function DestinationsPage() {
                         type="button"
                         className="dest-details-link"
                         onClick={() => openCatalogueModal(dest)}
-                        aria-label={`Inspect catalogue for ${dest.city}`}
+                        aria-label={`View catalogue for ${dest.city}`}
                       >
-                        Catalogue
+                        View Catalogue
                       </button>
                     </div>
                   </div>
@@ -302,14 +321,15 @@ export default function DestinationsPage() {
         </div>
       )}
 
-      {/* Catalogue Inspection Modal */}
-      {selectedDest && (
+      {/* Catalogue Inspection Modal (rendered via React Portal directly into document.body) */}
+      {selectedDest && createPortal(
         <div className="editorial-modal-backdrop" onClick={() => setSelectedDest(null)}>
           <div
             className="editorial-modal-window"
             role="dialog"
             aria-modal="true"
             aria-label={`Catalogue Inspection for ${selectedDest.city}`}
+            tabIndex={-1}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="editorial-modal-header">
@@ -355,6 +375,15 @@ export default function DestinationsPage() {
               >
                 Sights & Culture ({modalData.attractions.length})
               </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={modalTab === "transports"}
+                className={`editorial-tab-btn ${modalTab === "transports" ? "active" : ""}`}
+                onClick={() => setModalTab("transports")}
+              >
+                Transit ({modalData.transports ? modalData.transports.length : 0})
+              </button>
             </div>
 
             <div className="editorial-modal-body">
@@ -363,10 +392,21 @@ export default function DestinationsPage() {
                   <div className="editorial-spinner" />
                   <p>Retrieving database records...</p>
                 </div>
+              ) : modalError ? (
+                <div className="editorial-error-box" role="alert">
+                  <p>{modalError}</p>
+                  <button
+                    type="button"
+                    className="editorial-link-btn"
+                    onClick={() => loadCatalogueData(selectedDest)}
+                  >
+                    Retry loading catalogue
+                  </button>
+                </div>
               ) : modalTab === "hotels" ? (
                 <div className="editorial-catalogue-list">
                   {modalData.hotels.length === 0 ? (
-                    <p className="empty-notice">No accommodations recorded in database.</p>
+                    <p className="empty-notice">No accommodations recorded in database for {selectedDest.city}.</p>
                   ) : (
                     modalData.hotels.map((h) => (
                       <div key={h.id} className="editorial-catalogue-row">
@@ -398,7 +438,7 @@ export default function DestinationsPage() {
               ) : modalTab === "restaurants" ? (
                 <div className="editorial-catalogue-list">
                   {modalData.restaurants.length === 0 ? (
-                    <p className="empty-notice">No dining venues recorded.</p>
+                    <p className="empty-notice">No dining venues recorded for {selectedDest.city}.</p>
                   ) : (
                     modalData.restaurants.map((r) => (
                       <div key={r.id} className="editorial-catalogue-row">
@@ -409,7 +449,7 @@ export default function DestinationsPage() {
                               <IconStar size={12} /> {r.rating || "4.5"}
                             </span>
                           </div>
-                          <p className="catalogue-row-sub">Cuisine: {r.cuisine}</p>
+                          <p className="catalogue-row-sub">Cuisine: {r.cuisine || "Regional specialties"}</p>
                         </div>
                         <div className="catalogue-row-meta">
                           <span className="cost-num">~₹{Number(r.average_cost_per_person).toLocaleString()} / person</span>
@@ -427,10 +467,10 @@ export default function DestinationsPage() {
                     ))
                   )}
                 </div>
-              ) : (
+              ) : modalTab === "attractions" ? (
                 <div className="editorial-catalogue-list">
                   {modalData.attractions.length === 0 ? (
-                    <p className="empty-notice">No attractions recorded.</p>
+                    <p className="empty-notice">No attractions recorded for {selectedDest.city}.</p>
                   ) : (
                     modalData.attractions.map((a) => (
                       <div key={a.id} className="editorial-sight-row">
@@ -471,6 +511,29 @@ export default function DestinationsPage() {
                     ))
                   )}
                 </div>
+              ) : (
+                <div className="editorial-catalogue-list">
+                  {!modalData.transports || modalData.transports.length === 0 ? (
+                    <p className="empty-notice">No transport connections recorded for {selectedDest.city}.</p>
+                  ) : (
+                    modalData.transports.map((t) => (
+                      <div key={t.id} className="editorial-catalogue-row">
+                        <div className="catalogue-row-main">
+                          <div className="catalogue-row-title">
+                            <strong>{t.origin} → {selectedDest.city}</strong>
+                            <span className="rating-pill">{t.mode?.toUpperCase()}</span>
+                          </div>
+                          <p className="catalogue-row-sub">
+                            Provider: {t.provider || "Direct"} · Est. Duration: {t.duration_minutes || 120} mins
+                          </p>
+                        </div>
+                        <div className="catalogue-row-meta">
+                          <span className="cost-num">₹{Number(t.estimated_cost).toLocaleString()}</span>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
               )}
             </div>
 
@@ -484,7 +547,8 @@ export default function DestinationsPage() {
               </Link>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

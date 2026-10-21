@@ -307,3 +307,127 @@ def test_packing_items_lifecycle(client: TestClient, traveller_headers: dict, se
     # Delete item
     del_res = client.delete(f"/api/v1/assistant/packing/{item_id}", headers=traveller_headers)
     assert del_res.status_code == 204
+
+
+def test_assistant_chat_ambiguous_request_returns_clarification(client: TestClient, traveller_headers: dict):
+    """Step 1 & 2: Ambiguous modification requests return structured clarification_request."""
+    res = client.post(
+        "/api/v1/assistant/chat",
+        headers=traveller_headers,
+        json={"message": "Change my plans for tonight"},
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["clarification_request"] is not None
+    assert "question" in data["clarification_request"]
+    assert "options" in data["clarification_request"]
+    assert len(data["clarification_request"]["options"]) > 0
+    assert data["clarification_request"]["allow_custom_input"] is True
+
+
+def test_assistant_chat_duration_query_returns_days_not_rain(
+    client: TestClient, traveller_headers: dict, seed_destination: Destination
+):
+    """Verify assistant responds to 'how many days trip is this' with duration and dates, never rain advice."""
+    trip_res = client.post(
+        "/api/v1/trips",
+        headers=traveller_headers,
+        json={
+            "destination_id": seed_destination.id,
+            "starting_location": "Delhi",
+            "start_date": "2026-10-27",
+            "end_date": "2026-10-31",
+            "traveller_count": 2,
+            "total_budget": "45000.00",
+            "generate_plan": True,
+        },
+    )
+    assert trip_res.status_code == 201
+    trip_id = trip_res.json()["id"]
+
+    chat_res = client.post(
+        "/api/v1/assistant/chat",
+        headers=traveller_headers,
+        json={
+            "message": "how many days trip is this",
+            "trip_id": trip_id,
+        },
+    )
+    assert chat_res.status_code == 200
+    data = chat_res.json()
+    reply = data["reply"]
+
+    # Must accurately report 5-day duration
+    assert "5-day" in reply or "5 days" in reply or "5" in reply
+    # Must NOT return canned rain advice
+    assert "indoor cultural sightseeing" not in reply.lower()
+    assert "encounter rain" not in reply.lower()
+
+
+
+def test_assistant_chat_rest_roaming_budget_proposal_and_execution(
+    client: TestClient, traveller_headers: dict, seed_destination: Destination
+):
+    """Verify assistant handles rest/roaming budget queries by suggesting improvements, proposing day clearing, and applying changes."""
+    # 1. Create a trip with generated plan
+    trip_res = client.post(
+        "/api/v1/trips",
+        headers=traveller_headers,
+        json={
+            "destination_id": seed_destination.id,
+            "starting_location": "Delhi",
+            "start_date": "2026-11-01",
+            "end_date": "2026-11-04",
+            "traveller_count": 2,
+            "total_budget": "45000.00",
+            "generate_plan": True,
+        },
+    )
+    assert trip_res.status_code == 201
+    trip_id = trip_res.json()["id"]
+    initial_estimated_total = Decimal(str(trip_res.json()["estimated_total"]))
+
+    # 2. Ask assistant about bringing down the budget with rest, roaming, and flexible eating
+    chat_res = client.post(
+        "/api/v1/assistant/chat",
+        headers=traveller_headers,
+        json={
+            "message": "can we somehow bring down the budget if we put more time for rest and roaming instead of a lot of places and maybe increase the time periods for each visiting place, and maybe add a flexible time for eating",
+            "trip_id": trip_id,
+        },
+    )
+    assert chat_res.status_code == 200
+    chat_data = chat_res.json()
+    reply = chat_data["reply"]
+    # Check that it gives insightful suggestions and acknowledges the strategy
+    assert "rest" in reply.lower() or "roaming" in reply.lower() or "budget" in reply.lower()
+    assert "proposal" in reply.lower() or "apply" in reply.lower() or "clear" in reply.lower()
+
+    # Verify structured proposal was generated
+    assert chat_data["proposed_changes"] is not None
+    proposal = chat_data["proposed_changes"]
+    assert proposal["action"] == "clear_day"
+    assert proposal["target_day_number"] is not None
+    assert proposal["budget_impact"]["savings"] > 0
+    assert proposal["requires_user_confirmation"] is True
+
+    # 3. User accepts and executes the proposal
+    exec_res = client.post(
+        "/api/v1/assistant/execute-proposal",
+        headers=traveller_headers,
+        json={
+            "trip_id": trip_id,
+            "proposal_id": proposal["proposal_id"],
+            "action": proposal["action"],
+            "day_number": proposal["target_day_number"],
+        },
+    )
+    assert exec_res.status_code == 200
+    exec_data = exec_res.json()
+    assert exec_data["success"] is True
+
+    # 4. Verify updated trip reflected the savings
+    updated_trip_res = client.get(f"/api/v1/trips/{trip_id}", headers=traveller_headers)
+    assert updated_trip_res.status_code == 200
+    updated_total = Decimal(str(updated_trip_res.json()["estimated_total"]))
+    assert updated_total < initial_estimated_total

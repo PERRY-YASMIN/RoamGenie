@@ -35,7 +35,7 @@ docs/
 │   └── AI_ARCHITECTURE.md                 # Multi-Provider LLM Gateway & Grounding Engine
 ├── testing/
 │   ├── TESTING.md                         # Comprehensive Testing Framework & Guide
-│   ├── TEST_RESULTS.md                    # Live Verified Test Results (162/162 PASS)
+│   ├── TEST_RESULTS.md                    # Live Verified Test Results (254/254 PASS (203 Backend + 51 Frontend))
 │   ├── REGRESSION_TEST_REPORT.md          # Full Regression Test Verification Report
 │   └── TESTING_STRATEGY_AND_REPORT.md     # Historical Testing Strategy & Report
 ├── datasets/
@@ -50,12 +50,10 @@ docs/
 │   ├── KNOWN_LIMITATIONS.md               # System Boundaries & Post-MVP Roadmap
 │   ├── DOCUMENTATION_AUDIT_REPORT.md      # Documentation Synchronization Audit Report
 │   └── V1.0.0_RELEASE_REPORT.md           # Historical v1.0.0 Release Report
-├── presentation/
-│   └── PRESENTATION_AND_VIVA_GUIDE.md     # 15-Slide Presentation Outline & 7-Min Demo Script
 ├── guides/
 │   ├── DEVELOPER_GUIDE.md                 # Developer & Admin Credentials, Commands & Environment
 │   ├── DEPLOYMENT_AND_OPERATIONS.md       # Local & Supabase Deployment Guide
-│   ├── PRESENTATION_AND_VIVA_GUIDE.md     # Live Demonstration & Defense Script
+│   ├── PRESENTATION_AND_VIVA_GUIDE.md     # 15-Slide Presentation Outline & 7-Min Demo Script
 │   └── RISK_REGISTER.md                   # Technical Risk Register & Mitigations
 └── PROJECT_CHECKLIST.md                   # Master Academic & Technical Progress Checklist
 ```
@@ -73,7 +71,7 @@ docs/
   6. [Database Advanced Features & 10 Analytical Queries](database/DATABASE_FEATURES.md)
   7. [Dataset Verification Report (21,133 Records)](datasets/DATASET_VERIFICATION_REPORT.md)
   8. [Academic Milestone Completion Status (12/12 Complete)](milestones/MILESTONE_COMPLETION_STATUS.md)
-  9. [Presentation & Viva Defense Guide](presentation/PRESENTATION_AND_VIVA_GUIDE.md)
+  9. [Presentation & Viva Defense Guide](guides/PRESENTATION_AND_VIVA_GUIDE.md)
 
 * **For Developers & Engineers:**
   1. [Developer & Admin Reference Guide (Credentials & Commands)](guides/DEVELOPER_GUIDE.md)

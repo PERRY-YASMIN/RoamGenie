@@ -1,221 +1,259 @@
-# RoamGenie — AI Travel Planner & Budget Optimizer
+# RoamGenie — Autonomous Travel Planner & Relational Budget Optimization Engine
 
-[![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg)](docs/release/RELEASE_NOTES.md)
-[![Status](https://img.shields.io/badge/status-RELEASE%20READY-success.svg)](docs/release/MVP_RELEASE_REPORT.md)
-[![Backend Tests](https://img.shields.io/badge/backend%20tests-172%2F172%20PASS-brightgreen.svg)](docs/testing/TEST_RESULTS.md)
-[![Frontend Tests](https://img.shields.io/badge/frontend%20tests-16%2F16%20PASS-brightgreen.svg)](docs/testing/TEST_RESULTS.md)
-[![Database](https://img.shields.io/badge/database-PostgreSQL%2015%2B%20%7C%2021%2C133%20rows-336791.svg)](docs/database/DATABASE_DESIGN.md)
-[![Course](https://img.shields.io/badge/course-DBMS%20Semester%205-orange.svg)](docs/requirements/PROBLEM_STATEMENT.md)
-
-RoamGenie is an intelligent, relational database-backed travel itinerary planner and budget optimization platform developed for the Semester 5 Database Management Systems (DBMS) curriculum. The application centralizes normalized travel catalogue data across 500 destinations (6,000 accommodations, 6,000 restaurants, 2,517 attractions, and 6,000 transport options), accepts multi-dimensional trip constraints, and generates structured day-wise itineraries with itemized budget allocations, deficit warnings, weather context, dynamic packing checklists, manual catalogue entity swapping, and multi-turn AI travel assistant chat.
+> "Where the mountains hold their breath. Find your way through a world of snow and sky."  
+> **ROAMGENIE / 01** — An autonomous, relational travel planning and budget optimization engine with bounded generative AI.
 
 ---
 
-## 1. Project Status — v1.0.0 (Release Ready)
+## Executive Overview
 
-* **MVP Release Status:** **RELEASE READY (v1.0.0)**
-* **All 12 Academic Milestones Completed (100%):** [docs/milestones/MILESTONE_COMPLETION_STATUS.md](docs/milestones/MILESTONE_COMPLETION_STATUS.md)
-* **Automated Tests:** **188 / 188 PASS (100%)** — 172 Backend Pytest + 16 Frontend Vitest
-* **Master Database:** **21,133 rows** across 23 base tables in PostgreSQL (Supabase) with 0 FK orphans.
-* **Master Documentation Index:** [docs/README.md](docs/README.md)
-* **Final Release Report:** [docs/release/MVP_RELEASE_REPORT.md](docs/release/MVP_RELEASE_REPORT.md)
-* **Developer & Admin Reference:** [docs/guides/DEVELOPER_GUIDE.md](docs/guides/DEVELOPER_GUIDE.md)
+RoamGenie is a full-stack, relational database-backed travel itinerary planner and budget optimization platform developed for the Semester 5 Database Management Systems (DBMS) curriculum.
+
+Combining mathematically normalized relational engineering (3NF/BCNF PostgreSQL 15+) with structured, deterministic scheduling algorithms and a bounded multi-turn AI Travel Copilot, RoamGenie centralizes a master travel catalogue across 500 global destinations (6,000 accommodations, 6,000 restaurants, 2,517 attractions, and 6,000 transit options). The application accepts multi-dimensional traveller constraints and synthesizes day-by-day scheduled itineraries, dynamic budget allocations, real-time deficit warnings, live weather forecasts, dynamic packing checklists, interactive catalogue swapping, and synchronized dual-time-zone conversions.
 
 ---
 
-## 2. 👨‍💻 For Developers & Evaluators (Quick Credentials)
+## Core System Highlights
 
-For rapid evaluation and testing, the database includes pre-seeded administrator and demo traveller accounts:
+### 1. Atmospheric Arrival Experience & UI Theme
+* **Cinematic Mountain Aesthetic:** High-resolution landscape photography of Kargil, Ladakh and Mount Fuji with tranquil particle effects.
+* **Luminous Section 1 Hero:** Section 1 is styled ~20% brighter than the trip planning workspace, creating a serene, open aesthetic without heavy rectangular card boxes or text shadows.
+* **Ambient Audio Soundscape:** Built-in ambient wind synthesizer and soundscape toggled from the bottom-left corner control.
 
-| Account Type | Email Address | Password | Role & Scope |
+### 2. Dual-Time-Zone Itinerary Engine
+* **Dynamic Time-Zone Switching:** Instantly switch between **Origin Time** (e.g., IST, UTC+05:30) and **Destination Time** (e.g., GST, UTC+04:00) with dynamic location detection.
+* **Calendar Synchronization & Date Shifts:** Automatically handles cross-midnight time conversions, dynamically tagging shifted events with `+1 Day` or `-1 Day` badges.
+* **Transit & Arrival Alignment:** Synchronizes scheduled transfers, flight connections, check-ins, and daily activity cards without modifying stored database timestamps.
+
+### 3. Autonomous Grounded AI Travel Copilot
+* **Multi-Turn Tool Execution Loop:** Powered by Google Gemini (with fallbacks to OpenAI, Groq, and heuristic algorithms) via `AIPlanOrchestrator` and `chat_tools.py`.
+* **Safe In-Memory Simulation:** The AI inspects travel history (`get_travel_history`) and simulates schedule swaps (`propose_itinerary_modification`) strictly in memory without unconfirmed database writes.
+* **Interactive Visual Diff Cards:** Proposes changes via interactive React Diff Cards displaying exact itinerary additions, removals, and estimated financial impacts.
+* **ACID-Compliant User Confirmation:** Changes persist only after explicit human approval via `/api/v1/assistant/execute-proposal`, enforcing strict IDOR protection (`trip.user_id == current_user.id`).
+
+### 4. Master Travel Catalogue Explorer & Modals
+* **Curated Global Dataset:** 21,133 verified catalogue records across 500 cities, with curated photography, price baselines, and direct Google Maps exploration links.
+* **Deep Catalogue Modals:** Interactive modals for exploring attractions, hotels, dining, and transit options by destination with instant category filtering.
+* **Zero-Insert Guest Preview:** Allows prospective travellers to preview full day-wise itineraries in-memory with a verified 0-database-insert guarantee.
+
+### 5. Relational Budget Optimizer & Deficit Alerts
+* **4-Category Expense Splits:** Itemizes expenses across Accommodation, Transport, Food, and Activities with dynamic progress bars.
+* **Explicit Deficit Warning Panel:** Visually alerts travellers when estimated costs exceed budget with prominent alert banners and exact deficit amounts.
+* **Deterministic Item Swapping:** Interactive modal to replace high-tariff items with budget alternatives, recalculating total trip costs atomically.
+
+### 6. WCAG 2.2 AA Accessibility & Responsive Design
+* **High-Contrast Input Surfaces:** Distinct, accessible input fields and persistent labels designed for effortless legibility over dark scenic gradients.
+* **Keyboard Navigation & ARIA:** Full keyboard navigation support, visible focus rings, and explicit ARIA attributes across drawers, dialogs, and triggers.
+* **Fluid Clamp Typography:** Responsive typography and layout constraints that remain stable across mobile (390px), tablet (768px), laptop (1280px), and ultrawide (1920px) viewports without clipping.
+
+---
+
+## Project Metadata & Verification Status
+
+| Attribute | Specification | Verification Link |
+| :--- | :--- | :--- |
+| **Release** | v1.1.0 | [Release Notes](docs/release/RELEASE_NOTES.md) |
+| **Status** | Production Ready (100% Release Verified) | [MVP Release Report](docs/release/MVP_RELEASE_REPORT.md) |
+| **Backend Tests** | 203 / 203 PASS (100%) | [Test Results](docs/testing/TEST_RESULTS.md) |
+| **Frontend Tests** | 51 / 51 PASS (100%, 9 Suites) | [Test Results](docs/testing/TEST_RESULTS.md) |
+| **Database** | PostgreSQL 15+ (Supabase) \| 23 Tables \| 21,133 Records | [Database Design](docs/database/DATABASE_DESIGN.md) |
+| **Accessibility** | WCAG 2.2 AA Compliant | [System Architecture](docs/architecture/SYSTEM_ARCHITECTURE.md) |
+| **Course** | DBMS Semester 5 Theory & Laboratory (Solo Capstone) | [Problem Statement](docs/requirements/PROBLEM_STATEMENT.md) |
+
+---
+
+## Quick Evaluation Credentials
+
+For rapid testing and academic evaluation, the database includes pre-seeded administrator and demo traveller accounts:
+
+| Role | Email Address | Password | Permissions & Scope |
 | :--- | :--- | :--- | :--- |
 | **System Administrator** | `admin@roamgenie.internal` | `AdminPass123!` | Full administrative access, SQL showcase, IDOR bypass, catalogue management. |
 | **Demo Traveller 1** | `traveller@roamgenie.internal` | `TravellerPass123!` | Standard traveller (Arun Kumar): itineraries, bookings, chat, packing. |
 | **Demo Traveller 2** | `ananya@roamgenie.internal` | `TravellerPass123!` | Standard traveller (Ananya Sharma): multi-user testing & collaboration. |
 
-> **Complete Developer Reference:** See [docs/guides/DEVELOPER_GUIDE.md](docs/guides/DEVELOPER_GUIDE.md) for full environment variables, CLI commands, database scripts, and security conventions.
-
 ---
 
-## 3. Problem Statement & Academic Scope
-
-Planning multi-day leisure travel across unfamiliar destinations is fragmented, time-consuming, and prone to budget overruns. Travellers typically consult disjointed sources for hotels, restaurants, sightseeing spots, and transit options without unified cost tracking or schedule coherence. 
-
-RoamGenie solves this by combining **3NF/BCNF relational database engineering** with **deterministic scheduling algorithms** and a **bounded AI Travel Copilot**:
-1. **Normalized Catalogue:** Centralizes 21,133 entities across 500 destinations with transparent cost baselines.
-2. **Deterministic Scheduling & Budgeting:** Schedules daily activities within time slots and calculates 4-category budget splits (stay, transit, food, sights) with real-time deficit alerts.
-3. **Interactive Manual Swapping:** Allows travellers to customize scheduled items with catalogue alternatives while recalculating budgets atomically.
-4. **Contextually Grounded AI Copilot:** Answers travel inquiries using strictly authorized trip, budget, forecast, and catalogue context with guaranteed offline fallback.
-
----
-
-## 3. Core Implemented Capabilities
-
-Every capability documented below is fully implemented and verified by automated tests:
-
-* **Authentication & User Profiles:** Bcrypt password hashing, expiring JWT bearer tokens, user profile customization.
-* **Master Travel Catalogue Explorer:** Filtered browsing of 500 cities, 6,000 hotels, 6,000 dining spots, 2,517 attractions, and 6,000 transit routes with curated landmark photography and direct Google Maps exploration links.
-* **Autocomplete Destination Search:** Interactive Google-search-style autocomplete in trip planner filtering across 500 active destinations with keyword suggestions.
-* **Deterministic Itinerary Engine:** Day-by-day scheduler allocating morning, afternoon, and evening slots based on user dates and traveller count.
-* **Itemized Budget Visualizer & Deficit Solver:** Category expense breakdown with colored progress bars and deficit warnings when $\text{estimated\cost} > \text{total\budget}$.
-* **Manual Catalogue Swap:** Modal interface to replace individual itinerary items with catalogue alternatives, recalculating budgets atomically.
-* **Weather Forecasting:** Open-Meteo live forecast integration (summary, temperature, conditions) with snapshot caching.
-* **Dynamic Packing Checklist:** Contextual travel checklist items with interactive add, toggle packed, and delete controls.
-* **Grounded AI Travel Copilot (Chatbot):** Multi-turn assistant chat grounded in trip parameters, budget allocations, forecast data, and catalogue entities (Gemini, OpenAI, Groq, and offline heuristic fallback).
-* **Multi-Table Relational Persistence:** Atomic transactional commits across `trips`, `itineraries`, `itinerary_days`, `itinerary_items`, and `budget_allocations`.
-* **Saved Trip Reload:** Instant hydration of persisted trips from `/plan?tripId=X` without re-generation or duplicate database rows.
-* **Catalogue-Grounded Guest Preview:** In-memory preview generation for unauthenticated visitors with a verified 0-database-insert guarantee.
-* **DBMS Showcase (10 Analytical SQL Queries):** Live execution of 10 analytical SQL queries (Q01–Q10) featuring window functions, multi-table joins, subqueries, and aggregations.
-
----
-
-## 4. System Architecture & Security Boundaries
+## System Architecture
 
 ```
-[ React 19 + Vite SPA ] (Port 5173)
-       │ HTTP / JSON REST API (Port 8000)
-       ▼
-[ FastAPI Application Gateway ]
-   ├── Pydantic v2 Request/Response Validation
-   ├── Bcrypt Hashing & JWT Bearer Authentication
-   ├── Deterministic Day-Wise Itinerary Scheduler
-   ├── Iterative Budget Optimizer & Deficit Solver
-   ├── Manual Item Swap & Atomic Recalculation Engine
-   ├── Grounded AI Travel Copilot & Orchestrator (Gemini / OpenAI / Groq / Heuristic)
-   ├── Open-Meteo Weather Client & Snapshot Caching
-   └── SQLAlchemy 2.0 Repositories
-        │ psycopg (Connection Pooling)
-        ▼
-[ Supabase-Hosted PostgreSQL 15+ ]
-   ├── 23 Normalized Relational Tables (3NF Schema)
-   ├── Database Views, Stored Procs & Functions
-   ├── PL/pgSQL Audit Trigger (trg_trip_audit -> trip_audit)
-   └── Composite B-Tree Indexes & Execution Plans
+┌────────────────────────────────────────────────────────────────────────┐
+│                   PRESENTATION LAYER (React 19 + Vite)                 │
+│  - Atmospheric Arrival Hero (20% Brighter Scenery, Ambient Audio)      │
+│  - Dual-Time-Zone Selector & Date-Shift Timeline Engine                │
+│  - Autonomous Travel Copilot Drawer with Interactive Proposal Cards    │
+│  - Travel Catalogue Modals & WCAG 2.2 AA Accessible Planning Form      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ HTTP / JSON REST API (Port 8000)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                  APPLICATION SERVICE LAYER (FastAPI)                   │
+│  - Pydantic v2 Request/Response Validation & Bcrypt JWT Auth           │
+│  - AIPlanOrchestrator: Multi-Turn Function Calling Loop                │
+│  - chat_tools.py: get_travel_history, get_itinerary_details            │
+│  - Deterministic Day-Wise Scheduler & Budget Optimizer                │
+│  - Open-Meteo Live Forecast Client & Snapshot Caching                  │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ psycopg3 Connection Pooling
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                 RELATIONAL DATABASE LAYER (PostgreSQL 15+)             │
+│  - 23 Normalized Tables (3NF/BCNF Schema, 21,133 Master Records)       │
+│  - Composite B-Tree Indexes & Execution Plan Optimization              │
+│  - PL/pgSQL Audit Triggers (trg_trip_audit -> trip_audit)              │
+│  - Stored Procedures, Functions, and 10 Complex Analytical Views       │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Security Boundaries
-1. **Zero Client Database Exposure:** The React frontend communicates exclusively via FastAPI JSON endpoints. No database passwords or Supabase service-role keys are exposed.
-2. **Resource Ownership & IDOR Protection:** Strict ownership checks ensure User A cannot view, modify, or delete User B's trips, itineraries, packing items, or AI chat threads.
-3. **Parameterized Queries:** All database interactions are mediated via SQLAlchemy ORM and typed Pydantic models to prevent SQL injection.
-4. **Bounded AI Prompts:** AI services receive sanitized, allow-listed catalogue context and return schema-validated JSON. The AI has zero direct database write permissions.
-
 ---
 
-## 5. Technology Stack
-
-* **Frontend:** React 19, Vite 8.2, React Router DOM v7, Vanilla CSS Tokens, Vitest 4.1, Testing Library.
-* **Backend:** Python 3.12, FastAPI 0.110+, Pydantic v2, Pydantic Settings, Uvicorn, PyJWT, Passlib (Bcrypt).
-* **Database & ORM:** PostgreSQL 15+ (Hosted on Supabase), SQLAlchemy 2.0, psycopg v3 (Connection Pooling), Alembic.
-* **AI & External Services:** Google Gemini SDK, OpenAI API, Groq Cloud, Deterministic Heuristic Scheduler, Open-Meteo weather client.
-
----
-
-## 6. Repository Layout
+## Repository Structure
 
 ```text
 RoamGenie/
-├── backend/                       # FastAPI Application & Business Logic
+├── backend/                       # FastAPI application & business logic
 │   ├── app/
-│   │   ├── config.py              # Centralized Pydantic Settings
-│   │   ├── main.py                # FastAPI App Factory & Middleware
-│   │   ├── db/                    # SQLAlchemy Models & Session Factory
-│   │   ├── routers/               # auth, catalogues, trips, assistant, reports, weather
-│   │   ├── schemas/               # Pydantic v2 Contracts
-│   │   └── services/              # AI Orchestrator, Budget, Scheduler, Weather, Auth
-│   ├── tests/                     # 147 Unit & Integration Pytest Suite
-│   └── pyproject.toml             # Python Dependencies
-├── frontend/                      # React SPA Client Application
+│   │   ├── config.py              # Centralized Pydantic application settings
+│   │   ├── main.py                # FastAPI app factory, CORS, and router registration
+│   │   ├── db/                    # SQLAlchemy 2.0 models, session management, base
+│   │   ├── routers/               # assistant, auth, catalogues, health, plans, reports, trips, users
+│   │   ├── schemas/               # Typed Pydantic v2 data contracts & validation
+│   │   └── services/              # AI orchestrator, chat tools, budget optimizer, scheduler, weather
+│   ├── tests/                     # 203 automated backend tests (Pytest)
+│   ├── pyproject.toml             # Python package configuration
+│   └── requirements.txt           # Python dependencies
+├── frontend/                      # React 19 SPA client application
+│   ├── public/                    # Static assets (cinematic mountain images, ambient soundscape)
 │   ├── src/
-│   │   ├── components/            # UI Components & Immersive Backgrounds
-│   │   ├── context/               # AuthContext, ToastContext
-│   │   ├── pages/                 # Home, Plan, Destinations, Trips, Showcase, Profile, Auth
-│   │   ├── services/api.js        # Centralized REST Client
-│   │   ├── utils/                 # Landmark photo & Google Maps resolvers
-│   │   └── styles.css             # High-Contrast Minimalist Design Tokens
-│   ├── package.json               # Frontend Dependencies & Scripts
-│   └── vite.config.js             # Vite Configuration & Vitest Runner
-├── database/                      # SQL Scripts & Seeding Data
-│   ├── schema/                    # DDL Schema Definitions
-│   ├── seeds/                     # Master SQL & JSON Seed Manifests
-│   ├── queries/                   # 10 Complex Analytical Queries (Q01–Q10)
-│   ├── procedures/                # Stored Procedures & Functions
-│   └── triggers/                  # Audit Triggers
-├── docs/                          # Comprehensive Project Documentation
-│   ├── requirements/              # Problem Statement, SRS, Traceability Matrix
-│   ├── architecture/              # System Architecture, Data Flow, Security
-│   ├── database/                  # ER Diagram, Database Design, Schema, Dictionary
-│   ├── ai/                        # AI Features & Orchestration Architecture
-│   ├── testing/                   # Testing Strategy, Test Results, Regression Report
-│   ├── datasets/                  # Dataset Documentation & Verification Report
-│   ├── milestones/                # Milestone Completion Status (12/12 Complete)
-│   ├── release/                   # Release Notes, MVP Release Report, Limitations
-│   └── presentation/              # 15-Slide Deck Outline & 7-Min Viva Guide
-└── scripts/                       # Database Seeding & Verification Scripts
+│   │   ├── components/            # DualTimeZoneSelector, TravelCopilotDrawer, icons, toasts
+│   │   ├── components/immersive/  # AmbientWorld, ImmersiveScene, environmentConfig
+│   │   ├── context/               # AuthContext, CopilotContext, ToastContext
+│   │   ├── pages/                 # HomePage, PlanPage, DestinationsPage, TripsPage, ShowcasePage, AuthPage
+│   │   ├── services/api.js        # Centralized REST API client
+│   │   ├── utils/                 # Timezone engine, destination image resolvers
+│   │   └── styles.css             # Comprehensive design system, quiet luxury tokens, responsive layouts
+│   ├── package.json               # Frontend dependencies & scripts
+│   └── vite.config.js             # Vite configuration & Vitest test runner
+├── database/                      # SQL scripts, schemas, and analytical queries
+│   ├── schema/                    # 000_create_database.sql, 001_schema.sql (23 tables)
+│   ├── seeds/                     # Master SQL and JSON seed manifests (D1 to D5 datasets)
+│   ├── queries/                   # 10 complex analytical queries (Q01 to Q10)
+│   ├── procedures/                # Stored procedures & refresh functions
+│   └── triggers/                  # PL/pgSQL audit triggers
+├── docs/                          # Comprehensive technical documentation suite
+│   ├── architecture/              # System architecture, data flow, security architecture
+│   ├── database/                  # ER diagrams, 3NF normalization proofs, schema definitions, dictionary
+│   ├── api/                       # REST API endpoint specifications
+│   ├── ai/                        # AI features inventory & grounding architecture
+│   ├── testing/                   # Testing strategy, verified test results, regression reports
+│   ├── datasets/                  # Catalogue dataset verification & row count proofs
+│   ├── guides/                    # Developer guide, deployment guide, presentation & viva guide
+│   └── release/                   # Release notes, MVP release report, known limitations
+├── scripts/                       # Database seeding, verification, and backup scripts
+├── tests/                         # Integration flows and database integrity test suites
+├── RoamGenie_Milestones_1-5/      # Academic course submission deliverables (ER diagram, SRS, proofs)
+├── ARCHITECTURE.md                # High-level architecture topology & security boundary overview
+├── STARTUP_GUIDE.md               # Local development setup & Windows PowerShell instructions
+└── README.md                      # Master project overview & feature showcase (This Document)
 ```
 
 ---
 
-## 7. Quickstart & Installation
+## Quickstart Guide
 
 ### Prerequisites
-* Python 3.12+
-* Node.js 18+ & npm
-* PostgreSQL 15+ (Local or Supabase instance)
+* **Python:** 3.12+ (Virtual environment recommended)
+* **Node.js:** 18+ & **npm**
+* **Database:** PostgreSQL 15+ (Local or Supabase)
 
-### 7.1 Backend Setup
-```bash
+---
+
+### Step 1: Start the Backend (FastAPI)
+
+In your first terminal:
+
+```powershell
+# Navigate to the backend directory
 cd backend
-python -m venv .venv
+
+# Activate virtual environment
 .\.venv\Scripts\activate
-pip install -e .
 
-# Configure environment variables
-copy .env.example .env
+# Install dependencies (if first time)
+pip install -r requirements.txt
 
-# Run FastAPI backend server
+# Start backend server
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-### 7.2 Frontend Setup
-```bash
+* API Docs (Swagger UI): [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+* Health Check: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
+
+---
+
+### Step 2: Start the Frontend (React + Vite)
+
+In your second terminal:
+
+```powershell
+# Navigate to the frontend directory
 cd frontend
+
+# Install dependencies (if first time)
 npm install
 
-# Run Vite development server
+# Start Vite development server
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+* Web Application: [http://127.0.0.1:5173](http://127.0.0.1:5173)
 
 ---
 
-## 8. Running Automated Tests
+## Running Automated Tests
 
-```bash
-# Run Backend Pytest Suite (147 tests)
-cd backend
-pytest backend/tests/ -v
+Every layer of RoamGenie is covered by comprehensive automated tests:
 
-# Run Frontend Vitest Suite (15 tests)
-cd frontend
-npm test -- --run
+```powershell
+# 1. Run all Backend Pytest Suites (203 tests)
+& "backend\.venv\Scripts\python.exe" -m pytest
 
-# Run Production Frontend Build Gate
-npm run build
+# 2. Run all Frontend Vitest Suites (51 tests across 9 suites)
+npm test --prefix frontend
+
+# 3. Run Frontend Linter (0 errors)
+npm run lint --prefix frontend
+
+# 4. Run Frontend Production Build Gate
+npm run build --prefix frontend
 ```
 
+### Verified Test Summary:
+* **Backend Pytest:** **203 / 203 PASS** (100%)
+* **Frontend Vitest:** **51 / 51 PASS** (100%)
+* **Total Automated Tests:** **254 / 254 PASS (100%)**
+
 ---
 
-## 9. Documentation Directory Index
+## Complete Documentation Index
 
-| Section | Link | Description |
+| Domain | Document | Summary |
 | :--- | :--- | :--- |
-| **Requirements** | [docs/requirements/](docs/requirements/) | Problem Statement, SRS, Traceability Matrix |
-| **Architecture** | [docs/architecture/](docs/architecture/) | System Architecture, Data Flow, Security Architecture |
-| **Database** | [docs/database/](docs/database/) | ER Diagram, 3NF Design, Relational Schema, Data Dictionary, Features |
-| **AI Features** | [docs/ai/](docs/ai/) | AI Features Inventory, AI Orchestrator & Grounding Architecture |
-| **Testing** | [docs/testing/](docs/testing/) | Testing Strategy, Verified Results (162/162 PASS), Regression Report |
-| **Datasets** | [docs/datasets/](docs/datasets/) | Master Dataset Documentation & 21,133-Row Verification Report |
-| **Milestones** | [docs/milestones/](docs/milestones/) | Milestone Completion Status (12 / 12 Complete) |
-| **Release** | [docs/release/](docs/release/) | Release Notes, MVP Release Report, Known Limitations |
-| **Presentation** | [docs/presentation/](docs/presentation/) | 15-Slide Presentation Outline & 7-Min Live Demo Script |
+| **System Architecture** | [SYSTEM_ARCHITECTURE.md](docs/architecture/SYSTEM_ARCHITECTURE.md) | 3-tier decoupling, security perimeter, and AI loop |
+| **Relational Schema** | [RELATIONAL_SCHEMA.md](docs/database/RELATIONAL_SCHEMA.md) | 23 normalized tables, data types, and foreign keys |
+| **Data Dictionary** | [DATA_DICTIONARY.md](docs/database/DATA_DICTIONARY.md) | Attribute definitions, constraints, nullability, defaults |
+| **Normalization Proofs** | [NORMALIZATION.md](docs/database/NORMALIZATION.md) | Formal mathematical proofs (1NF, 2NF, 3NF, BCNF) |
+| **Database Features** | [DATABASE_FEATURES.md](docs/database/DATABASE_FEATURES.md) | Triggers, procedures, views, and 10 analytical queries |
+| **AI Architecture** | [AI_ARCHITECTURE.md](docs/ai/AI_ARCHITECTURE.md) | Multi-provider orchestration, grounded prompting, tools |
+| **API Specification** | [API_SPECIFICATION.md](docs/api/API_SPECIFICATION.md) | Endpoints, request schemas, and response envelopes |
+| **Developer Reference** | [DEVELOPER_GUIDE.md](docs/guides/DEVELOPER_GUIDE.md) | Environment configuration, credentials, and CLI tools |
+| **Presentation & Viva** | [PRESENTATION_AND_VIVA_GUIDE.md](docs/guides/PRESENTATION_AND_VIVA_GUIDE.md) | 15-slide presentation guide & 7-minute live demo script |
+
+---
+
+## Academic Credit & Course Context
+
+* **Project Title:** RoamGenie — Autonomous Travel Planning & Relational Budget Optimization Engine
+* **Course:** Database Management Systems (Semester 5 Theory & Laboratory)
+* **Author / Developer:** Solo Developer Capstone Project
+* **Core Philosophy:** Combining mathematically rigorous relational database normalization with deterministic budget algorithms and grounded generative AI.

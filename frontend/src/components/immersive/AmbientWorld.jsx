@@ -54,10 +54,7 @@ export default function AmbientWorld({ showScene = true }) {
         aria-label={soundOn ? "Mute ambient soundscape" : "Unmute ambient soundscape"}
         title={soundOn ? "Mute soundscape" : "Unmute soundscape"}
       >
-        <span className={`speaker-icon ${soundOn ? "" : "is-muted"}`} aria-hidden="true">
-          <i />
-          <b />
-        </span>
+        <span className="sound-emoji headphone-emoji" aria-hidden="true">🎧</span>
       </button>
     </>
   );

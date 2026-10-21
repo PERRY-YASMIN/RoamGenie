@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCopilot } from "../context/CopilotContext";
 import {
-  IconSparkles,
   IconClose,
   IconSend,
   IconCompass,
   IconTrash,
+  IconArrowRight,
+  IconHelpCircle,
 } from "./icons";
 
 function formatTripDates(startDate, endDate) {
@@ -23,6 +24,297 @@ function formatTripDates(startDate, endDate) {
   }
 }
 
+function ProposalCard({ proposal, status, errorMessage, onConfirm, onReject, isApplying }) {
+  if (!proposal) return null;
+
+  const {
+    action = "swap",
+    original_item,
+    proposed_item,
+    budget_impact = {},
+    summary,
+  } = proposal;
+
+  const originalTotal = budget_impact.original_estimated_total ?? 0;
+  const proposedTotal = budget_impact.proposed_estimated_total ?? 0;
+  const savings = budget_impact.savings ?? 0;
+  const extraCost = budget_impact.extra_cost ?? 0;
+  const hasSavings = Number(savings) > 0;
+  const hasExtra = Number(extraCost) > 0;
+
+  const isApplied = status === "applied";
+  const isRejected = status === "rejected";
+  const isFailed = status === "failed";
+
+  return (
+    <div
+      className={`chat-proposal-card ${isApplied ? "applied" : ""} ${isRejected ? "rejected" : ""} ${isFailed ? "failed" : ""}`}
+    >
+      <div className="proposal-card-header">
+        <span className="proposal-badge">
+          <span className="copilot-btn-icon snowflake-emoji" aria-hidden="true">❄️</span>
+          <span>
+            {action === "clear_day"
+              ? "PROPOSED DAY CANCELLATION"
+              : `PROPOSED ITINERARY ${action.toUpperCase()}`}
+          </span>
+        </span>
+        {isApplied && <span className="proposal-state-tag applied">✓ Applied</span>}
+        {isRejected && <span className="proposal-state-tag rejected">✕ Declined</span>}
+        {isFailed && <span className="proposal-state-tag failed">✕ Failed</span>}
+      </div>
+
+      {/* Visual Diff: Original vs Proposed */}
+      <div className="proposal-diff-grid">
+        {action === "clear_day" ? (
+          <div className="proposal-diff-box original">
+            <div className="diff-label">CURRENT SCHEDULE</div>
+            <div className="diff-title">
+              Day {proposal.target_day_number || proposal.day_number || 1} Plans
+            </div>
+            <div className="diff-meta">
+              <span className="diff-category">Itinerary Day</span>
+              {hasSavings && <span className="diff-cost">Saves ₹{Number(savings).toLocaleString()}</span>}
+            </div>
+          </div>
+        ) : original_item ? (
+          <div className="proposal-diff-box original">
+            <div className="diff-label">CURRENT ITEM</div>
+            <div className="diff-title" title={original_item.title}>
+              {original_item.title}
+            </div>
+            <div className="diff-meta">
+              <span className="diff-category">{original_item.category}</span>
+              <span className="diff-cost">₹{Number(original_item.estimated_cost || 0).toLocaleString()}</span>
+            </div>
+          </div>
+        ) : null}
+
+        {(action === "swap" || action === "clear_day" || (original_item && proposed_item)) && (
+          <div className="diff-arrow" aria-hidden="true">
+            <IconArrowRight size={18} />
+          </div>
+        )}
+
+        {action === "clear_day" ? (
+          <div className="proposal-diff-box proposed">
+            <div className="diff-label">PROPOSED SCHEDULE</div>
+            <div className="diff-title">
+              Clear Day (Unscheduled / Free Day)
+            </div>
+            <div className="diff-meta">
+              <span className="diff-category">No Activities</span>
+              <span className="diff-cost">₹0</span>
+            </div>
+          </div>
+        ) : proposed_item ? (
+          <div className="proposal-diff-box proposed">
+            <div className="diff-label">PROPOSED REPLACEMENT</div>
+            <div className="diff-title" title={proposed_item.title}>
+              {proposed_item.title}
+            </div>
+            <div className="diff-meta">
+              <span className="diff-category">{proposed_item.category}</span>
+              <span className="diff-cost">₹{Number(proposed_item.estimated_cost || 0).toLocaleString()}</span>
+            </div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* Financial Impact Comparison */}
+      <div className="proposal-financial-impact">
+        <div className="impact-header">
+          <span className="impact-label">FINANCIAL IMPACT</span>
+          {hasSavings && (
+            <span className="impact-delta savings">
+              ↓ ₹{Number(savings).toLocaleString()} Savings
+            </span>
+          )}
+          {hasExtra && (
+            <span className="impact-delta deficit">
+              ↑ ₹{Number(extraCost).toLocaleString()} Deficit
+            </span>
+          )}
+          {!hasSavings && !hasExtra && (
+            <span className="impact-delta neutral">Net Zero Change</span>
+          )}
+        </div>
+
+        <div className="impact-numbers-row">
+          <div className="impact-num-col">
+            <span className="num-caption">Current Trip Estimate</span>
+            <span className="num-val">₹{Number(originalTotal).toLocaleString()}</span>
+          </div>
+          <div className="impact-arrow" aria-hidden="true">→</div>
+          <div className="impact-num-col">
+            <span className="num-caption">New Trip Estimate</span>
+            <span className={`num-val ${hasSavings ? "text-savings" : hasExtra ? "text-deficit" : ""}`}>
+              ₹{Number(proposedTotal).toLocaleString()}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {summary && (
+        <p className="proposal-summary-note">{summary}</p>
+      )}
+
+      {isFailed && (
+        <div className="proposal-error-note">
+          <span className="error-note-title">Update Failed:</span> {errorMessage || "This change violates your budget or itinerary constraints."}
+        </div>
+      )}
+
+      {/* Interactive Action Buttons */}
+      {!isApplied && !isRejected && !isFailed && (
+        <div className="proposal-actions-row">
+          <button
+            type="button"
+            className="proposal-btn apply-btn"
+            onClick={() => {
+              if (!isApplying) onConfirm();
+            }}
+            disabled={isApplying}
+          >
+            {isApplying ? "Applying Changes..." : "Apply Changes"}
+          </button>
+          <button
+            type="button"
+            className="proposal-btn reject-btn"
+            onClick={() => {
+              if (!isApplying) onReject();
+            }}
+            disabled={isApplying}
+          >
+            Reject
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ClarificationCard({ clarification, onSelect, disabled }) {
+  const [selectedOption, setSelectedOption] = useState("");
+  const [customText, setCustomText] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  if (!clarification) return null;
+
+  const {
+    question = "Which option would you like to choose?",
+    options = [],
+    allow_custom_input = true,
+  } = clarification;
+
+  const isOther = selectedOption === "__OTHER__";
+  const finalValue = isOther ? customText.trim() : selectedOption;
+
+  const handleOptionClick = (opt) => {
+    if (disabled || isSubmitted) return;
+    setSelectedOption(opt);
+  };
+
+  const handleSelectOther = () => {
+    if (disabled || isSubmitted) return;
+    setSelectedOption("__OTHER__");
+  };
+
+  const handleSubmit = (e) => {
+    if (e) e.preventDefault();
+    if (!finalValue || disabled || isSubmitted) return;
+    setIsSubmitted(true);
+    onSelect(finalValue);
+  };
+
+  return (
+    <div className={`chat-clarification-card ${isSubmitted ? "submitted" : ""}`}>
+      <div className="clarification-card-header">
+        <span className="clarification-badge">
+          <IconHelpCircle size={13} />
+          <span>CHOICE NEEDED</span>
+        </span>
+        {isSubmitted && <span className="clarification-state-tag">✓ Answered</span>}
+      </div>
+
+      <div className="clarification-question">{question}</div>
+
+      <div className="clarification-options-list" role="radiogroup" aria-label={question}>
+        {options.map((opt, oIdx) => {
+          const isSelected = selectedOption === opt;
+          return (
+            <button
+              key={oIdx}
+              type="button"
+              role="radio"
+              aria-checked={isSelected}
+              className={`clarification-option-pill ${isSelected ? "selected" : ""}`}
+              onClick={() => handleOptionClick(opt)}
+              disabled={disabled || isSubmitted}
+            >
+              <span className="clarification-radio-indicator" aria-hidden="true">
+                {isSelected && <span className="radio-dot" />}
+              </span>
+              <span className="option-text">{opt}</span>
+            </button>
+          );
+        })}
+
+        {allow_custom_input && (
+          <div className="clarification-custom-container">
+            <button
+              type="button"
+              role="radio"
+              aria-checked={isOther}
+              className={`clarification-option-pill ${isOther ? "selected" : ""}`}
+              onClick={handleSelectOther}
+              disabled={disabled || isSubmitted}
+            >
+              <span className="clarification-radio-indicator" aria-hidden="true">
+                {isOther && <span className="radio-dot" />}
+              </span>
+              <span className="option-text">Other...</span>
+            </button>
+
+            {isOther && !isSubmitted && (
+              <div className="clarification-custom-input-box">
+                <input
+                  type="text"
+                  className="clarification-text-field"
+                  placeholder="Specify day, date or activity..."
+                  value={customText}
+                  onChange={(e) => setCustomText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSubmit();
+                    }
+                  }}
+                  disabled={disabled || isSubmitted}
+                  autoFocus
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {!isSubmitted && (
+        <div className="clarification-action-row">
+          <button
+            type="button"
+            className="clarification-submit-btn"
+            onClick={handleSubmit}
+            disabled={disabled || !finalValue}
+          >
+            Submit Selection
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function TravelCopilotDrawer() {
   const { isAuthenticated } = useAuth();
   const {
@@ -36,6 +328,8 @@ export default function TravelCopilotDrawer() {
     chatMessages,
     chatLoading,
     executeChatMessage,
+    confirmProposal,
+    rejectProposal,
     clearChat,
   } = useCopilot();
 
@@ -71,7 +365,7 @@ export default function TravelCopilotDrawer() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!inputVal.trim() || chatLoading) return;
-    executeChatMessage(inputVal);
+    executeChatMessage(inputVal, activeTripId || activeTrip?.id || null);
     setInputVal("");
   };
 
@@ -83,7 +377,7 @@ export default function TravelCopilotDrawer() {
   };
 
   const handleQuickPrompt = (prompt) => {
-    executeChatMessage(prompt);
+    executeChatMessage(prompt, activeTripId || activeTrip?.id || null);
   };
 
   const destName = activeTrip?.destination_city || activeTrip?.destination?.city || null;
@@ -99,20 +393,16 @@ export default function TravelCopilotDrawer() {
       {/* Floating Trigger Button in Bottom-Right */}
       <button
         type="button"
-        className="copilot-floating-btn"
+        className={`copilot-floating-btn ${isOpen ? "is-on" : ""}`}
         onClick={toggleCopilot}
         aria-label="Open RoamGenie AI Assistant"
         aria-expanded={isOpen}
+        title={destName ? `RoamGenie AI Assistant · ${destName}` : "RoamGenie AI Assistant"}
       >
-        <span className="copilot-btn-icon" aria-hidden="true">
-          <IconSparkles size={16} />
+        <span className="sound-emoji snowflake-emoji" aria-hidden="true">
+          ❄️
         </span>
-        <span className="copilot-btn-label">RoamGenie AI</span>
-        {destName && (
-          <span className="copilot-btn-badge" title={`Active trip: ${destName}`}>
-            {destName}
-          </span>
-        )}
+        <span className="sr-only">RoamGenie AI</span>
       </button>
 
       {/* Sliding Chat Drawer & Backdrop */}
@@ -129,7 +419,9 @@ export default function TravelCopilotDrawer() {
             <div className="chat-header">
               <div className="chat-header-title-wrap">
                 <div className="chat-eyebrow">INTELLIGENCE</div>
-                <h3 className="chat-title">RoamGenie AI</h3>
+                <h3 className="chat-title">
+                  <span className="copilot-title-icon snowflake-emoji" aria-hidden="true">❄️</span> RoamGenie AI
+                </h3>
                 <p className="chat-header-subtitle">Personalized Travel Assistant</p>
               </div>
 
@@ -152,11 +444,20 @@ export default function TravelCopilotDrawer() {
                 <select
                   id="ai-trip-select"
                   className="chat-trip-select"
-                  value={activeTripId || ""}
-                  onChange={(e) => selectTrip(e.target.value)}
+                  value={activeTripId || activeTrip?.id || ""}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    selectTrip(val ? Number(val) : null);
+                  }}
                   aria-label="Select trip context for AI assistant"
                 >
                   <option value="">No trip connected (General advice)</option>
+                  {activeTrip && !userTrips.some((t) => String(t.id) === String(activeTrip.id)) && (
+                    <option key={activeTrip.id || "active"} value={activeTrip.id}>
+                      {activeTrip.destination_city || activeTrip.destination?.city || `Trip #${activeTrip.id}`}
+                      {activeTrip.start_date && activeTrip.end_date ? ` (${formatTripDates(activeTrip.start_date, activeTrip.end_date)})` : ""}
+                    </option>
+                  )}
                   {userTrips.map((t) => (
                     <option key={t.id} value={t.id}>
                       {t.destination_city || `Trip #${t.id}`}
@@ -312,6 +613,28 @@ export default function TravelCopilotDrawer() {
                     <div className="bubble-content" style={{ whiteSpace: "pre-line" }}>
                       {msg.text}
                     </div>
+
+                    {/* Interactive Itinerary Modification Proposal Card */}
+                    {msg.proposed_changes && (
+                      <ProposalCard
+                        proposal={msg.proposed_changes}
+                        status={msg.proposal_status || "pending"}
+                        errorMessage={msg.proposal_error}
+                        onConfirm={() => confirmProposal(msg.proposed_changes, idx)}
+                        onReject={() => rejectProposal(msg.proposed_changes, idx)}
+                        isApplying={chatLoading}
+                      />
+                    )}
+
+                    {/* Interactive Clarification Engine Card */}
+                    {msg.clarification_request && (
+                      <ClarificationCard
+                        clarification={msg.clarification_request}
+                        onSelect={(choice) => handleQuickPrompt(choice)}
+                        disabled={chatLoading}
+                      />
+                    )}
+
                     {msg.actions && msg.actions.length > 0 && (
                       <div className="suggested-actions-editorial">
                         {msg.actions.map((act, aIdx) => (

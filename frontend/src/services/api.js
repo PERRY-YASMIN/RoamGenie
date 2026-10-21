@@ -219,6 +219,15 @@ export async function chatAssistant(message, tripId = null, conversationId = nul
   return handleResponse(response, "AI Assistant is currently unavailable.");
 }
 
+export async function executeChatProposal(payload) {
+  const response = await fetch(`${API_BASE}/assistant/execute-proposal`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...getAuthHeader() },
+    body: JSON.stringify(payload),
+  });
+  return handleResponse(response, "Failed to apply itinerary proposal.");
+}
+
 export async function getPackingItems(tripId) {
   const response = await fetch(`${API_BASE}/assistant/trips/${tripId}/packing`, {
     headers: { ...getAuthHeader() },

@@ -15,7 +15,13 @@ export function ToastProvider({ children }) {
     const id = toastIdRef.current;
     const newToast = { id, message, type, duration };
 
-    setToasts((prev) => [...prev, newToast]);
+    setToasts((prev) => {
+      // Prevent duplicate messages with identical content and status type
+      if (prev.some((t) => t.message === message && t.type === type)) {
+        return prev;
+      }
+      return [...prev, newToast];
+    });
 
     if (duration > 0) {
       setTimeout(() => {

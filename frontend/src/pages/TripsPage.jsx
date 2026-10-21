@@ -5,7 +5,7 @@ import { useToast } from "../context/ToastContext";
 import { useCopilot } from "../context/CopilotContext";
 import { deleteTrip, listSavedTrips, listTrips } from "../services/api";
 import { getDestinationImageUrl } from "../utils/destinationImages";
-import { IconArrowRight, IconSparkles, IconTrash, IconCompass } from "../components/icons";
+import { IconArrowRight, IconTrash, IconCompass } from "../components/icons";
 
 function formatDateRange(startDate, endDate) {
   if (!startDate || !endDate) return "";
@@ -221,7 +221,7 @@ export default function TripsPage() {
                       onClick={() => openCopilot(trip.id)}
                       aria-label={`Ask RoamGenie AI about trip in ${destCity}`}
                     >
-                      <IconSparkles size={13} /> RoamGenie AI
+                      <span className="ai-btn-icon snowflake-emoji" aria-hidden="true">❄️</span> RoamGenie AI
                     </button>
                     <button
                       type="button"

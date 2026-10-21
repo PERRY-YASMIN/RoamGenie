@@ -21,13 +21,21 @@ import {
   toggleSaveTrip,
   updateTrip,
 } from "../services/api";
+import DualTimeZoneSelector from "../components/DualTimeZoneSelector";
 import {
+  convertScheduledTime,
+  getInstantFromWallClock,
+  getTimeZoneMeta,
+  resolveLocationTimeZone,
+} from "../utils/timezone";
+import {
+  IconAlert,
   IconCheck,
+  IconClock,
   IconClose,
   IconCompass,
   IconRefresh,
   IconSearch,
-  IconSparkles,
   IconSuitcase,
   IconSun,
 } from "../components/icons";
@@ -55,14 +63,7 @@ function getDefaultEndDate() {
   return d.toISOString().split("T")[0];
 }
 
-function formatDayPart(timeStr) {
-  if (!timeStr) return "Morning";
-  const hour = parseInt(timeStr.split(":")[0], 10);
-  if (isNaN(hour)) return "Daytime";
-  if (hour < 12) return "Morning";
-  if (hour < 17) return "Afternoon";
-  return "Evening";
-}
+
 
 export default function PlanPage() {
   const [searchParams] = useSearchParams();
@@ -72,7 +73,7 @@ export default function PlanPage() {
 
   const { isAuthenticated } = useAuth();
   const { success, error: toastError, info } = useToast();
-  const { selectTrip } = useCopilot();
+  const { activeTrip, selectTrip, openCopilot, refreshUserTrips } = useCopilot();
 
   const [destinations, setDestinations] = useState([]);
   const [destSearchText, setDestSearchText] = useState(cityParam || "");
@@ -101,6 +102,10 @@ export default function PlanPage() {
   const [isSaved, setIsSaved] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
+
+  // Dual-Time-Zone Itinerary Display State
+  const [activeTzMode, setActiveTzMode] = useState("destination");
+  const [customOriginTz, setCustomOriginTz] = useState(null);
 
   // Alternative Swap Modal State
   const [swapModalItem, setSwapModalItem] = useState(null);
@@ -207,7 +212,7 @@ export default function PlanPage() {
           setStatus("idle");
         }
 
-        if (tripData.status === "planned" || tripData.status === "confirmed") {
+        if (tripData.id) {
           selectTrip(tripData.id);
         }
 
@@ -238,6 +243,43 @@ export default function PlanPage() {
       isMounted = false;
     };
   }, [tripIdParam, isAuthenticated, toastError, selectTrip]);
+
+  // Sync PlanPage when activeTrip is updated by Copilot AI (e.g. after proposal execution)
+  useEffect(() => {
+    if (!activeTrip) return;
+    if (createdTripId && activeTrip.id !== createdTripId) return;
+
+    const activeItinerary = activeTrip.itineraries?.[0] || null;
+    if (activeItinerary) {
+      const categoryBreakdown = (activeTrip.budget_summary?.categories || activeTrip.budget_allocations || []).map((c) => ({
+        category: c.category,
+        actual: Number(c.amount),
+        allocated: Number(c.amount),
+      }));
+
+      const budgetSummary = activeTrip.budget_summary
+        ? {
+            ...activeTrip.budget_summary,
+            is_over_budget:
+              activeTrip.budget_summary.status === "over_budget" ||
+              Number(activeTrip.estimated_total) > Number(activeTrip.total_budget),
+            deficit_amount: Number(activeTrip.budget_summary.deficit || 0),
+            remaining_budget: Number(activeTrip.budget_summary.remaining_budget || 0),
+            category_breakdown: categoryBreakdown,
+          }
+        : null;
+
+      setGeneratedPlan((prev) => ({
+        ...prev,
+        itinerary: {
+          ...activeItinerary,
+          destination_city: activeTrip.destination_city || prev?.itinerary?.destination_city,
+        },
+        budget_summary: budgetSummary,
+        warnings: activeTrip.budget_summary?.warnings || [],
+      }));
+    }
+  }, [activeTrip, createdTripId]);
 
   // Escape key listener for swap modal
   useEffect(() => {
@@ -293,6 +335,10 @@ export default function PlanPage() {
         };
         const tripRes = await createTrip(createPayload);
         setCreatedTripId(tripRes.id);
+        selectTrip(tripRes.id);
+        if (typeof refreshUserTrips === "function") {
+          refreshUserTrips();
+        }
 
         const planRes = await generateTripPlan(
           tripRes.id,
@@ -413,6 +459,9 @@ export default function PlanPage() {
       await updateTrip(createdTripId, { status: "planned" });
       setIsConfirmed(true);
       selectTrip(createdTripId);
+      if (typeof refreshUserTrips === "function") {
+        refreshUserTrips();
+      }
       success("Trip confirmed! RoamGenie AI is now connected to this journey.");
     } catch (err) {
       console.error(err);
@@ -583,6 +632,41 @@ export default function PlanPage() {
   const daysList = itin?.days || [];
   const currentDayData = daysList.find((d) => d.day_number === selectedDay) || daysList[0];
 
+  // Resolve Time Zones dynamically for Destination and Origin
+  const destCity =
+    itin?.destination_city ||
+    destinations.find((d) => d.id === Number(formData.destination_id))?.city ||
+    "Destination";
+  const selectedDestObj =
+    destinations.find((d) => d.id === Number(formData.destination_id)) || {
+      city: destCity,
+    };
+
+  const destTzResolution = resolveLocationTimeZone(selectedDestObj);
+  const destTzMeta = getTimeZoneMeta(
+    destTzResolution.timeZone || "Asia/Dubai",
+    formData.start_date,
+    destTzResolution.locationName || destCity
+  );
+
+  const originTzResolution = customOriginTz
+    ? { timeZone: customOriginTz, locationName: formData.starting_location || "Origin", isAmbiguous: false }
+    : resolveLocationTimeZone(formData.starting_location || "Delhi");
+
+  const originTzMeta = getTimeZoneMeta(
+    originTzResolution.timeZone,
+    formData.start_date,
+    originTzResolution.locationName || formData.starting_location || "Origin"
+  );
+
+  const currentTzMeta = activeTzMode === "origin" ? originTzMeta : destTzMeta;
+  const targetTimeZone = currentTzMeta.timeZone || destTzMeta.timeZone;
+  const isSameTimeZone = Boolean(
+    destTzMeta.timeZone &&
+    originTzMeta.timeZone &&
+    (destTzMeta.timeZone === originTzMeta.timeZone || destTzMeta.utcOffset === originTzMeta.utcOffset)
+  );
+
   const matchingDestinations = destinations.filter((d) => {
     if (!destSearchText.trim()) return true;
     const q = destSearchText.toLowerCase().trim();
@@ -642,246 +726,252 @@ export default function PlanPage() {
       <div className="planner-editorial-layout">
         {/* Left Column: Calm Journey Configuration */}
         <section className="planner-inputs-column" aria-label="Trip Parameters Form">
-          <div className="inputs-column-header">
-            <span className="inputs-eyebrow">STAGE 01 — 04</span>
-            <h2 className="inputs-section-title">Trip Parameters</h2>
-            <p className="inputs-section-sub">Define the essentials of where and how you want to travel.</p>
-          </div>
-
-          <form onSubmit={handlePlanSubmit} className="editorial-form">
-            {/* Stage 01: Destination Discovery */}
-            <div className="editorial-field-block">
-              <label htmlFor="destination_input" className="field-label-editorial">
-                Where are you going?
-              </label>
-              <div className="dest-discovery-wrap" ref={destDropdownRef}>
-                <div className="dest-input-shell">
-                  <span className="dest-input-icon" aria-hidden="true">
-                    <IconSearch size={16} />
-                  </span>
-                  <input
-                    id="destination_input"
-                    name="destination_input"
-                    type="text"
-                    className="editorial-line-input"
-                    placeholder="Search destination city or country..."
-                    value={destSearchText}
-                    onFocus={() => setShowDestDropdown(true)}
-                    onChange={(e) => {
-                      const text = e.target.value;
-                      setDestSearchText(text);
-                      setShowDestDropdown(true);
-                      if (text.trim()) {
-                        const q = text.toLowerCase().trim();
-                        const match = destinations.find(
-                          (d) =>
-                            (d.city && d.city.toLowerCase().includes(q)) ||
-                            (d.country && d.country.toLowerCase().includes(q))
-                        );
-                        if (match) {
-                          setFormData((prev) => ({ ...prev, destination_id: match.id }));
-                        }
-                      }
-                    }}
-                    disabled={status === "loading"}
-                    required
-                    autoComplete="off"
-                  />
-                </div>
-
-                {showDestDropdown && (
-                  <ul className="dest-discovery-dropdown" role="listbox" aria-label="Destination suggestions">
-                    {matchingDestinations.length > 0 ? (
-                      matchingDestinations.slice(0, 30).map((d) => {
-                        const isSelected = d.id === formData.destination_id;
-                        return (
-                          <li
-                            key={d.id}
-                            role="option"
-                            aria-selected={isSelected}
-                            className={`dest-dropdown-row ${isSelected ? "selected" : ""}`}
-                            onMouseDown={(e) => {
-                              e.preventDefault();
-                              setFormData((prev) => ({ ...prev, destination_id: d.id }));
-                              setDestSearchText(`${d.city}, ${d.country}`);
-                              setShowDestDropdown(false);
-                            }}
-                          >
-                            <div className="dropdown-row-main">
-                              <span className="dropdown-city">{d.city}</span>
-                              <span className="dropdown-country">, {d.country}</span>
-                            </div>
-                            <span className="dropdown-cost">
-                              ₹{Number(d.average_daily_cost || 3500).toLocaleString()} / day
-                            </span>
-                          </li>
-                        );
-                      })
-                    ) : (
-                      <li className="dest-no-matches">
-                        No catalogue destinations found matching &quot;{destSearchText}&quot;
-                      </li>
-                    )}
-                  </ul>
-                )}
-              </div>
+          <div className="planner-form-panel">
+            <div className="inputs-column-header">
+              <span className="inputs-eyebrow">STAGE 01 — 04</span>
+              <h2 className="inputs-section-title">Trip Parameters</h2>
+              <p className="inputs-section-sub">Define the essentials of where and how you want to travel.</p>
             </div>
 
-            {/* Stage 02: Dates, Travellers, and Origin */}
-            <div className="editorial-field-block">
-              <label className="field-label-editorial">When and with whom?</label>
-              <div className="dates-travellers-grid">
-                <div className="grid-input-unit">
-                  <span className="input-sublabel">DEPARTURE</span>
-                  <input
-                    id="start_date"
-                    name="start_date"
-                    type="date"
-                    className="editorial-date-input"
-                    required
-                    value={formData.start_date}
-                    onChange={handleInputChange}
-                    disabled={status === "loading"}
-                  />
-                </div>
-
-                <div className="grid-input-unit">
-                  <span className="input-sublabel">RETURN</span>
-                  <input
-                    id="end_date"
-                    name="end_date"
-                    type="date"
-                    className="editorial-date-input"
-                    min={formData.start_date}
-                    required
-                    value={formData.end_date}
-                    onChange={handleInputChange}
-                    disabled={status === "loading"}
-                  />
-                </div>
-
-                <div className="grid-input-unit">
-                  <span className="input-sublabel">TRAVELLERS</span>
-                  <input
-                    id="traveller_count"
-                    name="traveller_count"
-                    type="number"
-                    min="1"
-                    max="50"
-                    className="editorial-number-input"
-                    required
-                    value={formData.traveller_count}
-                    onChange={handleInputChange}
-                    disabled={status === "loading"}
-                  />
-                </div>
-
-                <div className="grid-input-unit">
-                  <span className="input-sublabel">ORIGIN</span>
-                  <input
-                    id="starting_location"
-                    name="starting_location"
-                    type="text"
-                    className="editorial-text-input"
-                    required
-                    value={formData.starting_location}
-                    onChange={handleInputChange}
-                    placeholder="Starting point"
-                    disabled={status === "loading"}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Stage 03: Budget Display & Slider */}
-            <div className="editorial-field-block">
-              <div className="budget-header-row">
-                <label htmlFor="total_budget" className="field-label-editorial">
-                  Your trip budget
+            <form onSubmit={handlePlanSubmit} className="editorial-form">
+              {/* Stage 01: Destination Discovery */}
+              <div className="editorial-field-block">
+                <label htmlFor="destination_input" className="field-label-editorial">
+                  Where are you going?
                 </label>
-                <span className="budget-large-display">
-                  ₹{Number(formData.total_budget || 0).toLocaleString()}
-                </span>
-              </div>
-              <input
-                id="total_budget"
-                name="total_budget"
-                type="range"
-                min="5000"
-                max="500000"
-                step="2500"
-                className="editorial-range-slider"
-                value={formData.total_budget}
-                onChange={handleInputChange}
-                disabled={status === "loading"}
-              />
-              <div className="slider-limits">
-                <span>₹5,000</span>
-                <span>₹5,00,000</span>
-              </div>
-            </div>
-
-            {/* Stage 04: Travel Style & Preferences */}
-            <div className="editorial-field-block">
-              <label className="field-label-editorial">Travel style & pace</label>
-              <div className="editorial-preference-list">
-                {PREFERENCE_TAGS.map((tag) => {
-                  const isSelected = formData.preferences.includes(tag);
-                  return (
-                    <button
-                      key={tag}
-                      type="button"
-                      className={`preference-text-link ${isSelected ? "selected" : ""}`}
-                      onClick={() => togglePreference(tag)}
+                <div className="dest-discovery-wrap" ref={destDropdownRef}>
+                  <div className="dest-input-shell">
+                    <span className="dest-input-icon" aria-hidden="true">
+                      <IconSearch size={16} />
+                    </span>
+                    <input
+                      id="destination_input"
+                      name="destination_input"
+                      type="text"
+                      className="editorial-line-input"
+                      placeholder="Search destination city or country..."
+                      value={destSearchText}
+                      onFocus={() => setShowDestDropdown(true)}
+                      onChange={(e) => {
+                        const text = e.target.value;
+                        setDestSearchText(text);
+                        setShowDestDropdown(true);
+                        if (text.trim()) {
+                          const q = text.toLowerCase().trim();
+                          const match = destinations.find(
+                            (d) =>
+                              (d.city && d.city.toLowerCase().includes(q)) ||
+                              (d.country && d.country.toLowerCase().includes(q))
+                          );
+                          if (match) {
+                            setFormData((prev) => ({ ...prev, destination_id: match.id }));
+                          }
+                        }
+                      }}
                       disabled={status === "loading"}
-                    >
-                      {tag}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+                      required
+                      autoComplete="off"
+                    />
+                  </div>
 
-            {/* AI Optimization Option */}
-            <div className="editorial-ai-toggle">
-              <label className="toggle-label-editorial">
+                  {showDestDropdown && (
+                    <ul className="dest-discovery-dropdown" role="listbox" aria-label="Destination suggestions">
+                      {matchingDestinations.length > 0 ? (
+                        matchingDestinations.slice(0, 30).map((d) => {
+                          const isSelected = d.id === formData.destination_id;
+                          return (
+                            <li
+                              key={d.id}
+                              role="option"
+                              aria-selected={isSelected}
+                              className={`dest-dropdown-row ${isSelected ? "selected" : ""}`}
+                              onMouseDown={(e) => {
+                                e.preventDefault();
+                                setFormData((prev) => ({ ...prev, destination_id: d.id }));
+                                setDestSearchText(`${d.city}, ${d.country}`);
+                                setShowDestDropdown(false);
+                              }}
+                            >
+                              <div className="dropdown-row-main">
+                                <span className="dropdown-city">{d.city}</span>
+                                <span className="dropdown-country">, {d.country}</span>
+                              </div>
+                              <span className="dropdown-cost">
+                                ₹{Number(d.average_daily_cost || 3500).toLocaleString()} / day
+                              </span>
+                            </li>
+                          );
+                        })
+                      ) : (
+                        <li className="dest-no-matches">
+                          No catalogue destinations found matching &quot;{destSearchText}&quot;
+                        </li>
+                      )}
+                    </ul>
+                  )}
+                </div>
+              </div>
+
+              {/* Stage 02: Dates, Travellers, and Origin */}
+              <fieldset className="editorial-field-block editorial-fieldset">
+                <legend className="field-label-editorial">When and with whom?</legend>
+                <div className="dates-travellers-grid">
+                  <div className="grid-input-unit">
+                    <label htmlFor="start_date" className="input-sublabel">DEPARTURE</label>
+                    <input
+                      id="start_date"
+                      name="start_date"
+                      type="date"
+                      className="editorial-date-input"
+                      required
+                      value={formData.start_date}
+                      onChange={handleInputChange}
+                      disabled={status === "loading"}
+                    />
+                  </div>
+
+                  <div className="grid-input-unit">
+                    <label htmlFor="end_date" className="input-sublabel">RETURN</label>
+                    <input
+                      id="end_date"
+                      name="end_date"
+                      type="date"
+                      className="editorial-date-input"
+                      min={formData.start_date}
+                      required
+                      value={formData.end_date}
+                      onChange={handleInputChange}
+                      disabled={status === "loading"}
+                    />
+                  </div>
+
+                  <div className="grid-input-unit">
+                    <label htmlFor="traveller_count" className="input-sublabel">TRAVELLERS</label>
+                    <input
+                      id="traveller_count"
+                      name="traveller_count"
+                      type="number"
+                      min="1"
+                      max="50"
+                      className="editorial-number-input"
+                      required
+                      value={formData.traveller_count}
+                      onChange={handleInputChange}
+                      disabled={status === "loading"}
+                    />
+                  </div>
+
+                  <div className="grid-input-unit">
+                    <label htmlFor="starting_location" className="input-sublabel">ORIGIN</label>
+                    <input
+                      id="starting_location"
+                      name="starting_location"
+                      type="text"
+                      className="editorial-text-input"
+                      required
+                      value={formData.starting_location}
+                      onChange={handleInputChange}
+                      placeholder="Starting point"
+                      disabled={status === "loading"}
+                    />
+                  </div>
+                </div>
+              </fieldset>
+
+              {/* Stage 03: Budget Display & Slider */}
+              <div className="editorial-field-block">
+                <div className="budget-header-row">
+                  <label htmlFor="total_budget" className="field-label-editorial">
+                    Your trip budget
+                  </label>
+                  <span className="budget-large-display">
+                    ₹{Number(formData.total_budget || 0).toLocaleString()}
+                  </span>
+                </div>
                 <input
-                  type="checkbox"
-                  name="use_ai"
-                  checked={formData.use_ai}
+                  id="total_budget"
+                  name="total_budget"
+                  type="range"
+                  min="5000"
+                  max="500000"
+                  step="2500"
+                  aria-label="Trip budget in Rupees"
+                  className="editorial-range-slider"
+                  value={formData.total_budget}
                   onChange={handleInputChange}
                   disabled={status === "loading"}
                 />
-                <span>Enable RoamGenie AI weather and pacing intelligence</span>
-              </label>
-            </div>
+                <div className="slider-limits" aria-hidden="true">
+                  <span>₹5,000</span>
+                  <span>₹5,00,000</span>
+                </div>
+              </div>
 
-            {/* Submit Action */}
-            <div className="form-submit-block">
-              <button
-                type="submit"
-                className="editorial-action-btn submit-btn"
-                disabled={status === "loading"}
-              >
-                {status === "loading" ? "Scheduling & Persisting..." : "Generate Optimized Itinerary →"}
-              </button>
-            </div>
-          </form>
+              {/* Stage 04: Travel Style & Preferences */}
+              <fieldset className="editorial-field-block editorial-fieldset">
+                <legend className="field-label-editorial">Travel style & pace</legend>
+                <div className="editorial-preference-list" role="group" aria-label="Travel preferences">
+                  {PREFERENCE_TAGS.map((tag) => {
+                    const isSelected = formData.preferences.includes(tag);
+                    return (
+                      <button
+                        key={tag}
+                        type="button"
+                        role="checkbox"
+                        aria-checked={isSelected}
+                        className={`preference-text-link ${isSelected ? "selected" : ""}`}
+                        onClick={() => togglePreference(tag)}
+                        disabled={status === "loading"}
+                      >
+                        {tag}
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
 
-          {status === "error" && (
-            <div className="editorial-error-box" role="alert">
-              <p>{errorMessage}</p>
-            </div>
-          )}
+              {/* AI Optimization Option */}
+              <div className="editorial-ai-toggle">
+                <label className="toggle-label-editorial" htmlFor="use_ai">
+                  <input
+                    id="use_ai"
+                    type="checkbox"
+                    name="use_ai"
+                    checked={formData.use_ai}
+                    onChange={handleInputChange}
+                    disabled={status === "loading"}
+                  />
+                  <span>Enable RoamGenie AI weather and pacing intelligence</span>
+                </label>
+              </div>
 
-          {!isAuthenticated && (
-            <div className="editorial-notice-box">
-              <p>
-                <strong>Guest Mode:</strong> You are viewing an in-memory preview.{" "}
-                <Link to="/login" className="editorial-link">Log in</Link> to save itineraries to your PostgreSQL account.
-              </p>
-            </div>
-          )}
+              {/* Submit Action */}
+              <div className="form-submit-block">
+                <button
+                  type="submit"
+                  className="editorial-action-btn submit-btn"
+                  disabled={status === "loading"}
+                >
+                  {status === "loading" ? "Scheduling & Persisting..." : "Generate Optimized Itinerary →"}
+                </button>
+              </div>
+            </form>
+
+            {status === "error" && (
+              <div className="editorial-error-box" role="alert">
+                <p>{errorMessage}</p>
+              </div>
+            )}
+
+            {!isAuthenticated && (
+              <div className="editorial-notice-box">
+                <p>
+                  <strong>Guest Mode:</strong> You are viewing an in-memory preview.{" "}
+                  <Link to="/login" className="editorial-link">Log in</Link> to save itineraries to your PostgreSQL account.
+                </p>
+              </div>
+            )}
+          </div>
         </section>
 
         {/* Right Column: Editorial Itinerary & Results */}
@@ -910,6 +1000,17 @@ export default function PlanPage() {
 
           {status === "success" && generatedPlan && (
             <div className="editorial-itinerary-stream">
+              {/* Contextual Workflow Feedback */}
+              <div className="itinerary-workflow-feedback" role="status">
+                <span className="workflow-feedback-icon" aria-hidden="true">
+                  <IconCheck size={16} />
+                </span>
+                <div className="workflow-feedback-body">
+                  <strong>Itinerary Generated Successfully</strong>
+                  <span>Review your day-by-day schedule, budget breakdown, and packing list below.</span>
+                </div>
+              </div>
+
               {/* Itinerary Header */}
               <div className="itinerary-editorial-header">
                 <div>
@@ -936,10 +1037,17 @@ export default function PlanPage() {
                   <button
                     type="button"
                     className="editorial-ai-btn"
-                    onClick={() => selectTrip(createdTripId)}
+                    onClick={() => {
+                      if (createdTripId) {
+                        selectTrip(createdTripId);
+                        openCopilot(createdTripId);
+                      } else {
+                        openCopilot();
+                      }
+                    }}
                     aria-label="Open RoamGenie AI chat drawer"
                   >
-                    <IconSparkles size={14} /> RoamGenie AI
+                    <span className="ai-btn-icon snowflake-emoji" aria-hidden="true">❄️</span> RoamGenie AI
                   </button>
                 </div>
               </div>
@@ -993,17 +1101,19 @@ export default function PlanPage() {
                       <span className="figure-label">STATUS</span>
                       {budget.is_over_budget ? (
                         <span className="figure-val text-deficit">
+                          <IconAlert size={14} className="figure-status-icon" aria-hidden="true" />
                           ₹{Number(budget.deficit_amount).toLocaleString()} deficit
                         </span>
                       ) : (
                         <span className="figure-val text-aligned">
+                          <IconCheck size={14} className="figure-status-icon" aria-hidden="true" />
                           ₹{Number(budget.remaining_budget).toLocaleString()} remaining
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <div className="budget-thin-bar">
+                  <div className="budget-thin-bar" role="progressbar" aria-valuenow={Math.min(100, Math.round((budget.estimated_total / budget.total_budget) * 100))} aria-valuemin="0" aria-valuemax="100" aria-label="Budget consumption percentage">
                     <div
                       className={`budget-thin-fill ${budget.is_over_budget ? "fill-deficit" : "fill-aligned"}`}
                       style={{
@@ -1023,11 +1133,48 @@ export default function PlanPage() {
                     </div>
                   )}
 
-                  {generatedPlan.warnings && generatedPlan.warnings.length > 0 && (
-                    <div className="budget-warnings-editorial">
-                      {generatedPlan.warnings.map((w, idx) => (
-                        <p key={idx} className="warning-line">{w}</p>
-                      ))}
+                  {/* Redesigned Explicit Budget Deficit / Status Warning Panel */}
+                  {budget.is_over_budget ? (
+                    <div className="budget-status-alert alert-deficit" role="alert" aria-label="Budget Deficit Warning">
+                      <div className="budget-alert-top">
+                        <div className="budget-alert-badge">
+                          <IconAlert size={16} aria-hidden="true" />
+                          <span>WARNING: OVER BUDGET</span>
+                        </div>
+                        <span className="budget-deficit-pill">
+                          −₹{Number(budget.deficit_amount).toLocaleString()} Deficit
+                        </span>
+                      </div>
+                      <div className="budget-alert-content">
+                        <p className="budget-alert-lead">
+                          Estimated journey expenses (₹{Number(budget.estimated_total).toLocaleString()}) exceed your allocated budget (₹{Number(budget.total_budget).toLocaleString()}) by <strong>₹{Number(budget.deficit_amount).toLocaleString()}</strong>.
+                        </p>
+                        {generatedPlan.warnings && generatedPlan.warnings.length > 0 && (
+                          <ul className="budget-alert-warnings">
+                            {generatedPlan.warnings.map((w, idx) => (
+                              <li key={idx} className="warning-item">{w}</li>
+                            ))}
+                          </ul>
+                        )}
+                        <p className="budget-alert-advice">
+                          Recommended action: Adjust your total budget in the parameters panel, or use &quot;Replace activity&quot; in the timeline to swap for budget-friendly alternatives.
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="budget-status-alert alert-aligned" role="status" aria-label="Budget Status">
+                      <div className="budget-alert-top">
+                        <div className="budget-alert-badge">
+                          <IconCheck size={16} aria-hidden="true" />
+                          <span>STATUS: WITHIN BUDGET</span>
+                        </div>
+                        <span className="budget-aligned-pill">
+                          +₹{Number(budget.remaining_budget).toLocaleString()} Remaining
+                        </span>
+                      </div>
+                      <p className="budget-alert-lead">
+                        Your estimated expenses (₹{Number(budget.estimated_total).toLocaleString()}) are fully within your budget limit of ₹{Number(budget.total_budget).toLocaleString()}.
+                      </p>
                     </div>
                   )}
                 </div>
@@ -1046,70 +1193,160 @@ export default function PlanPage() {
                 </div>
               )}
 
-              {/* Day Tabs */}
-              <div className="day-selection-chain" role="tablist">
-                {daysList.map((d) => (
-                  <button
-                    key={d.day_number}
-                    role="tab"
-                    aria-selected={selectedDay === d.day_number}
-                    className={`day-chain-btn ${selectedDay === d.day_number ? "active" : ""}`}
-                    onClick={() => setSelectedDay(d.day_number)}
-                  >
-                    Day {d.day_number < 10 ? `0${d.day_number}` : d.day_number}
-                  </button>
-                ))}
-              </div>
+              {/* Dual-Time-Zone Itinerary Display Selector */}
+              <DualTimeZoneSelector
+                activeMode={activeTzMode}
+                onModeChange={setActiveTzMode}
+                origin={formData.starting_location}
+                destination={selectedDestObj}
+                referenceDate={formData.start_date}
+                customOriginTz={customOriginTz}
+                onCustomOriginTzChange={setCustomOriginTz}
+              />
 
-              {/* Day Timeline View */}
-              <div className="day-editorial-timeline">
-                <div className="timeline-day-header">
-                  <h3>Day {selectedDay < 10 ? `0${selectedDay}` : selectedDay} Itinerary</h3>
-                  {currentDayData?.date && <span className="timeline-day-date">{currentDayData.date}</span>}
+              {/* Day Timeline Container Panel */}
+              <div className="timeline-container-panel">
+                {/* Active Timeline Time Zone Status Banner */}
+                <div className="timeline-active-tz-banner" role="status" aria-live="polite">
+                  <div className="active-tz-indicator-pill">
+                    <IconClock size={15} aria-hidden="true" />
+                    <span className="active-tz-type-label">
+                      {activeTzMode === "origin" ? "Origin Time" : "Destination Time"}
+                    </span>
+                    <span className="active-tz-sep">·</span>
+                    <span className="active-tz-city">{currentTzMeta.locationName}</span>
+                    <span className="active-tz-badge">({currentTzMeta.labelWithAbbr})</span>
+                  </div>
+                  {activeTzMode === "origin" && !isSameTimeZone && (
+                    <span className="active-tz-converted-note">
+                      Times converted from {destTzMeta.locationName} schedule
+                    </span>
+                  )}
                 </div>
 
-                {currentDayData && currentDayData.items && currentDayData.items.length > 0 ? (
-                  <div className="timeline-events-list">
-                    {currentDayData.items.map((item, idx) => (
-                      <div key={idx} className="editorial-timeline-event">
-                        <div className="event-time-col">
-                          <span className="event-time">{item.start_time || item.time || "09:00"}</span>
-                          <span className="event-period">{formatDayPart(item.start_time || item.time)}</span>
-                        </div>
+                {/* Day Tabs */}
+                <div className="day-selection-chain" role="tablist" aria-label="Itinerary day selector">
+                  {daysList.map((d) => (
+                    <button
+                      key={d.day_number}
+                      role="tab"
+                      aria-selected={selectedDay === d.day_number}
+                      className={`day-chain-btn ${selectedDay === d.day_number ? "active" : ""}`}
+                      onClick={() => setSelectedDay(d.day_number)}
+                    >
+                      Day {d.day_number < 10 ? `0${d.day_number}` : d.day_number}
+                    </button>
+                  ))}
+                </div>
 
-                        <div className="event-timeline-line" />
-
-                        <div className="event-content-col">
-                          <div className="event-primary-line">
-                            <h4 className="event-title">{item.title}</h4>
-                            <span className="event-cost-tag">₹{Number(item.estimated_cost).toLocaleString()}</span>
-                          </div>
-                          {item.notes && <p className="event-description">{item.notes}</p>}
-                          <div className="event-meta-line">
-                            <span className="event-category-label">{item.category}</span>
-                            <button
-                              type="button"
-                              className="event-swap-link"
-                              onClick={() => handleOpenSwapModal(item)}
-                              aria-label={`Swap ${item.title}`}
-                            >
-                              <IconRefresh size={12} /> Replace activity
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                {/* Day Timeline View */}
+                <div className="day-editorial-timeline">
+                  <div className="timeline-day-header">
+                    <div>
+                      <h3>Day {selectedDay < 10 ? `0${selectedDay}` : selectedDay} Itinerary</h3>
+                      {currentDayData?.date && <span className="timeline-day-date">{currentDayData.date}</span>}
+                    </div>
+                    {currentDayData?.items && (
+                      <span className="timeline-day-count">{currentDayData.items.length} scheduled activities</span>
+                    )}
                   </div>
-                ) : (
-                  <p className="empty-day-notice">No activities recorded for this day.</p>
-                )}
+
+                  {currentDayData && currentDayData.items && currentDayData.items.length > 0 ? (
+                    <div className="timeline-events-list">
+                      {currentDayData.items.map((item, idx) => {
+                        const converted = convertScheduledTime({
+                          dateStr: currentDayData?.date || formData.start_date,
+                          timeStr: item.start_time || item.time,
+                          sourceTimeZone: destTzMeta.timeZone,
+                          targetTimeZone: targetTimeZone,
+                        });
+
+                        // Extract transport departure & arrival if duration is present in notes
+                        let transitTiming = null;
+                        if (item.category === "transportation" || (item.notes && item.notes.includes("Duration:"))) {
+                          const durationMatch = item.notes?.match(/Duration:\s*(\d+)\s*mins?/i);
+                          if (durationMatch) {
+                            const durationMins = parseInt(durationMatch[1], 10);
+                            const depInstant = getInstantFromWallClock(
+                              currentDayData?.date || formData.start_date,
+                              item.start_time || item.time || "09:00",
+                              destTzMeta.timeZone
+                            );
+                            const arrInstant = new Date(depInstant.getTime() + durationMins * 60 * 1000);
+                            const arrTimeStr = new Intl.DateTimeFormat("en-US", {
+                              timeZone: targetTimeZone,
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            }).format(arrInstant);
+                            transitTiming = {
+                              arrivalTime: arrTimeStr,
+                              durationMinutes: durationMins,
+                            };
+                          }
+                        }
+
+                        return (
+                          <div key={idx} className="editorial-timeline-event">
+                            <div className="event-time-col">
+                              <span className="event-time">{converted.time}</span>
+                              <span className="event-period">
+                                {converted.period} · {currentTzMeta.abbr || currentTzMeta.utcOffset}
+                              </span>
+                              {converted.dateShift && (
+                                <span
+                                  className={`event-date-shift shift-${converted.dateShift.diffDays > 0 ? "next" : "prev"}`}
+                                  title={`Original scheduled date was ${currentDayData?.date || "selected day"}`}
+                                >
+                                  {converted.dateShift.label}
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="event-timeline-line" aria-hidden="true">
+                              <span className="timeline-node-dot" />
+                            </div>
+
+                            <div className="event-content-col">
+                              <div className="event-primary-line">
+                                <h4 className="event-title">{item.title}</h4>
+                                <span className="event-cost-tag">₹{Number(item.estimated_cost).toLocaleString()}</span>
+                              </div>
+                              {item.notes && <p className="event-description">{item.notes}</p>}
+                              {transitTiming && (
+                                <div className="event-transit-detail">
+                                  <span className="transit-timing-badge">
+                                    Dep: {converted.time} → Est. Arr: {transitTiming.arrivalTime} ({currentTzMeta.abbr || currentTzMeta.utcOffset})
+                                  </span>
+                                </div>
+                              )}
+                              <div className="event-meta-line">
+                                <span className="event-category-label">{item.category}</span>
+                                <button
+                                  type="button"
+                                  className="event-swap-link"
+                                  onClick={() => handleOpenSwapModal(item)}
+                                  aria-label={`Replace activity: ${item.title}`}
+                                >
+                                  <IconRefresh size={13} aria-hidden="true" /> Replace activity
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <p className="empty-day-notice">No activities recorded for this day.</p>
+                  )}
+                </div>
               </div>
 
               {/* Packing Checklist */}
-              <div className="packing-editorial-section">
+              <div className="packing-editorial-section" role="region" aria-label="Trip Packing Checklist">
                 <div className="packing-header">
                   <div className="packing-header-title">
-                    <IconSuitcase size={16} />
+                    <IconSuitcase size={18} aria-hidden="true" />
                     <h3>Trip Packing Checklist</h3>
                   </div>
                   <span className="packing-count">
@@ -1119,23 +1356,29 @@ export default function PlanPage() {
 
                 <div className="packing-items-stream">
                   {packingList.map((item) => (
-                    <div key={item.id} className="packing-row-item">
-                      <label className={`pack-checkbox-label ${item.is_packed ? "checked" : ""}`}>
+                    <div key={item.id} className={`packing-row-item ${item.is_packed ? "is-packed" : ""}`}>
+                      <label className={`pack-checkbox-label ${item.is_packed ? "checked" : ""}`} htmlFor={`pack-item-${item.id}`}>
                         <input
+                          id={`pack-item-${item.id}`}
                           type="checkbox"
                           checked={item.is_packed}
                           onChange={() => handleTogglePacking(item)}
                           aria-label={`Mark ${item.item} as ${item.is_packed ? "unpacked" : "packed"}`}
+                          className="pack-native-checkbox"
                         />
+                        <span className={`pack-custom-indicator ${item.is_packed ? "checked" : ""}`} aria-hidden="true">
+                          {item.is_packed && <IconCheck size={12} />}
+                        </span>
                         <span className="pack-item-name">{item.item}</span>
                       </label>
                       <button
                         type="button"
                         className="pack-remove-btn"
                         onClick={() => handleDeletePackItem(item.id)}
-                        aria-label={`Remove ${item.item}`}
+                        aria-label={`Remove ${item.item} from checklist`}
+                        title={`Remove ${item.item}`}
                       >
-                        <IconClose size={13} />
+                        <IconClose size={13} aria-hidden="true" />
                       </button>
                     </div>
                   ))}
@@ -1149,6 +1392,7 @@ export default function PlanPage() {
                       placeholder="Add custom packing essential..."
                       value={newPackItem}
                       onChange={(e) => setNewPackItem(e.target.value)}
+                      aria-label="Add custom packing item"
                     />
                     <button type="submit" className="add-pack-btn" disabled={!newPackItem.trim()}>
                       Add Item

@@ -13,7 +13,7 @@ This guide is for running RoamGenie locally on Windows PowerShell.
 Open the project folder in VS Code:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie"
+cd "<project-root>"
 ```
 
 The expected branch is:
@@ -36,7 +36,7 @@ Do not commit or share `backend/.env`. It contains private configuration and is 
 Open PowerShell terminal 1:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie"
+cd "<project-root>"
 Push-Location backend
 ..\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 Pop-Location
@@ -55,7 +55,7 @@ Uvicorn running on http://127.0.0.1:8000
 Open PowerShell terminal 2:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie\frontend"
+cd "frontend"
 npm.cmd run dev -- --host 127.0.0.1
 ```
 
@@ -76,7 +76,7 @@ Press `Ctrl+C` in each terminal to stop a server.
 The backend virtual environment should already exist at `backend/.venv`. If it does not, create it and install dependencies:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie"
+cd "<project-root>"
 & "C:\Python314\python.exe" -m venv backend\.venv
 .\backend\.venv\Scripts\python.exe -m pip install -r backend\requirements.txt
 ```
@@ -88,7 +88,7 @@ Python 3.12 or 3.13 is preferred by the project documentation. Python 3.14 also 
 If `frontend\node_modules` does not exist:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie\frontend"
+cd "frontend"
 npm.cmd ci
 ```
 
@@ -165,7 +165,7 @@ The response should have status `200` and content type `text/html`.
 If the Supabase database is empty, run migrations from the backend directory:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie\backend"
+cd "<project-root>\backend"
 ..\.venv\Scripts\python.exe -m alembic upgrade head
 ```
 
@@ -178,7 +178,7 @@ Only run migrations when the project owner confirms that the target database nee
 Check the private file `backend/.env`:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie"
+cd "<project-root>"
 Get-Content backend\.env | ForEach-Object {
   if ($_ -match '^DATABASE_URL=.+') { 'DATABASE_URL_SET' }
   elseif ($_ -match '^DATABASE_URL=') { 'DATABASE_URL_EMPTY' }
@@ -209,7 +209,7 @@ Start the backend using the command in this guide. The command must run with `ba
 Use the project interpreter directly instead of activating the environment:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie"
+cd "<project-root>"
 .\backend\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
@@ -266,14 +266,14 @@ OneDrive may temporarily lock directories. Close file previews and unnecessary V
 Backend tests:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie\backend"
+cd "<project-root>\backend"
 ..\.venv\Scripts\python.exe -m pytest
 ```
 
 Frontend tests:
 
 ```powershell
-cd "C:\Users\user\OneDrive\Desktop\RoamGenie\frontend"
+cd "frontend"
 npm.cmd test -- --run
 ```
 
