@@ -27,7 +27,14 @@ from app.db.models import (
 from app.db.session import get_engine
 from app.routers import assistant, auth, catalogues, health, plans, reports, trips, users
 from app.services.auth_service import hash_password
-from app.services.seeder import get_catalogue_counts, get_seed_dir, seed_master_catalogues
+from app.services.seeder import (
+    ensure_database_programmability,
+    get_all_table_counts,
+    get_catalogue_counts,
+    get_seed_dir,
+    seed_all_domain_entities,
+    seed_master_catalogues,
+)
 
 logger = logging.getLogger("uvicorn.error")
 settings = get_settings()
@@ -35,7 +42,7 @@ settings = get_settings()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Ensure database schema tables and seed records exist on startup."""
+    """Ensure database schema tables, views, triggers, and seed records exist on startup."""
     try:
         engine = get_engine()
         if engine is not None:
@@ -46,53 +53,8 @@ async def lifespan(app: FastAPI):
             def _background_seeder():
                 try:
                     with Session(engine) as db:
-                        # 1. Ensure admin accounts exist
-                        existing_admin = db.execute(select(User).where(User.email == "admin@roamgenie.internal")).scalar_one_or_none()
-                        if not existing_admin:
-                            admin = User(
-                                email="admin@roamgenie.internal",
-                                password_hash=hash_password("AdminPass123!"),
-                                full_name="System Administrator",
-                                role="admin",
-                            )
-                            traveller1 = User(
-                                email="traveller@roamgenie.internal",
-                                password_hash=hash_password("TravellerPass123!"),
-                                full_name="Arun Kumar",
-                                role="traveller",
-                            )
-                            traveller2 = User(
-                                email="ananya@roamgenie.internal",
-                                password_hash=hash_password("TravellerPass123!"),
-                                full_name="Ananya Sharma",
-                                role="traveller",
-                            )
-                            db.add_all([admin, traveller1, traveller2])
-                            db.commit()
-
-                        # 2. Check if destinations exist
-                        dest_count = db.execute(select(func.count(Destination.id))).scalar() or 0
-                        if dest_count == 0:
-                            seed_dir = get_seed_dir()
-                            if seed_dir and (seed_dir / "destinations_master_d1.json").exists():
-                                with open(seed_dir / "destinations_master_d1.json", "r", encoding="utf-8") as f:
-                                    dests_data = json.load(f)
-                                bulk_dests = [
-                                    Destination(
-                                        city=d["city"],
-                                        country=d["country"],
-                                        description=d.get("description", ""),
-                                        average_daily_cost=Decimal(str(d.get("average_daily_cost", 3500))),
-                                        active=d.get("active", True),
-                                    )
-                                    for d in dests_data
-                                ]
-                                db.add_all(bulk_dests)
-                                db.commit()
-                                logger.info("Seeded %d master destinations.", len(bulk_dests))
-
-                        # 3. Seed child master catalogues (Hotels, Dining, Sights, Transit)
-                        seed_master_catalogues(db)
+                        # Ensures all 22 domain tables, views, functions, triggers, and master catalogues are populated
+                        seed_all_domain_entities(db)
                 except Exception as ex:
                     logger.error("Background seeding failed: %s\n%s", ex, traceback.format_exc())
 
@@ -156,6 +118,16 @@ def catalogue_counts():
         return get_catalogue_counts(db)
 
 
+@app.get(f"{settings.api_v1_prefix}/system/all-table-counts")
+def all_table_counts():
+    """Retrieve row counts for all 22 domain entities."""
+    engine = get_engine()
+    if not engine:
+        return {"error": "Database not configured"}
+    with Session(engine) as db:
+        return get_all_table_counts(db)
+
+
 @app.post(f"{settings.api_v1_prefix}/system/seed-catalogues")
 def trigger_seed_catalogues(force: bool = False):
     """Trigger seeding of master catalogue datasets."""
@@ -164,6 +136,16 @@ def trigger_seed_catalogues(force: bool = False):
         return {"error": "Database not configured"}
     with Session(engine) as db:
         return seed_master_catalogues(db, force=force)
+
+
+@app.post(f"{settings.api_v1_prefix}/system/seed-all")
+def trigger_seed_all(force: bool = False):
+    """Trigger seeding of all 22 domain tables and database programmability."""
+    engine = get_engine()
+    if not engine:
+        return {"error": "Database not configured"}
+    with Session(engine) as db:
+        return seed_all_domain_entities(db, force=force)
 
 
 @app.exception_handler(Exception)
