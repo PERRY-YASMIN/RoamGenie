@@ -610,3 +610,102 @@ export function getGoogleStreetViewUrl(locationQuery, size = "800x450") {
   if (!apiKey) return null;
   return `https://maps.googleapis.com/maps/api/streetview?size=${size}&location=${encodeURIComponent(locationQuery)}&fov=90&heading=235&pitch=10&key=${apiKey}`;
 }
+
+/**
+ * Ultra-reliable zero-network SVG fallback poster generator.
+ * Guaranteed to display instantly even on restricted or firewalled networks (e.g. college/corporate Wi-Fi).
+ */
+export function getDestinationFallbackSvg(dest) {
+  const city = (dest?.city || "Destination").replace(/[<>&"']/g, "");
+  const country = (dest?.country || "World").replace(/[<>&"']/g, "");
+
+  // Hash the city name for deterministic theme selection
+  let hash = 0;
+  for (let i = 0; i < city.length; i++) {
+    hash = (hash << 5) - hash + city.charCodeAt(i);
+    hash |= 0;
+  }
+  const themeIndex = Math.abs(hash) % 4;
+
+  const themes = [
+    {
+      bg1: "#0b1f20",
+      bg2: "#173c3e",
+      accent: "#bb5b35",
+      gold: "#e8a87c",
+      fog: "#133638",
+      darkRidge: "#061314",
+    },
+    {
+      bg1: "#2d1612",
+      bg2: "#4a241e",
+      accent: "#f4ebd9",
+      gold: "#d4a373",
+      fog: "#3b1c17",
+      darkRidge: "#1a0b08",
+    },
+    {
+      bg1: "#0a1324",
+      bg2: "#192841",
+      accent: "#60a5fa",
+      gold: "#93c5fd",
+      fog: "#131f33",
+      darkRidge: "#050912",
+    },
+    {
+      bg1: "#0c1d18",
+      bg2: "#19392f",
+      accent: "#a7f3d0",
+      gold: "#6ee7b7",
+      fog: "#132d25",
+      darkRidge: "#050e0b",
+    },
+  ];
+
+  const t = themes[themeIndex];
+  const uid = Math.abs(hash);
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+    <defs>
+      <linearGradient id="g_${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="${t.bg1}" />
+        <stop offset="100%" stop-color="${t.bg2}" />
+      </linearGradient>
+      <linearGradient id="glow_${uid}" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="${t.accent}" stop-opacity="0.35" />
+        <stop offset="100%" stop-color="${t.accent}" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <rect width="800" height="600" fill="url(#g_${uid})" />
+    <circle cx="640" cy="170" r="65" fill="${t.gold}" opacity="0.22" />
+    <path d="M-50 490 L180 310 L360 450 L520 290 L720 470 L850 390 L850 600 L-50 600 Z" fill="${t.fog}" opacity="0.75" />
+    <path d="M-50 530 L130 420 L290 510 L450 380 L650 500 L850 430 L850 600 L-50 600 Z" fill="${t.darkRidge}" />
+    <rect y="310" width="800" height="290" fill="url(#glow_${uid})" />
+    <rect x="20" y="20" width="760" height="560" fill="none" stroke="${t.gold}" stroke-opacity="0.18" stroke-width="1.5" />
+    <text x="48" y="78" font-family="'Cinzel', Georgia, serif" font-size="12" font-weight="700" letter-spacing="3" fill="${t.gold}">ROAMGENIE · DESTINATION ARCHIVE</text>
+    <text x="48" y="500" font-family="'Cinzel', 'Playfair Display', Georgia, serif" font-size="44" font-weight="700" fill="#f4ebd9">${city}</text>
+    <text x="48" y="542" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="16" font-weight="600" letter-spacing="2.5" fill="${t.accent}">${country.toUpperCase()}</text>
+  </svg>`;
+
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
+/**
+ * Ultra-reliable zero-network SVG fallback for attraction cards.
+ */
+export function getAttractionFallbackSvg(attraction) {
+  const name = (attraction?.name || "Attraction").replace(/[<>&"']/g, "");
+  const cat = (attraction?.category || "Sights & Culture").replace(/[<>&"']/g, "");
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+    <rect width="400" height="300" fill="#173c3e" />
+    <circle cx="200" cy="110" r="45" fill="#bb5b35" opacity="0.3" />
+    <path d="M50 250 L200 130 L350 250 Z" fill="#0b1f20" />
+    <rect x="12" y="12" width="376" height="276" fill="none" stroke="#d4a373" stroke-opacity="0.2" stroke-width="1" />
+    <text x="24" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" letter-spacing="2" fill="#d4a373">${cat.toUpperCase()}</text>
+    <text x="24" y="260" font-family="'Cinzel', Georgia, serif" font-size="18" font-weight="700" fill="#f4ebd9">${name.slice(0, 32)}</text>
+  </svg>`;
+
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+

@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import { useCopilot } from "../context/CopilotContext";
 import { deleteTrip, listSavedTrips, listTrips } from "../services/api";
-import { getDestinationImageUrl } from "../utils/destinationImages";
+import { getDestinationFallbackSvg, getDestinationImageUrl } from "../utils/destinationImages";
 import { IconArrowRight, IconTrash, IconCompass } from "../components/icons";
 
 function formatDateRange(startDate, endDate) {
@@ -180,7 +180,9 @@ export default function TripsPage() {
                     alt={`Scenery for ${destCity}`}
                     loading="lazy"
                     onError={(e) => {
-                      e.target.src = "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80";
+                      if (e.currentTarget.dataset.fallbackApplied) return;
+                      e.currentTarget.dataset.fallbackApplied = "true";
+                      e.currentTarget.src = getDestinationFallbackSvg(mockDest);
                     }}
                   />
                 </div>

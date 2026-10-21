@@ -102,27 +102,27 @@ export async function getDestinations(search = "", activeOnly = true, limit = 50
 }
 
 export async function getDestination(id) {
-  const response = await fetch(`${API_BASE}/destinations/${id}`);
+  const response = await fetchWithTimeout(`${API_BASE}/destinations/${id}`);
   return handleResponse(response, "Failed to load destination details.");
 }
 
 export async function getHotels(destinationId) {
-  const response = await fetch(`${API_BASE}/hotels?destination_id=${destinationId}`);
+  const response = await fetchWithTimeout(`${API_BASE}/hotels?destination_id=${destinationId}`);
   return handleResponse(response, "Failed to load hotels.");
 }
 
 export async function getRestaurants(destinationId) {
-  const response = await fetch(`${API_BASE}/restaurants?destination_id=${destinationId}`);
+  const response = await fetchWithTimeout(`${API_BASE}/restaurants?destination_id=${destinationId}`);
   return handleResponse(response, "Failed to load restaurants.");
 }
 
 export async function getAttractions(destinationId) {
-  const response = await fetch(`${API_BASE}/attractions?destination_id=${destinationId}`);
+  const response = await fetchWithTimeout(`${API_BASE}/attractions?destination_id=${destinationId}`);
   return handleResponse(response, "Failed to load attractions.");
 }
 
 export async function getTransportOptions(destinationId) {
-  const response = await fetch(`${API_BASE}/transport-options?destination_id=${destinationId}`);
+  const response = await fetchWithTimeout(`${API_BASE}/transport-options?destination_id=${destinationId}`);
   return handleResponse(response, "Failed to load transport options.");
 }
 

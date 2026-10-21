@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { getAttractions, getDestinations, getHotels, getRestaurants, getTransportOptions } from "../services/api";
-import { getAttractionImageUrl, getDestinationImageUrl, getGoogleMapsUrl } from "../utils/destinationImages";
+import { getAttractionFallbackSvg, getAttractionImageUrl, getDestinationFallbackSvg, getDestinationImageUrl, getGoogleMapsUrl } from "../utils/destinationImages";
 import { IconSearch, IconClose, IconArrowRight, IconExternalLink, IconStar } from "../components/icons";
 
 export default function DestinationsPage() {
@@ -215,7 +215,9 @@ export default function DestinationsPage() {
                   alt={`Scenic landscape of ${featuredDest.city}, ${featuredDest.country}`}
                   loading="eager"
                   onError={(e) => {
-                    e.target.src = "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80";
+                    if (e.currentTarget.dataset.fallbackApplied) return;
+                    e.currentTarget.dataset.fallbackApplied = "true";
+                    e.currentTarget.src = getDestinationFallbackSvg(featuredDest);
                   }}
                 />
               </div>
@@ -280,7 +282,9 @@ export default function DestinationsPage() {
                       alt={`View of ${dest.city}, ${dest.country}`}
                       loading="lazy"
                       onError={(e) => {
-                        e.target.src = "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80";
+                        if (e.currentTarget.dataset.fallbackApplied) return;
+                        e.currentTarget.dataset.fallbackApplied = "true";
+                        e.currentTarget.src = getDestinationFallbackSvg(dest);
                       }}
                     />
                   </div>
@@ -480,7 +484,9 @@ export default function DestinationsPage() {
                             alt={a.name}
                             loading="lazy"
                             onError={(e) => {
-                              e.target.src = "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=400&q=80";
+                              if (e.currentTarget.dataset.fallbackApplied) return;
+                              e.currentTarget.dataset.fallbackApplied = "true";
+                              e.currentTarget.src = getAttractionFallbackSvg(a);
                             }}
                           />
                         </div>
