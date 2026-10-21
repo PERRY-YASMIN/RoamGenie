@@ -39,6 +39,14 @@ def seed_preview_destination(db_session: Session) -> Destination:
     return dest
 
 
+def test_root() -> None:
+    """Verify system root endpoint status."""
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json()["status"] == "healthy"
+    assert response.json()["app"] == "RoamGenie"
+
+
 def test_health() -> None:
     """Verify system health endpoint status."""
     response = client.get("/api/health")

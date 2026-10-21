@@ -33,6 +33,19 @@ app.include_router(assistant.router, prefix=settings.api_v1_prefix)
 app.include_router(reports.router, prefix=settings.api_v1_prefix)
 app.include_router(plans.router, prefix=settings.api_v1_prefix)
 
+@app.get("/")
+def root():
+    return {
+        "status": "healthy",
+        "app": settings.app_name,
+        "version": "1.0.0",
+        "docs": "/docs",
+        "health": "/health",
+        "api_v1": settings.api_v1_prefix,
+    }
+
+
+
 
 @app.exception_handler(Exception)
 async def safe_unhandled_error(_: Request, exc: Exception) -> JSONResponse:
