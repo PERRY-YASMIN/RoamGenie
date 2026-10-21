@@ -212,12 +212,32 @@ def seed_master_catalogues(db: Session, force: bool = False) -> Dict[str, Any]:
         logger.warning("Seed directory not found. Master catalogue seeding skipped.")
         return {"status": "error", "message": "Seed directory not found", "counts": get_catalogue_counts(db)}
 
+    stats: Dict[str, Any] = {}
+
+    # 0. Destinations (Must be seeded before child catalogues)
+    dest_count = db.execute(select(func.count(Destination.id))).scalar() or 0
+    if dest_count < 100 or force:
+        d_path = seed_dir / "destinations_master_d1.json"
+        if d_path.exists():
+            with open(d_path, "r", encoding="utf-8") as f:
+                raw_dests = json.load(f)
+            records = [
+                {
+                    "city": d["city"].strip(),
+                    "country": d["country"].strip(),
+                    "description": d.get("description", ""),
+                    "average_daily_cost": Decimal(str(d.get("average_daily_cost", 3500))),
+                    "active": d.get("active", True),
+                }
+                for d in raw_dests
+            ]
+            stats["destinations_seeded"] = _bulk_insert(db, Destination, records, conflict_cols=["city", "country"])
+            logger.info("Seeded %d master destinations.", len(records))
+
     # Destination mapping cache
     dests = db.execute(select(Destination.id, Destination.city, Destination.country)).all()
     dest_map = {(d.city.strip().lower(), d.country.strip().lower()): d.id for d in dests}
     dest_id_set = {d.id for d in dests}
-
-    stats: Dict[str, Any] = {}
 
     # 1. Hotels
     hotel_count = db.execute(select(func.count(Hotel.id))).scalar() or 0
